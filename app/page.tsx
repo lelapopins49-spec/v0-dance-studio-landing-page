@@ -93,7 +93,7 @@ export default function LAteneoDanzaLanding() {
       {/* Navigation */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-background/95 backdrop-blur-md border-b border-border" : "bg-transparent"
+          isScrolled ? "bg-[#0F0E0A]/95 backdrop-blur-md border-b border-border" : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -161,18 +161,29 @@ export default function LAteneoDanzaLanding() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image Placeholder */}
-        <div className="absolute inset-0 bg-secondary">
-          {/* IMAGE: hero dancer - dramatic full-bleed photo of a dancer in motion */}
-          <div className="w-full h-full bg-gradient-to-b from-background/60 via-background/40 to-background" />
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Background with warm golden glow */}
+        <div 
+          className="absolute inset-0"
+          style={{ background: "radial-gradient(ellipse at 70% 50%, #2A1F0A 0%, #0F0E0A 65%)" }}
+        >
+          {/* Dark overlay for text legibility */}
+          <div className="w-full h-full bg-gradient-to-r from-[#0F0E0A]/90 via-[#0F0E0A]/70 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
-          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 animate-fade-in-up text-balance">
-            Il Tuo Palcoscenico<br />
-            <span className="text-primary">Inizia Qui</span>
-          </h1>
+        {/* Desktop right-side dancer placeholder zone */}
+        <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center">
+          {/* IMAGE: hero-dancer */}
+          <div className="w-3/4 h-3/4 bg-[#1A1408] border border-[#2A2010] rounded-sm" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-0 lg:text-left">
+          <div className="hero-headline-mask">
+            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 animate-fade-in-up text-balance">
+              Il Tuo Palcoscenico<br />
+              <span className="text-primary">Inizia Qui</span>
+            </h1>
+          </div>
           <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in-up animate-delay-200 text-pretty">
             Corsi di danza per bambini e adulti ad Agropoli — dai 3 anni in su
           </p>
@@ -202,7 +213,7 @@ export default function LAteneoDanzaLanding() {
       </section>
 
       {/* Stats Strip */}
-      <section className="bg-primary py-8 sm:py-12">
+      <section className="bg-[#0A0905] py-8 sm:py-12 border-t border-b border-[#2A2010]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
             {[
@@ -211,9 +222,9 @@ export default function LAteneoDanzaLanding() {
               { number: "5+", label: "Discipline" },
               { number: "∞", label: "Passione" },
             ].map((stat, index) => (
-              <div key={index} className="text-primary-foreground">
-                <div className="font-serif text-4xl sm:text-5xl font-bold mb-1">{stat.number}</div>
-                <div className="text-sm sm:text-base opacity-90">{stat.label}</div>
+              <div key={index}>
+                <div className="font-serif text-4xl sm:text-5xl font-bold mb-1 text-[#C9980A]">{stat.number}</div>
+                <div className="text-sm sm:text-base text-[#B8A080] uppercase tracking-wider">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -238,7 +249,7 @@ export default function LAteneoDanzaLanding() {
             {courses.map((course, index) => (
               <div
                 key={index}
-                className="group bg-card border border-border hover:border-primary/50 rounded-sm p-6 transition-all duration-300"
+                className="group bg-[#0A0905] border border-[#2A2010] rounded-sm p-6 transition-all duration-300 hover:bg-[#120F06] hover:border-l-[3px] hover:border-l-[#C9980A]"
               >
                 {/* IMAGE: course icon or photo placeholder */}
                 <div className="w-full h-48 bg-secondary rounded-sm mb-6 overflow-hidden">
@@ -246,7 +257,7 @@ export default function LAteneoDanzaLanding() {
                     <Music className="w-12 h-12 text-primary/50" />
                   </div>
                 </div>
-                <div className="inline-block bg-accent/20 text-accent px-3 py-1 rounded-sm text-xs font-semibold mb-3">
+                <div className="inline-block bg-[#C9980A]/10 text-[#C9980A] border border-[#C9980A]/25 px-3 py-1 rounded-sm text-xs font-semibold mb-3">
                   {course.age}
                 </div>
                 <h3 className="font-serif text-2xl font-bold text-foreground mb-3">{course.title}</h3>
@@ -261,6 +272,21 @@ export default function LAteneoDanzaLanding() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Prima Lezione Gratuita CTA Banner 1 */}
+      <section className="bg-[#C9980A]/10 border-t border-b border-[#C9980A]/20 py-8 sm:py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-foreground text-lg sm:text-xl mb-4">
+            La prima lezione è gratuita — vieni a trovarci
+          </p>
+          <a
+            href="#contatti"
+            className="inline-block bg-[#C9980A] hover:bg-[#C9980A]/90 text-[#0A0905] px-8 py-3 rounded-sm font-semibold transition-colors"
+          >
+            Prenota Ora
+          </a>
         </div>
       </section>
 
@@ -423,9 +449,7 @@ export default function LAteneoDanzaLanding() {
             ))}
           </div>
 
-          <p className="text-center text-accent font-semibold mt-12 text-lg">
-            ✨ Prima lezione gratuita — vieni a trovarci!
-          </p>
+          
         </div>
       </section>
 
@@ -492,6 +516,21 @@ export default function LAteneoDanzaLanding() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Prima Lezione Gratuita CTA Banner 2 */}
+      <section className="bg-[#C9980A]/10 border-t border-b border-[#C9980A]/20 py-8 sm:py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-foreground text-lg sm:text-xl mb-4">
+            La prima lezione è gratuita — vieni a trovarci
+          </p>
+          <a
+            href="#contatti"
+            className="inline-block bg-[#C9980A] hover:bg-[#C9980A]/90 text-[#0A0905] px-8 py-3 rounded-sm font-semibold transition-colors"
+          >
+            Prenota Ora
+          </a>
         </div>
       </section>
 
