@@ -301,11 +301,9 @@ export default function LAteneoDanzaLanding() {
             {/* Portrait Placeholder */}
             <div className="relative">
               {/* IMAGE: portrait photo of the founder/instructor */}
-              <div className="aspect-[4/5] bg-secondary rounded-sm overflow-hidden">
+              <div className="aspect-[4/5] bg-[#1A1408] border border-[#2A2010] rounded-sm overflow-hidden">
                 <div className="w-full h-full bg-gradient-to-t from-background/50 to-transparent" />
               </div>
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/20 rounded-sm -z-10" />
-              <div className="absolute -top-6 -left-6 w-24 h-24 border-2 border-accent rounded-sm -z-10" />
             </div>
 
             <div>
@@ -412,36 +410,30 @@ export default function LAteneoDanzaLanding() {
             ].map((plan, index) => (
               <div
                 key={index}
-                className={`relative rounded-sm p-8 transition-all duration-300 ${
+                className={`relative rounded-sm p-8 transition-all duration-300 bg-[#0A0905] ${
                   plan.popular
-                    ? "bg-primary text-primary-foreground scale-105 shadow-2xl"
-                    : "bg-background border border-border hover:border-primary/30"
+                    ? "border-2 border-[#C9980A]"
+                    : "border border-[#2A2010] hover:border-[#C9980A]/30"
                 }`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-accent-foreground px-4 py-1 rounded-sm text-sm font-bold">
-                    Più Popolare
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C9980A18] text-[#C9980A] border border-[#C9980A44] px-4 py-1 rounded-sm text-xs font-semibold">
+                    Piu Popolare
                   </div>
                 )}
-                <h3 className="font-serif text-2xl font-bold mb-2">{plan.name}</h3>
-                <div className="font-serif text-4xl font-bold mb-6">{plan.price}</div>
+                <h3 className="font-serif text-2xl font-bold mb-2 text-foreground">{plan.name}</h3>
+                <div className="font-serif text-4xl font-bold mb-6 text-foreground">{plan.price}</div>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <span className={plan.popular ? "text-primary-foreground" : "text-accent"}>✓</span>
-                      <span className={plan.popular ? "text-primary-foreground/90" : "text-muted-foreground"}>
-                        {feature}
-                      </span>
+                      <span className="text-[#C9980A]">✓</span>
+                      <span className="text-muted-foreground">{feature}</span>
                     </li>
                   ))}
                 </ul>
                 <a
                   href="#contatti"
-                  className={`block text-center py-3 rounded-sm font-semibold transition-colors ${
-                    plan.popular
-                      ? "bg-foreground text-primary hover:bg-foreground/90"
-                      : "bg-primary text-primary-foreground hover:bg-primary/90"
-                  }`}
+                  className="block text-center py-3 rounded-sm font-semibold transition-colors bg-[#C9980A] text-[#0A0905] hover:bg-[#C9980A]/90"
                 >
                   Scegli questo piano
                 </a>
@@ -722,18 +714,18 @@ export default function LAteneoDanzaLanding() {
       </footer>
 
       {/* Sticky Mobile Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border p-4 lg:hidden z-50">
-        <div className="flex gap-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-[#0F0E0A] border-t border-[#2A2010] h-14 md:hidden z-50 flex items-center">
+        <div className="flex w-full">
           <a
             href="tel:+390000000000"
-            className="flex-1 flex items-center justify-center gap-2 border border-border text-foreground py-3 rounded-sm font-semibold transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 bg-transparent text-[#F5EDD8] font-semibold transition-colors"
           >
             <Phone size={18} />
             Chiamaci
           </a>
           <a
             href="#contatti"
-            className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-sm font-semibold text-center transition-colors"
+            className="flex-1 flex items-center justify-center bg-[#C9980A] text-[#0A0905] font-semibold transition-colors"
           >
             Iscriviti Ora
           </a>
@@ -741,7 +733,7 @@ export default function LAteneoDanzaLanding() {
       </div>
 
       {/* Bottom padding for mobile sticky bar */}
-      <div className="h-20 lg:hidden" />
+      <div className="h-14 md:hidden" />
     </div>
   )
 }
