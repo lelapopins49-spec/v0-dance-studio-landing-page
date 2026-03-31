@@ -301,9 +301,7 @@ export default function LAteneoDanzaLanding() {
             {/* Portrait Placeholder */}
             <div className="relative">
               {/* IMAGE: portrait photo of the founder/instructor */}
-              <div className="aspect-[4/5] bg-[#1A1408] border border-[#2A2010] rounded-sm overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-t from-background/50 to-transparent" />
-              </div>
+              <div className="aspect-[4/5] bg-[#1A1408] border border-[#2A2010] rounded-sm" />
             </div>
 
             <div>
@@ -417,8 +415,8 @@ export default function LAteneoDanzaLanding() {
                 }`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C9980A18] text-[#C9980A] border border-[#C9980A44] px-4 py-1 rounded-sm text-xs font-semibold">
-                    Piu Popolare
+                  <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-[#C9980A18] text-[#C9980A] border border-[#C9980A44] px-3 py-0.5 rounded-full text-[11px] font-semibold">
+                    Più Popolare
                   </div>
                 )}
                 <h3 className="font-serif text-2xl font-bold mb-2 text-foreground">{plan.name}</h3>
