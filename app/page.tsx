@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
 import { Phone, Mail, MapPin, Instagram, Facebook, Music, Star, Menu, X, ChevronRight } from "lucide-react"
 
 export default function LAteneoDanzaLanding() {
@@ -50,26 +51,37 @@ export default function LAteneoDanzaLanding() {
       title: "Danza Classica",
       age: "3–6 anni",
       description: "Le basi della tecnica classica per i più piccoli, in un ambiente giocoso e stimolante.",
+      image: "/younger_female_student_solo.jpg",
     },
     {
       title: "Danza Moderna / Hip Hop",
       age: "7–14 anni",
       description: "Energia, ritmo e creatività per giovani ballerini che vogliono esprimersi liberamente.",
+      image: "/student_male.jpg",
     },
     {
       title: "Danza Contemporanea",
       age: "15–30 anni",
       description: "Esplorazione del movimento, improvvisazione e tecnica avanzata per ballerini esperti.",
+      image: "/danza_comp.jpg",
     },
     {
       title: "Musical Theatre",
       age: "Tutti i livelli",
       description: "Canto, recitazione e danza combinati per creare performer completi.",
+      image: "/dance_theatre.jpg",
     },
     {
       title: "Pilates & Fitness",
       age: "Adulti",
       description: "Benessere fisico e mentale attraverso esercizi mirati e controllati.",
+      image: "/fitness.jpg",
+    },
+    {
+      title: "Aria Danza",
+      age: "Dagli 8 anni",
+      description: "Sperimenta la libertà del movimento in volo. Un mix di acrobatica e danza su tessuti e cerchio.",
+      image: "/air_dance.jpg",
     },
   ]
 
@@ -92,9 +104,8 @@ export default function LAteneoDanzaLanding() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Navigation */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-[#0F0E0A]/95 backdrop-blur-md border-b border-border" : "bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-[#0F0E0A]/95 backdrop-blur-md border-b border-border" : "bg-transparent"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
@@ -163,7 +174,7 @@ export default function LAteneoDanzaLanding() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Background with warm golden glow */}
-        <div 
+        <div
           className="absolute inset-0"
           style={{ background: "radial-gradient(ellipse at 70% 50%, #2A1F0A 0%, #0F0E0A 65%)" }}
         >
@@ -173,8 +184,15 @@ export default function LAteneoDanzaLanding() {
 
         {/* Desktop right-side dancer placeholder zone */}
         <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center">
-          {/* IMAGE: hero-dancer */}
-          <div className="w-3/4 h-3/4 bg-[#1A1408] border border-[#2A2010] rounded-sm" />
+          <div className="w-3/4 h-3/4 relative">
+            <Image
+              src="/collective_school_w_founder.jpg"
+              alt="L'Ateneo Danza"
+              fill
+              className="object-cover rounded-sm"
+              priority
+            />
+          </div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-0 lg:text-left">
@@ -251,11 +269,19 @@ export default function LAteneoDanzaLanding() {
                 key={index}
                 className="group bg-[#0A0905] border border-[#2A2010] rounded-sm p-6 transition-all duration-300 hover:bg-[#120F06] hover:border-l-[3px] hover:border-l-[#C9980A]"
               >
-                {/* IMAGE: course icon or photo placeholder */}
-                <div className="w-full h-48 bg-secondary rounded-sm mb-6 overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-transparent flex items-center justify-center">
-                    <Music className="w-12 h-12 text-primary/50" />
-                  </div>
+                <div className="w-full h-48 bg-secondary rounded-sm mb-6 overflow-hidden relative">
+                  {course.image ? (
+                    <Image
+                      src={course.image}
+                      alt={course.title}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-transparent flex items-center justify-center">
+                      <Music className="w-12 h-12 text-primary/50" />
+                    </div>
+                  )}
                 </div>
                 <div className="inline-block bg-[#C9980A]/10 text-[#C9980A] border border-[#C9980A]/25 px-3 py-1 rounded-sm text-xs font-semibold mb-3">
                   {course.age}
@@ -299,9 +325,13 @@ export default function LAteneoDanzaLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Portrait Placeholder */}
-            <div className="relative">
-              {/* IMAGE: portrait photo of the founder/instructor */}
-              <div className="aspect-[4/5] bg-[#1A1408] border border-[#2A2010] rounded-sm" />
+            <div className="relative aspect-[4/5] w-full overflow-hidden">
+              <Image
+                src="/founder.jpg"
+                alt="Founder"
+                fill
+                className="object-cover bg-[#1A1408] border border-[#2A2010] rounded-sm"
+              />
             </div>
 
             <div>
@@ -309,8 +339,8 @@ export default function LAteneoDanzaLanding() {
                 Conosci la Tua Insegnante
               </h2>
               <p className="text-muted-foreground text-lg mb-6 leading-relaxed text-pretty">
-                [Nome insegnante], fondatrice de L&apos;Ateneo, vanta oltre 20 anni di esperienza nella danza classica e contemporanea. 
-                Formatasi presso le più prestigiose accademie italiane, ha dedicato la sua vita a trasmettere la passione 
+                [Nome insegnante], fondatrice de L&apos;Ateneo, vanta oltre 20 anni di esperienza nella danza classica e contemporanea.
+                Formatasi presso le più prestigiose accademie italiane, ha dedicato la sua vita a trasmettere la passione
                 per la danza alle nuove generazioni di Agropoli e del Cilento.
               </p>
               <blockquote className="border-l-4 border-accent pl-6 py-2 mb-8">
@@ -408,11 +438,10 @@ export default function LAteneoDanzaLanding() {
             ].map((plan, index) => (
               <div
                 key={index}
-                className={`relative rounded-sm p-8 transition-all duration-300 bg-[#0A0905] ${
-                  plan.popular
-                    ? "border-2 border-[#C9980A]"
-                    : "border border-[#2A2010] hover:border-[#C9980A]/30"
-                }`}
+                className={`relative rounded-sm p-8 transition-all duration-300 bg-[#0A0905] ${plan.popular
+                  ? "border-2 border-[#C9980A]"
+                  : "border border-[#2A2010] hover:border-[#C9980A]/30"
+                  }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-[#C9980A18] text-[#C9980A] border border-[#C9980A44] px-3 py-0.5 rounded-full text-[11px] font-semibold">
@@ -439,7 +468,7 @@ export default function LAteneoDanzaLanding() {
             ))}
           </div>
 
-          
+
         </div>
       </section>
 
@@ -458,21 +487,30 @@ export default function LAteneoDanzaLanding() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {Array.from({ length: 9 }).map((_, index) => (
+            {[
+              { src: "/air_dance_student.jpg", alt: "Studente di danza aerea" },
+              { src: "/collage_children_group.jpg", alt: "Gruppo di bambini" },
+              { src: "/group_male_female_stuends_stage.jpg", alt: "Studenti sul palco" },
+              { src: "/group_outside_.jpg", alt: "Gruppo all'aperto" },
+              { src: "/inside_school_children_lesson.jpg", alt: "Lezione all'interno" },
+              { src: "/male_female_duo.jpg", alt: "Duo maschile e femminile" },
+              { src: "/outside_event_students.jpg", alt: "Evento all'aperto" },
+              { src: "/solo_female_air_dance.jpg", alt: "Solo danza aerea" },
+              { src: "/student_green_dress.jpg", alt: "Studentessa in abito verde" },
+            ].map((image, index) => (
               <div
                 key={index}
-                className={`relative overflow-hidden rounded-sm group ${
-                  index === 0 || index === 4 ? "row-span-2" : ""
-                }`}
-              >
-                {/* IMAGE: gallery photo placeholder */}
-                <div
-                  className={`bg-secondary ${
-                    index === 0 || index === 4 ? "aspect-[3/4]" : "aspect-square"
+                className={`relative overflow-hidden rounded-sm group ${index === 0 || index === 4 ? "row-span-2 aspect-[3/4]" : "aspect-square"
                   }`}
-                >
-                  <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 group-hover:scale-110 transition-transform duration-500" />
-                </div>
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
               </div>
             ))}
           </div>
