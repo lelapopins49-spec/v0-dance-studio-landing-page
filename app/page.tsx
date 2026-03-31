@@ -1,13 +1,15 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
+
 import { Phone, Mail, MapPin, Instagram, Facebook, Music, Star, Menu, X, ChevronRight } from "lucide-react"
 
 export default function LAteneoDanzaLanding() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
-  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
+  const [statsVisible, setStatsVisible] = useState(false)
+  const [statValues, setStatValues] = useState({ anni: 0, eta: 0, discipline: 0 })
+  const statsRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,24 +19,61 @@ export default function LAteneoDanzaLanding() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Scroll reveal observer for sections
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisibleSections((prev) => new Set([...prev, entry.target.id]))
+            entry.target.classList.add("is-visible")
           }
         })
       },
       { threshold: 0.1 }
     )
 
-    Object.values(sectionRefs.current).forEach((ref) => {
-      if (ref) observer.observe(ref)
-    })
+    const elements = document.querySelectorAll(".scroll-reveal, .stagger-children")
+    elements.forEach((el) => observer.observe(el))
 
     return () => observer.disconnect()
   }, [])
+
+  // Stats counter animation
+  const animateValue = useCallback((start: number, end: number, duration: number, setter: (val: number) => void) => {
+    const startTime = performance.now()
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const easeOut = 1 - Math.pow(1 - progress, 3)
+      const current = Math.round(start + (end - start) * easeOut)
+      setter(current)
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      }
+    }
+    requestAnimationFrame(animate)
+  }, [])
+
+  useEffect(() => {
+    const statsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !statsVisible) {
+            setStatsVisible(true)
+            animateValue(0, 20, 1200, (val) => setStatValues(prev => ({ ...prev, anni: val })))
+            animateValue(0, 5, 1200, (val) => setStatValues(prev => ({ ...prev, discipline: val })))
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    if (statsRef.current) {
+      statsObserver.observe(statsRef.current)
+    }
+
+    return () => statsObserver.disconnect()
+  }, [statsVisible, animateValue])
 
   const navLinks = [
     { href: "#chi-siamo", label: "Chi Siamo" },
@@ -213,20 +252,25 @@ export default function LAteneoDanzaLanding() {
       </section>
 
       {/* Stats Strip */}
-      <section className="bg-[#0A0905] py-8 sm:py-12 border-t border-b border-[#2A2010]">
+      <section ref={statsRef} className="bg-[#0A0905] py-8 sm:py-12 border-t border-b border-[#2A2010]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
-            {[
-              { number: "20+", label: "Anni di Esperienza" },
-              { number: "3–30", label: "Anni di Età" },
-              { number: "5+", label: "Discipline" },
-              { number: "∞", label: "Passione" },
-            ].map((stat, index) => (
-              <div key={index}>
-                <div className="font-serif text-4xl sm:text-5xl font-bold mb-1 text-[#C9980A]">{stat.number}</div>
-                <div className="text-sm sm:text-base text-[#B8A080] uppercase tracking-wider">{stat.label}</div>
-              </div>
-            ))}
+            <div>
+              <div className="font-serif text-4xl sm:text-5xl font-bold mb-1 text-[#C9980A]">{statValues.anni}+</div>
+              <div className="text-sm sm:text-base text-[#B8A080] uppercase tracking-wider">Anni di Esperienza</div>
+            </div>
+            <div>
+              <div className="font-serif text-4xl sm:text-5xl font-bold mb-1 text-[#C9980A]">3–30</div>
+              <div className="text-sm sm:text-base text-[#B8A080] uppercase tracking-wider">Anni di Età</div>
+            </div>
+            <div>
+              <div className="font-serif text-4xl sm:text-5xl font-bold mb-1 text-[#C9980A]">{statValues.discipline}+</div>
+              <div className="text-sm sm:text-base text-[#B8A080] uppercase tracking-wider">Discipline</div>
+            </div>
+            <div>
+              <div className="font-serif text-4xl sm:text-5xl font-bold mb-1 text-[#C9980A]">∞</div>
+              <div className="text-sm sm:text-base text-[#B8A080] uppercase tracking-wider">Passione</div>
+            </div>
           </div>
         </div>
       </section>
@@ -234,8 +278,7 @@ export default function LAteneoDanzaLanding() {
       {/* Corsi Section */}
       <section
         id="corsi"
-        ref={(el) => { sectionRefs.current["corsi"] = el }}
-        className={`py-20 sm:py-28 transition-all duration-700 ${visibleSections.has("corsi") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className="py-20 sm:py-28 scroll-reveal"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -245,7 +288,7 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
             {courses.map((course, index) => (
               <div
                 key={index}
@@ -276,7 +319,7 @@ export default function LAteneoDanzaLanding() {
       </section>
 
       {/* Prima Lezione Gratuita CTA Banner 1 */}
-      <section className="bg-[#C9980A]/10 border-t border-b border-[#C9980A]/20 py-8 sm:py-10">
+      <section className="bg-[#C9980A]/10 border-t border-b border-[#C9980A]/20 py-8 sm:py-10 scroll-reveal">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-foreground text-lg sm:text-xl mb-4">
             La prima lezione è gratuita — vieni a trovarci
@@ -293,8 +336,7 @@ export default function LAteneoDanzaLanding() {
       {/* Chi Siamo Section */}
       <section
         id="chi-siamo"
-        ref={(el) => { sectionRefs.current["chi-siamo"] = el }}
-        className={`py-20 sm:py-28 bg-card transition-all duration-700 ${visibleSections.has("chi-siamo") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className="py-20 sm:py-28 bg-card scroll-reveal"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -335,8 +377,7 @@ export default function LAteneoDanzaLanding() {
       {/* Orari Section */}
       <section
         id="orari"
-        ref={(el) => { sectionRefs.current["orari"] = el }}
-        className={`py-20 sm:py-28 transition-all duration-700 ${visibleSections.has("orari") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className="py-20 sm:py-28 scroll-reveal"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -346,7 +387,7 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
             {schedule.map((day, index) => (
               <div key={index} className="bg-card border border-border rounded-sm p-6">
                 <h3 className="font-serif text-xl font-bold text-foreground mb-4 pb-3 border-b border-border">
@@ -376,8 +417,7 @@ export default function LAteneoDanzaLanding() {
       {/* Prezzi Section */}
       <section
         id="prezzi"
-        ref={(el) => { sectionRefs.current["prezzi"] = el }}
-        className={`py-20 sm:py-28 bg-card transition-all duration-700 ${visibleSections.has("prezzi") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className="py-20 sm:py-28 bg-card scroll-reveal"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -387,7 +427,7 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 stagger-children">
             {[
               {
                 name: "Corso Singolo",
@@ -448,8 +488,7 @@ export default function LAteneoDanzaLanding() {
       {/* Gallery Section */}
       <section
         id="gallery"
-        ref={(el) => { sectionRefs.current["gallery"] = el }}
-        className={`py-20 sm:py-28 transition-all duration-700 ${visibleSections.has("gallery") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className="py-20 sm:py-28 scroll-reveal"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -459,7 +498,7 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 stagger-children">
             {Array.from({ length: 9 }).map((_, index) => (
               <div
                 key={index}
@@ -483,8 +522,7 @@ export default function LAteneoDanzaLanding() {
 
       {/* Testimonials Section */}
       <section
-        ref={(el) => { sectionRefs.current["testimonials"] = el }}
-        className={`py-20 sm:py-28 bg-card transition-all duration-700 ${visibleSections.has("testimonials") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className="py-20 sm:py-28 bg-card scroll-reveal"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -493,7 +531,7 @@ export default function LAteneoDanzaLanding() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 stagger-children">
             {testimonials.map((testimonial, index) => (
               <div key={index} className="bg-background border border-border rounded-sm p-8">
                 <div className="text-primary text-5xl font-serif mb-4">&ldquo;</div>
@@ -512,7 +550,7 @@ export default function LAteneoDanzaLanding() {
       </section>
 
       {/* Prima Lezione Gratuita CTA Banner 2 */}
-      <section className="bg-[#C9980A]/10 border-t border-b border-[#C9980A]/20 py-8 sm:py-10">
+      <section className="bg-[#C9980A]/10 border-t border-b border-[#C9980A]/20 py-8 sm:py-10 scroll-reveal">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-foreground text-lg sm:text-xl mb-4">
             La prima lezione è gratuita — vieni a trovarci
@@ -529,8 +567,7 @@ export default function LAteneoDanzaLanding() {
       {/* Contact / CTA Section */}
       <section
         id="contatti"
-        ref={(el) => { sectionRefs.current["contatti"] = el }}
-        className={`py-20 sm:py-28 transition-all duration-700 ${visibleSections.has("contatti") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className="py-20 sm:py-28 scroll-reveal"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -662,7 +699,7 @@ export default function LAteneoDanzaLanding() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-card border-t border-border py-12">
+      <footer className="bg-card border-t border-border py-12 scroll-reveal">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             {/* Logo & Tagline */}
