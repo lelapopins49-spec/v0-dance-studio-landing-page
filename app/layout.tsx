@@ -1,18 +1,19 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Playfair_Display, Dancing_Script } from 'next/font/google'
+import { Jost, Bodoni_Moda, Dancing_Script } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const inter = Inter({
+const jost = Jost({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({
+const bodoni = Bodoni_Moda({
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
+  style: ['normal', 'italic'],
 })
 
 const dancingScript = Dancing_Script({
@@ -46,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="it" className={`${inter.variable} ${playfair.variable} ${dancingScript.variable}`}>
+    <html lang="it" className={`${jost.variable} ${bodoni.variable} ${dancingScript.variable}`}>
       <body className="font-sans antialiased">
         {children}
         <Analytics />

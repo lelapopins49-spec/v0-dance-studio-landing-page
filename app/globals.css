@@ -49,8 +49,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Inter', 'Inter Fallback', sans-serif;
-  --font-serif: 'Playfair Display', 'Playfair Display Fallback', serif;
+  --font-sans: 'Jost', 'Jost Fallback', sans-serif;
+  --font-serif: 'Bodoni Moda', 'Bodoni Moda Fallback', serif;
   --font-dancing: var(--font-dancing);
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
