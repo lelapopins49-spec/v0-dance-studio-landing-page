@@ -230,14 +230,14 @@ export default function LAteneoDanzaLanding() {
         </div>
 
         <div className="relative z-10 max-w-7xl ml-0 lg:mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-0 text-left lg:w-1/2">
-          <div className="hero-headline-mask">
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 animate-fade-in-up text-balance text-left">
-              Il Tuo Palcoscenico<br />
-              <span className="text-primary">Inizia Qui</span>
+          <div>
+            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold italic text-foreground mb-6 animate-fade-in-up text-balance text-left">
+              Nasce Tutto<br />
+              <span className="text-primary">da un Passo</span>
             </h1>
           </div>
-          <p className="text-lg sm:text-xl md:text-2xl text-[#F5EDD8] max-w-none lg:max-w-2xl mb-10 animate-fade-in-up animate-delay-200 text-pretty">
-            Corsi di danza per bambini e adulti ad Agropoli — dai 3 anni in su
+          <p className="text-lg sm:text-xl lg:text-2xl font-light leading-relaxed text-[#F5EDD8] max-w-none lg:max-w-xl mb-10 animate-fade-in-up animate-delay-200 text-pretty">
+            La passione per la danza si coltiva. La tua storia sul palcoscenico inizia qui.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-start animate-fade-in-up animate-delay-300">
             <a

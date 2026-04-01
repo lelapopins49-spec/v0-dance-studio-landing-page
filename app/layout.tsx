@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/collective_school_w_founder.jpg',
+        url: '/Screenshot_2.jpg',
         width: 1200,
         height: 630,
         alt: "L'Ateneo Danza - Gruppo e Insegnante",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "L'Ateneo di Rita Palidoro | Danza ad Agropoli",
     description: "Corsi di danza per bambini e adulti. Il tuo percorso nel mondo della danza inizia qui.",
-    images: ['/collective_school_w_founder.jpg'],
+    images: ['/Screenshot_2.jpg'],
   },
   robots: {
     index: true,
