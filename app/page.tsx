@@ -422,18 +422,21 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {schedule.map((day, index) => (
-              <div key={index} className="bg-card border border-border rounded-sm p-6">
-                <h3 className="font-serif text-xl font-bold text-foreground mb-4 pb-3 border-b border-border">
+              <div
+                key={index}
+                className="group bg-[#0A0905] border border-[#2A2010] rounded-sm p-6 transition-all duration-300 hover:bg-[#120F06] hover:border-l-[3px] hover:border-l-[#C9980A]"
+              >
+                <h3 className="font-serif text-xl font-bold text-[#F5EDD8] mb-4 pb-3 border-b border-[#2A2010] group-hover:text-[#C9980A] transition-colors">
                   {day.day}
                 </h3>
                 <div className="space-y-4">
                   {day.classes.map((cls, idx) => (
                     <div key={idx}>
-                      <div className="font-semibold text-foreground">{cls.name}</div>
-                      <div className="text-sm text-muted-foreground">{cls.time}</div>
-                      <div className="inline-block bg-secondary text-muted-foreground px-2 py-0.5 rounded-sm text-xs mt-1">
+                      <div className="font-semibold text-[#F5EDD8]">{cls.name}</div>
+                      <div className="text-sm text-[#B8A080]">{cls.time}</div>
+                      <div className="inline-block bg-[#C9980A]/10 text-[#C9980A] border border-[#C9980A]/25 px-2 py-0.5 rounded-sm text-xs mt-1">
                         {cls.level}
                       </div>
                     </div>
