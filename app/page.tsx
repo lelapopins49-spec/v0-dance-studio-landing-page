@@ -456,7 +456,7 @@ export default function LAteneoDanzaLanding() {
       <section
         id="prezzi"
         ref={(el) => { sectionRefs.current["prezzi"] = el }}
-        className={`py-20 sm:py-28 bg-card transition-all duration-700 ${visibleSections.has("prezzi") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className={`py-24 bg-card transition-all duration-700 ${visibleSections.has("prezzi") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
@@ -466,7 +466,7 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 name: "Corso Singolo",
@@ -489,37 +489,39 @@ export default function LAteneoDanzaLanding() {
             ].map((plan, index) => (
               <div
                 key={index}
-                className={`relative rounded-sm p-8 transition-all duration-300 bg-[#0A0905] ${plan.popular
-                  ? "border-2 border-[#C9980A]"
+                className={`relative group rounded-sm p-8 transition-all duration-300 bg-[#0A0905] h-full flex flex-col hover:bg-[#120F06] hover:border-l-[3px] hover:border-l-[#C9980A] ${plan.popular
+                  ? "border-2 border-[#C9980A] scale-[1.02] z-10"
                   : "border border-[#2A2010] hover:border-[#C9980A]/30"
                   }`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-[#C9980A18] text-[#C9980A] border border-[#C9980A44] px-3 py-0.5 rounded-full text-[11px] font-semibold">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C9980A] text-[#0A0905] px-4 py-1 rounded-full text-xs font-bold tracking-wider whitespace-nowrap">
                     Più Popolare
                   </div>
                 )}
-                <h3 className="font-serif text-2xl font-bold mb-2 text-foreground">{plan.name}</h3>
-                <div className="font-serif text-4xl font-bold mb-6 text-foreground">{plan.price}</div>
-                <ul className="space-y-3 mb-8">
+                <h3 className="font-serif text-2xl font-bold mb-2 text-foreground group-hover:text-[#C9980A] transition-colors">{plan.name}</h3>
+                <div className="font-serif text-4xl font-bold mb-6 text-[#F5EDD8] border-b border-[#2A2010] pb-6">
+                  {plan.price}
+                </div>
+                <ul className="space-y-3 mb-8 mt-6">
                   {plan.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <span className="text-[#C9980A]">✓</span>
-                      <span className="text-muted-foreground">{feature}</span>
+                      <span className="text-[#B8A080] text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
-                <a
-                  href="#contatti"
-                  className="block text-center py-3 rounded-sm font-semibold transition-colors bg-[#C9980A] text-[#0A0905] hover:bg-[#C9980A]/90"
-                >
-                  Scegli questo piano
-                </a>
+                <div className="mt-auto">
+                  <a
+                    href="#contatti"
+                    className="block text-center py-3 rounded-sm font-semibold transition-colors bg-[#C9980A] text-[#0A0905] hover:bg-[#C9980A]/90"
+                  >
+                    Scegli questo piano
+                  </a>
+                </div>
               </div>
             ))}
           </div>
-
-
         </div>
       </section>
 
@@ -745,14 +747,14 @@ export default function LAteneoDanzaLanding() {
                     <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
                       <div className="font-semibold text-[#F5EDD8]">Telefono</div>
-                      <div className="text-[#F5EDD8]">+39 0000 000 000</div>
+                      <div className="text-[#F5EDD8]">+39 339 356 5655</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
                       <div className="font-semibold text-[#F5EDD8]">Email</div>
-                      <div className="text-[#F5EDD8]">info@atenodanza.it</div>
+                      <div className="text-[#F5EDD8]">ritapolidoro4@gmail.com</div>
                     </div>
                   </div>
                 </div>
