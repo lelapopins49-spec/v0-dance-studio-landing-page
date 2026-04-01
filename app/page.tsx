@@ -95,9 +95,9 @@ export default function LAteneoDanzaLanding() {
   ]
 
   const testimonials = [
-    { name: "Sofia M.", course: "Danza Classica, 8 anni", quote: "Mia figlia aspetta con ansia ogni lezione. Ha trovato non solo una passione, ma anche una seconda famiglia." },
-    { name: "Marco R.", course: "Hip Hop, 16 anni", quote: "I maestri sono incredibili. Ho imparato più in sei mesi qui che in anni altrove. Consigliatissimo!" },
-    { name: "Giulia T.", course: "Pilates, Adulti", quote: "Un'oasi di benessere. L'atmosfera è accogliente e professionale allo stesso tempo." },
+    { name: "Sofia M.", course: "Danza Classica", quote: "Mia figlia aspetta con ansia ogni lezione. Ha trovato non solo una passione, ma anche una seconda famiglia." },
+    { name: "Marco R.", course: "Hip Hop", quote: "I maestri sono incredibili. Ho imparato più in sei mesi qui che in anni altrove. Consigliatissimo!" },
+    { name: "Giulia T.", course: "Pilates", quote: "Un'oasi di benessere. L'atmosfera è accogliente e professionale allo stesso tempo." },
   ]
 
   return (
@@ -113,7 +113,7 @@ export default function LAteneoDanzaLanding() {
             <a href="#" className="flex flex-col space-y-0 z-[60]">
               <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
               <span className="font-dancing text-lg font-semibold text-[#C9980A] leading-tight">di Rita Polidoro</span>
-              <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">ATENEO DANZA MUSICAL E FITNESS</span>
+              <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">DANZA MUSICAL E FITNESS</span>
             </a>
 
             {/* Desktop Navigation */}
@@ -190,51 +190,56 @@ export default function LAteneoDanzaLanding() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Background with warm golden glow */}
+        {/* Background with warm golden glow (Base layer) */}
         <div
           className="absolute inset-0"
           style={{ background: "radial-gradient(ellipse at 70% 50%, #2A1F0A 0%, #0F0E0A 65%)" }}
-        >
-          {/* Dark overlay for text legibility */}
-          <div className="w-full h-full bg-gradient-to-r from-[#0F0E0A]/90 via-[#0F0E0A]/70 to-transparent" />
-        </div>
+        />
 
-        {/* Desktop right-side image */}
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:block">
+        {/* Hero image — now visible on all screen sizes */}
+        <div className="absolute inset-0 w-full h-full block lg:w-1/2 lg:left-auto lg:right-0 z-0">
           <Image
             src="/collective_school_w_founder.jpg"
-            alt="L'Ateneo Danza"
+            alt="L&apos;Ateneo Danza"
             fill
-            className="object-cover"
+            className="object-cover object-top"
             priority
           />
-          {/* Left edge fade — blends image into background */}
-          <div 
-            className="absolute inset-0"
+
+          {/* MOBILE ONLY: Strengthened overlay gradient for text legibility */}
+          <div
+            className="absolute inset-0 lg:hidden"
+            style={{
+              background: 'linear-gradient(to bottom, rgba(15,14,10,0.75) 0%, rgba(15,14,10,0.85) 60%, #0F0E0A 100%)'
+            }}
+          />
+
+          {/* DESKTOP ONLY: Left and Bottom edge fades */}
+          <div
+            className="hidden lg:block absolute inset-0"
             style={{
               background: 'linear-gradient(to right, #0F0E0A 0%, transparent 35%)'
             }}
           />
-          {/* Bottom fade */}
-          <div 
-            className="absolute inset-0"
+          <div
+            className="hidden lg:block absolute inset-0"
             style={{
               background: 'linear-gradient(to top, #0F0E0A 0%, transparent 30%)'
             }}
           />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-0 lg:text-left">
+        <div className="relative z-10 max-w-7xl ml-0 lg:mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-0 text-left lg:w-1/2">
           <div className="hero-headline-mask">
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 animate-fade-in-up text-balance">
+            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 animate-fade-in-up text-balance text-left">
               Il Tuo Palcoscenico<br />
               <span className="text-primary">Inizia Qui</span>
             </h1>
           </div>
-          <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in-up animate-delay-200 text-pretty">
+          <p className="text-lg sm:text-xl md:text-2xl text-[#F5EDD8] max-w-none lg:max-w-2xl mb-10 animate-fade-in-up animate-delay-200 text-pretty">
             Corsi di danza per bambini e adulti ad Agropoli — dai 3 anni in su
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animate-delay-300">
+          <div className="flex flex-col sm:flex-row gap-4 justify-start animate-fade-in-up animate-delay-300">
             <a
               href="#corsi"
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-sm text-lg font-semibold transition-colors inline-flex items-center justify-center gap-2"
@@ -264,10 +269,10 @@ export default function LAteneoDanzaLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
             {[
-              { number: "20+", label: "Anni di Esperienza" },
-              { number: "3–30", label: "Anni di Età" },
-              { number: "5+", label: "Discipline" },
-              { number: "∞", label: "Passione" },
+              { number: "20+", label: "ANNI DI ESPERIENZA" },
+              { number: "200+", label: "ALLIEVI OGNI ANNO" },
+              { number: "Dai 3", label: "ANNI IN SU" },
+              { number: "2", label: "SAGGIO ANNUALE" },
             ].map((stat, index) => (
               <div key={index}>
                 <div className="font-serif text-4xl sm:text-5xl font-bold mb-1 text-[#C9980A]">{stat.number}</div>
@@ -285,9 +290,9 @@ export default function LAteneoDanzaLanding() {
         className={`py-20 sm:py-28 transition-all duration-700 ${visibleSections.has("corsi") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4">I Nostri Corsi</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty">
+          <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-4 text-left lg:text-center">I Nostri Corsi</h2>
+            <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
               Dalla danza classica al fitness, offriamo un percorso completo per ogni età e livello
             </p>
           </div>
@@ -315,8 +320,8 @@ export default function LAteneoDanzaLanding() {
                 <div className="inline-block bg-[#C9980A]/10 text-[#C9980A] border border-[#C9980A]/25 px-3 py-1 rounded-sm text-xs font-semibold mb-3">
                   {course.age}
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-foreground mb-3">{course.title}</h3>
-                <p className="text-muted-foreground mb-4 text-pretty">{course.description}</p>
+                <h3 className="font-serif text-2xl font-bold text-[#F5EDD8] mb-3">{course.title}</h3>
+                <p className="text-[#F5EDD8] mb-4 text-pretty">{course.description}</p>
                 <a
                   href="#contatti"
                   className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
@@ -361,14 +366,28 @@ export default function LAteneoDanzaLanding() {
                 fill
                 className="object-cover bg-[#1A1408] border border-[#2A2010] rounded-sm"
               />
+              {/* Right edge fade — blends image into background toward the text */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(to left, #0F0E0A 0%, transparent 40%)'
+                }}
+              />
+              {/* Bottom edge fade */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(to top, #0F0E0A 0%, transparent 35%)'
+                }}
+              />
             </div>
 
             <div>
               <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-6">
                 Conosci la Tua Insegnante
               </h2>
-              <p className="text-muted-foreground text-lg mb-6 leading-relaxed text-pretty">
-                [Nome insegnante], fondatrice de L&apos;Ateneo, vanta oltre 20 anni di esperienza nella danza classica e contemporanea.
+              <p className="text-[#F5EDD8] text-lg mb-6 leading-relaxed text-pretty">
+                Rita Polidoro, fondatrice de L&apos;Ateneo, vanta oltre 20 anni di esperienza nella danza classica e contemporanea.
                 Formatasi presso le più prestigiose accademie italiane, ha dedicato la sua vita a trasmettere la passione
                 per la danza alle nuove generazioni di Agropoli e del Cilento.
               </p>
@@ -396,9 +415,9 @@ export default function LAteneoDanzaLanding() {
         className={`py-20 sm:py-28 transition-all duration-700 ${visibleSections.has("orari") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4">Orari dei Corsi</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty">
+          <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4 text-left lg:text-center">Orari dei Corsi</h2>
+            <p className="text-muted-foreground text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
               Organizziamo i nostri corsi per adattarsi ai tuoi impegni
             </p>
           </div>
@@ -424,7 +443,7 @@ export default function LAteneoDanzaLanding() {
             ))}
           </div>
 
-          <p className="text-center text-muted-foreground mt-8 text-sm">
+          <p className="text-center text-[#F5EDD8] mt-8 text-sm">
             * Gli orari possono variare — contattaci per confermare
           </p>
         </div>
@@ -437,9 +456,9 @@ export default function LAteneoDanzaLanding() {
         className={`py-20 sm:py-28 bg-card transition-all duration-700 ${visibleSections.has("prezzi") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4">Iscrizioni & Prezzi</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty">
+          <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4 text-left lg:text-center">Iscrizioni & Prezzi</h2>
+            <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
               Scegli il piano più adatto alle tue esigenze
             </p>
           </div>
@@ -505,12 +524,12 @@ export default function LAteneoDanzaLanding() {
       <section
         id="gallery"
         ref={(el) => { sectionRefs.current["gallery"] = el }}
-        className={`py-20 sm:py-28 transition-all duration-700 ${visibleSections.has("gallery") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className={`pt-20 sm:pt-28 pb-0 transition-all duration-700 ${visibleSections.has("gallery") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4">I Nostri Momenti</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty">
+          <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4 text-left lg:text-center">I Nostri Momenti</h2>
+            <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
               Istantanee di passione, dedizione e gioia
             </p>
           </div>
@@ -529,8 +548,7 @@ export default function LAteneoDanzaLanding() {
             ].map((image, index) => (
               <div
                 key={index}
-                className={`relative overflow-hidden rounded-sm group ${index === 0 || index === 4 ? "row-span-2 aspect-[3/4]" : "aspect-square"
-                  }`}
+                className="relative overflow-hidden rounded-sm group aspect-square"
               >
                 <Image
                   src={image.src}
@@ -548,28 +566,54 @@ export default function LAteneoDanzaLanding() {
 
       {/* Testimonials Section */}
       <section
+        id="testimonials"
         ref={(el) => { sectionRefs.current["testimonials"] = el }}
-        className={`py-20 sm:py-28 bg-card transition-all duration-700 ${visibleSections.has("testimonials") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className={`py-24 sm:py-32 relative overflow-hidden transition-all duration-1000 ${visibleSections.has("testimonials") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4">
-              Cosa Dicono i Nostri Allievi
-            </h2>
+        {/* Background Decorative Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#C9980A]/5 rounded-full blur-[140px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#C9980A]/5 rounded-full blur-[140px]" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-left lg:text-center mb-20 px-4 lg:px-0">
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-6">Voci dall&apos;Accademia</h2>
+            <div className="h-1 w-24 bg-[#C9980A] lg:mx-auto mb-8" />
+            <p className="text-[#F5EDD8] text-lg max-w-2xl lg:mx-auto leading-relaxed">
+              La nostra più grande soddisfazione è il successo e il benessere dei nostri allievi.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-background border border-border rounded-sm p-8">
-                <div className="text-primary text-5xl font-serif mb-4">&ldquo;</div>
-                <p className="text-foreground mb-6 leading-relaxed text-pretty">{testimonial.quote}</p>
-                <div className="flex text-accent mb-4">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={16} fill="currentColor" />
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((t, index) => (
+              <div
+                key={index}
+                className="bg-[#0F0E0A] border border-[#2A2010] p-10 rounded-sm relative group hover:border-[#C9980A]/40 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col h-full"
+              >
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-[#0F0E0A] border border-[#2A2010] flex items-center justify-center text-[#C9980A] text-2xl font-serif">
+                  &ldquo;
+                </div>
+
+                <div className="flex gap-1 mb-8">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={15} className="text-[#C9980A]" fill="currentColor" />
                   ))}
                 </div>
-                <div className="font-semibold text-foreground">{testimonial.name}</div>
-                <div className="text-sm text-muted-foreground">{testimonial.course}</div>
+
+                <p className="text-[#F5EDD8] text-lg leading-relaxed mb-10 italic font-light flex-grow">
+                  {t.quote}
+                </p>
+
+                <div className="flex items-center gap-5 border-t border-[#2A2010] pt-8 mt-auto">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#1A1408] to-[#0A0905] border border-[#2A2010] flex items-center justify-center text-[#C9980A] font-serif text-xl font-bold group-hover:border-[#C9980A]/30 transition-colors">
+                    {t.name.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="font-serif text-[#F5EDD8] text-lg font-bold">{t.name}</div>
+                    <div className="text-[10px] text-[#F5EDD8] uppercase tracking-[0.2em] font-medium">{t.course}</div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -595,14 +639,14 @@ export default function LAteneoDanzaLanding() {
       <section
         id="contatti"
         ref={(el) => { sectionRefs.current["contatti"] = el }}
-        className={`py-20 sm:py-28 transition-all duration-700 ${visibleSections.has("contatti") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className={`py-24 border-t border-[#2A2010] transition-all duration-700 ${visibleSections.has("contatti") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-4">
+          <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
+            <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-4 text-left lg:text-center">
               Pronta a <span className="text-primary">Ballare</span>?
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty">
+            <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
               Iscriviti oggi o vieni a trovarci per una lezione gratuita di prova
             </p>
           </div>
@@ -612,47 +656,47 @@ export default function LAteneoDanzaLanding() {
             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="name" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
                     Nome
                   </label>
                   <input
                     type="text"
                     id="name"
-                    className="w-full bg-card border border-border rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                    className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
                     placeholder="Il tuo nome"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="email" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
                     Email
                   </label>
                   <input
                     type="email"
                     id="email"
-                    className="w-full bg-card border border-border rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                    className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
                     placeholder="La tua email"
                   />
                 </div>
               </div>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="phone" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
                     Telefono
                   </label>
                   <input
                     type="tel"
                     id="phone"
-                    className="w-full bg-card border border-border rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                    className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
                     placeholder="Il tuo numero"
                   />
                 </div>
                 <div>
-                  <label htmlFor="course" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="course" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
                     Corso di Interesse
                   </label>
                   <select
                     id="course"
-                    className="w-full bg-card border border-border rounded-sm px-4 py-3 text-foreground focus:outline-none focus:border-primary transition-colors"
+                    className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
                   >
                     <option value="">Seleziona un corso</option>
                     <option value="classica">Danza Classica</option>
@@ -664,13 +708,13 @@ export default function LAteneoDanzaLanding() {
                 </div>
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                <label htmlFor="message" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
                   Messaggio
                 </label>
                 <textarea
                   id="message"
                   rows={4}
-                  className="w-full bg-card border border-border rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+                  className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors resize-none"
                   placeholder="Raccontaci di te..."
                 />
               </div>
@@ -691,63 +735,70 @@ export default function LAteneoDanzaLanding() {
                     <MapPin className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
                       <div className="font-semibold text-foreground">Indirizzo</div>
-                      <div className="text-muted-foreground">Via [Nome Via], 00<br />84043 Agropoli (SA), Italia</div>
+                      <div className="text-[#F5EDD8]">Via Moio, 8 — 84043 Agropoli (SA), Italia</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <div className="font-semibold text-foreground">Telefono</div>
-                      <div className="text-muted-foreground">+39 0000 000 000</div>
+                      <div className="font-semibold text-[#F5EDD8]">Telefono</div>
+                      <div className="text-[#F5EDD8]">+39 0000 000 000</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <div className="font-semibold text-foreground">Email</div>
-                      <div className="text-muted-foreground">info@atenodanza.it</div>
+                      <div className="font-semibold text-[#F5EDD8]">Email</div>
+                      <div className="text-[#F5EDD8]">info@atenodanza.it</div>
                     </div>
                   </div>
                 </div>
               </div>
-
-              {/* Map Placeholder */}
-              <div>
-                <h3 className="font-serif text-2xl font-bold text-foreground mb-6">Dove Siamo</h3>
-                {/* Google Maps embed placeholder */}
-                <div className="aspect-video bg-secondary rounded-sm overflow-hidden">
-                  <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                    <MapPin className="w-12 h-12 opacity-30" />
-                  </div>
-                </div>
-              </div>
+            </div>
+          </div>
+          <div className="mt-16">
+            <h3 className="font-serif text-2xl font-bold text-foreground mb-6">Dove Siamo</h3>
+            <div className="w-full aspect-video md:aspect-[21/9] rounded-sm overflow-hidden border border-[#2A2010]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190.0541894250962!2d14.993754947979332!3d40.345295625828975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x133bfe5172eef7a9%3A0x39892003b04f0f75!2sVia%20Moio%2C%208%2C%2084043%20Agropoli%20SA!5e0!3m2!1sen!2sit!4v1775039640492!5m2!1sen!2sit"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-card border-t border-border py-12">
+      <footer className="bg-card border-t border-[#C9980A33] pt-16 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             {/* Logo & Tagline */}
             <div className="md:col-span-2">
-              <div className="flex flex-col mb-4">
-                <span className="font-serif text-2xl font-bold text-foreground tracking-tight">L&apos;Ateneo</span>
-                <span className="text-xs text-muted-foreground tracking-widest uppercase">Danza · Musical · Fitness</span>
-              </div>
-              <p className="text-muted-foreground max-w-sm text-pretty">
-                Da oltre 20 anni, la casa della danza ad Agropoli. Dove passione e professionalità si incontrano.
+              <a href="#" className="flex flex-col space-y-0 mb-6">
+                <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
+                <span className="font-dancing text-lg font-semibold text-[#C9980A] leading-tight">di Rita Polidoro</span>
+                <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">DANZA MUSICAL E FITNESS</span>
+              </a>
+              <p className="text-[#B8A080] text-sm max-w-[280px] mt-4 leading-relaxed">
+                Da oltre 20 anni, la casa della danza ad Agropoli.
               </p>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h4 className="font-semibold text-foreground mb-4">Link Rapidi</h4>
-              <ul className="space-y-2">
+              <h4 className="font-semibold text-[#F5EDD8] mb-6 text-sm uppercase tracking-wider">Link Rapidi</h4>
+              <ul className="space-y-3">
                 {navLinks.map((link) => (
                   <li key={link.href}>
-                    <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
+                    <a
+                      href={link.href}
+                      className="text-[#B8A080] hover:text-[#C9980A] hover:translate-x-0.5 transition-all duration-200 text-sm inline-block"
+                    >
                       {link.label}
                     </a>
                   </li>
@@ -757,23 +808,23 @@ export default function LAteneoDanzaLanding() {
 
             {/* Social */}
             <div>
-              <h4 className="font-semibold text-foreground mb-4">Seguici</h4>
-              <div className="flex gap-4">
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Instagram">
-                  <Instagram size={24} />
+              <h4 className="font-semibold text-[#F5EDD8] mb-6 text-sm uppercase tracking-wider">Seguici</h4>
+              <div className="flex gap-5">
+                <a href="#" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="Instagram">
+                  <Instagram size={26} />
                 </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Facebook">
-                  <Facebook size={24} />
+                <a href="#" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="Facebook">
+                  <Facebook size={26} />
                 </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="TikTok">
-                  <Music size={24} />
+                <a href="#" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="TikTok">
+                  <Music size={26} />
                 </a>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            © 2025 L&apos;Ateneo Danza Musical e Fitness — Agropoli, Cilento
+          <div className="border-t border-[#2A2010] pt-8 text-center text-xs text-[#B8A080]">
+            © 2025 L&apos;Ateneo Danza Musical e Fitness · Agropoli, Cilento · P.IVA
           </div>
         </div>
       </footer>
