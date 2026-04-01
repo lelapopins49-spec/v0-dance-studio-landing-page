@@ -104,31 +104,34 @@ export default function LAteneoDanzaLanding() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Navigation */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-[#0F0E0A]/95 backdrop-blur-md border-b border-border" : "bg-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-[#0F0E0A] border-b border-[#C9980A44]" : "bg-transparent"
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <a href="#" className="flex flex-col">
-              <span className="font-serif text-2xl font-bold text-foreground tracking-tight">L&apos;Ateneo</span>
-              <span className="text-xs text-muted-foreground tracking-widest uppercase">Danza · Musical · Fitness</span>
+          <div className="flex items-center justify-between py-4 h-24 sm:h-28 lg:h-24">
+            {/* Logo - Stacked Layout */}
+            <a href="#" className="flex flex-col space-y-0 z-[60]">
+              <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
+              <span className="font-dancing text-lg font-semibold text-[#C9980A] leading-tight">di Rita Polidoro</span>
+              <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">ATENEO DANZA MUSICAL E FITNESS</span>
             </a>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
+            <div className="hidden lg:flex items-center gap-10">
+              <div className="flex items-center gap-8">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-sm font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
               <a
                 href="#contatti"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2.5 rounded-sm text-sm font-semibold transition-colors"
+                className="bg-[#C9980A] hover:bg-[#C9980A]/90 text-[#0F0E0A] px-7 py-3 rounded-sm text-sm font-bold transition-all hover:scale-105 active:scale-95"
               >
                 Iscriviti Ora
               </a>
@@ -136,24 +139,32 @@ export default function LAteneoDanzaLanding() {
 
             {/* Mobile Menu Button */}
             <button
-              className="lg:hidden p-2 text-foreground"
+              className="lg:hidden p-2 text-[#F5EDD8] z-[60]"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden bg-background border-t border-border">
-            <div className="px-4 py-6 space-y-4">
+        {/* Mobile Sidebar Drawer */}
+        <div
+          className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[50] transition-opacity duration-300 lg:hidden ${mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          onClick={() => setMobileMenuOpen(false)}
+        />
+        <div
+          className={`fixed top-0 right-0 bottom-0 w-[300px] bg-[#0F0E0A] z-[55] transition-transform duration-300 ease-out lg:hidden border-l border-[#C9980A]/20 ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+        >
+          <div className="flex flex-col h-full pt-32 px-8 pb-10">
+            <div className="flex flex-col space-y-8">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="block text-lg font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-xl font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.label}
@@ -161,14 +172,20 @@ export default function LAteneoDanzaLanding() {
               ))}
               <a
                 href="#contatti"
-                className="block bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-sm text-center font-semibold transition-colors"
+                className="mt-6 bg-[#C9980A] text-[#0F0E0A] px-6 py-4 rounded-sm text-center font-bold text-lg transition-transform active:scale-95"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Iscriviti Ora
               </a>
             </div>
+            <div className="mt-auto pt-10 border-t border-[#B8A080]/10">
+              <div className="flex flex-col">
+                <span className="font-serif text-xl font-bold text-[#F5EDD8]">L&apos;Ateneo</span>
+                <span className="font-dancing text-base text-[#C9980A]">di Rita Polidoro</span>
+              </div>
+            </div>
           </div>
-        )}
+        </div>
       </nav>
 
       {/* Hero Section */}

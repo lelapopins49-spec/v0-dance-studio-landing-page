@@ -5,19 +5,27 @@
 
 :root {
   /* L'Ateneo Premium Dance Studio Theme - Warm Gold Palette */
-  --background: #0F0E0A; /* Page background */
-  --foreground: #F5EDD8; /* Primary text - ivory */
-  --card: #0A0905; /* Card/surface background */
+  --background: #0F0E0A;
+  /* Page background */
+  --foreground: #F5EDD8;
+  /* Primary text - ivory */
+  --card: #0A0905;
+  /* Card/surface background */
   --card-foreground: #F5EDD8;
   --popover: #0A0905;
   --popover-foreground: #F5EDD8;
-  --primary: #C9980A; /* Accent gold - CTAs, highlights, active states */
-  --primary-foreground: #0A0905; /* Dark text on gold */
-  --secondary: #1A1408; /* Slightly lighter surface */
+  --primary: #C9980A;
+  /* Accent gold - CTAs, highlights, active states */
+  --primary-foreground: #0A0905;
+  /* Dark text on gold */
+  --secondary: #1A1408;
+  /* Slightly lighter surface */
   --secondary-foreground: #F5EDD8;
   --muted: #2A2010;
-  --muted-foreground: #B8A080; /* Muted text */
-  --accent: #C9980A; /* Gold accent */
+  --muted-foreground: #B8A080;
+  /* Muted text */
+  --accent: #C9980A;
+  /* Gold accent */
   --accent-foreground: #0A0905;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: #F5EDD8;
@@ -43,6 +51,7 @@
 @theme inline {
   --font-sans: 'Inter', 'Inter Fallback', sans-serif;
   --font-serif: 'Playfair Display', 'Playfair Display Fallback', serif;
+  --font-dancing: var(--font-dancing);
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -86,9 +95,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     scroll-behavior: smooth;
   }
@@ -100,6 +111,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -110,6 +122,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
