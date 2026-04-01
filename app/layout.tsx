@@ -24,14 +24,59 @@ const dancingScript = Dancing_Script({
 })
 
 export const metadata: Metadata = {
-  title: "L'Ateneo Danza Musical e Fitness | Agropoli, Cilento",
-  description: 'Corsi di danza per bambini e adulti ad Agropoli. Danza classica, moderna, hip hop, contemporanea, musical theatre, pilates e fitness. Dai 3 anni in su.',
-  keywords: 'danza Agropoli, scuola danza Cilento, corsi danza bambini, danza classica, hip hop, musical theatre, pilates, fitness',
+  title: "L'Ateneo di Rita Palidoro | Danza, Musical e Fitness ad Agropoli",
+  description: "Benvenuti ne L'Ateneo di Rita Palidoro ad Agropoli. Oltre 20 anni di esperienza nell'insegnamento della danza classica, moderna, hip hop e contemporanea. Corsi per bambini e adulti dai 3 anni in su.",
+  keywords: 'danza Agropoli, scuola danza Cilento, Rita Palidoro, corsi danza bambini, danza classica Agropoli, hip hop Agropoli, musical theatre Cilento, pilates Agropoli, fitness Agropoli, L\'Ateneo danza',
+  authors: [{ name: 'Rita Palidoro' }],
+  creator: 'Rita Palidoro',
+  publisher: "L'Ateneo Danza Musical e Fitness",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    title: "L'Ateneo Danza Musical e Fitness",
-    description: 'Il Tuo Palcoscenico Inizia Qui - Corsi di danza per bambini e adulti ad Agropoli',
+    title: "L'Ateneo di Rita Palidoro | Il Tuo Palcoscenico Inizia Qui",
+    description: "Scopri l'eccellenza della danza ad Agropoli con Rita Palidoro. Oltre 20 anni di passione e professionalità. Iscriviti per una lezione gratuita.",
+    url: 'https://www.atenodanza.it',
+    siteName: "L'Ateneo Danza",
     locale: 'it_IT',
     type: 'website',
+    images: [
+      {
+        url: '/collective_school_w_founder.jpg',
+        width: 1200,
+        height: 630,
+        alt: "L'Ateneo Danza - Gruppo e Insegnante",
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "L'Ateneo di Rita Palidoro | Danza ad Agropoli",
+    description: "Corsi di danza per bambini e adulti. Il tuo percorso nel mondo della danza inizia qui.",
+    images: ['/collective_school_w_founder.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
+      { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' },
+    ],
+    apple: [
+      { url: '/apple-icon.png' },
+    ],
   },
 }
 
