@@ -199,17 +199,29 @@ export default function LAteneoDanzaLanding() {
           <div className="w-full h-full bg-gradient-to-r from-[#0F0E0A]/90 via-[#0F0E0A]/70 to-transparent" />
         </div>
 
-        {/* Desktop right-side dancer placeholder zone */}
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center">
-          <div className="w-3/4 h-3/4 relative">
-            <Image
-              src="/collective_school_w_founder.jpg"
-              alt="L'Ateneo Danza"
-              fill
-              className="object-cover rounded-sm"
-              priority
-            />
-          </div>
+        {/* Desktop right-side image */}
+        <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:block">
+          <Image
+            src="/collective_school_w_founder.jpg"
+            alt="L'Ateneo Danza"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Left edge fade — blends image into background */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(to right, #0F0E0A 0%, transparent 35%)'
+            }}
+          />
+          {/* Bottom fade */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(to top, #0F0E0A 0%, transparent 30%)'
+            }}
+          />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-0 lg:text-left">
