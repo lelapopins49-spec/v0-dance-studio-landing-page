@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { Phone, Mail, MapPin, Instagram, Facebook, Music, Star, Menu, X, ChevronRight } from "lucide-react"
 
@@ -9,6 +9,13 @@ export default function LAteneoDanzaLanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
+  const [galleryOpen, setGalleryOpen] = useState(false)
+  const [enlargedPhoto, setEnlargedPhoto] = useState<string | null>(null)
+  const videoRef1 = useRef<HTMLVideoElement>(null)
+  const videoRef2 = useRef<HTMLVideoElement>(null)
+  const videoRef3 = useRef<HTMLVideoElement>(null)
+  const videoRefs = [videoRef1, videoRef2, videoRef3]
+  const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set())
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,68 +44,251 @@ export default function LAteneoDanzaLanding() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    if (galleryOpen || enlargedPhoto) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => { document.body.style.overflow = "" }
+  }, [galleryOpen, enlargedPhoto])
+
   const navLinks = [
     { href: "#chi-siamo", label: "Chi Siamo" },
     { href: "#corsi", label: "Corsi" },
+    { href: "#formazione", label: "Formazione" },
     { href: "#orari", label: "Orari" },
+    { href: "#sedi", label: "Sedi" },
     { href: "#prezzi", label: "Prezzi" },
     { href: "#gallery", label: "Gallery" },
     { href: "#contatti", label: "Contatti" },
   ]
 
-  const courses = [
+  const courseCategories = [
     {
-      title: "Danza Classica",
-      age: "3–6 anni",
-      description: "Le basi della tecnica classica per i più piccoli, in un ambiente giocoso e stimolante.",
-      image: "/younger_female_student_solo.jpg",
+      label: "DANZA",
+      courses: [
+        {
+          title: "Danza Classica",
+          age: "3-6 anni",
+          description: "Le basi della tecnica classica per i pi\u00f9 piccoli, in un ambiente giocoso e stimolante.",
+          image: "/488642768_2081867468995252_8593027666977621862_n.jpg",
+        },
+        {
+          title: "Danza Moderna",
+          age: "7-14 anni",
+          description: "Energia, ritmo e creativit\u00e0 per giovani ballerini che vogliono esprimersi liberamente.",
+          image: "/female_pair_modern_dance.jpg",
+        },
+        {
+          title: "Danza Contemporanea",
+          age: "15-30 anni",
+          description: "Esplorazione del movimento, improvvisazione e tecnica avanzata per ballerini esperti.",
+          image: "/danza_comp.jpg",
+        },
+        {
+          title: "Hip Hop",
+          age: "Tutti i livelli",
+          description: "Stile urbano, groove e freestyle per chi ama il ritmo e l\u2019energia della street dance.",
+          image: "/student_male.jpg",
+        },
+        {
+          title: "Jazz",
+          age: "Tutti i livelli",
+          description: "Tecnica, musicalit\u00e0 e interpretazione per un approccio versatile alla danza.",
+          image: "/student_blue_dress.jpg",
+        },
+        {
+          title: "Discipline Aeree",
+          age: "Dagli 8 anni",
+          description: "Cerchio, tessuto, amaca e attrezzi misti \u2014 sperimenta la libert\u00e0 del movimento in volo.",
+          image: "/air_dance.jpg",
+        },
+      ],
     },
     {
-      title: "Danza Moderna / Hip Hop",
-      age: "7–14 anni",
-      description: "Energia, ritmo e creatività per giovani ballerini che vogliono esprimersi liberamente.",
-      image: "/student_male.jpg",
+      label: "MUSICAL & RECITAZIONE",
+      courses: [
+        {
+          title: "Corsi di Canto",
+          age: "Tutti i livelli",
+          description: "Tecnica vocale e interpretazione per aspiranti cantanti e performer.",
+          image: "/theatre_dance_pair.jpg",
+        },
+        {
+          title: "Corsi di Recitazione",
+          age: "Tutti i livelli",
+          description: "Espressivit\u00e0, dizione e presenza scenica per il palcoscenico e oltre.",
+          image: "/kids_dance_stage.jpg",
+        },
+        {
+          title: "Danza per Musical",
+          age: "Tutti i livelli",
+          description: "Canto, recitazione e danza combinati per creare performer completi.",
+          image: "/dance_theatre.jpg",
+        },
+      ],
     },
     {
-      title: "Danza Contemporanea",
-      age: "15–30 anni",
-      description: "Esplorazione del movimento, improvvisazione e tecnica avanzata per ballerini esperti.",
-      image: "/danza_comp.jpg",
-    },
-    {
-      title: "Musical Theatre",
-      age: "Tutti i livelli",
-      description: "Canto, recitazione e danza combinati per creare performer completi.",
-      image: "/dance_theatre.jpg",
-    },
-    {
-      title: "Pilates & Fitness",
-      age: "Adulti",
-      description: "Benessere fisico e mentale attraverso esercizi mirati e controllati.",
-      image: "/fitness.jpg",
-    },
-    {
-      title: "Aria Danza",
-      age: "Dagli 8 anni",
-      description: "Sperimenta la libertà del movimento in volo. Un mix di acrobatica e danza su tessuti e cerchio.",
-      image: "/air_dance.jpg",
+      label: "FITNESS",
+      courses: [
+        {
+          title: "Aerobica & Step",
+          age: "Adulti",
+          description: "Allenamento cardiovascolare dinamico a ritmo di musica.",
+          image: "/49515778_549482118900469_8702854088280244224_n.jpg",
+        },
+        {
+          title: "Zumba",
+          age: "Adulti",
+          description: "Fitness e divertimento con coreografie ispirate ai ritmi latini.",
+          image: "/Zmba_training.jpg",
+        },
+        {
+          title: "Pilates",
+          age: "Adulti",
+          description: "Benessere fisico e mentale attraverso esercizi mirati e controllati.",
+          image: "/fitness.jpg",
+        },
+      ],
     },
   ]
 
-  const schedule = [
-    { day: "Lunedì", classes: [{ name: "Danza Classica", time: "16:00–17:00", level: "Principianti" }, { name: "Hip Hop", time: "17:30–18:30", level: "Intermedio" }] },
-    { day: "Martedì", classes: [{ name: "Contemporanea", time: "18:00–19:30", level: "Avanzato" }, { name: "Pilates", time: "20:00–21:00", level: "Tutti" }] },
-    { day: "Mercoledì", classes: [{ name: "Musical Theatre", time: "16:30–18:00", level: "Tutti" }, { name: "Moderna", time: "18:30–19:30", level: "Intermedio" }] },
-    { day: "Giovedì", classes: [{ name: "Danza Classica", time: "16:00–17:00", level: "Intermedio" }, { name: "Fitness", time: "19:00–20:00", level: "Tutti" }] },
-    { day: "Venerdì", classes: [{ name: "Hip Hop", time: "17:00–18:00", level: "Principianti" }, { name: "Contemporanea", time: "18:30–20:00", level: "Tutti" }] },
-    { day: "Sabato", classes: [{ name: "Musical Theatre", time: "10:00–12:00", level: "Avanzato" }, { name: "Danza Classica", time: "14:00–15:30", level: "Tutti" }] },
+  const allGalleryPhotos = [
+    "/IMG_8356.JPG.webp", "/IMG_8357.JPG.webp", "/IMG_8359.JPG.webp", "/IMG_8360.JPG.webp",
+    "/IMG_8363.JPG.webp", "/IMG_8364.JPG.webp", "/IMG_8367.JPG.webp", "/IMG_8368.JPG.webp",
+    "/IMG_8369.JPG.webp", "/IMG_8370.JPG.webp", "/IMG_8371.JPG.webp", "/IMG_8373.JPG.webp",
+    "/IMG_8377.JPG.webp", "/IMG_8378.JPG.webp", "/IMG_8379.JPG.webp", "/IMG_8380.JPG.webp",
+    "/IMG_8382.JPG.webp", "/IMG_8383.JPG.webp", "/IMG_8385.JPG.webp", "/IMG_8387.JPG.webp",
+    "/IMG_8390.JPG.webp", "/IMG_8396.JPG.webp", "/IMG_8402.JPG.webp", "/IMG_8413.webp",
+  ]
+
+  const salaArmoniaSchedule = [
+    {
+      day: "LUNED\u00cc",
+      classes: [
+        { time: "10:00", name: "Benessere Mamme / Pilates / Aerobica" },
+        { time: "17:00", name: "Predanza" },
+        { time: "18:15", name: "Aerobica" },
+        { time: "19:15", name: "Moderno Avanzato" },
+      ],
+    },
+    {
+      day: "MARTED\u00cc",
+      classes: [
+        { time: "10:00", name: "Danza Per Adulti" },
+        { time: "16:00", name: "Moderno Principianti II" },
+        { time: "17:00", name: "Classico Principianti II" },
+        { time: "18:00", name: "Moderno Intermedio" },
+        { time: "19:00", name: "Danza Aerea" },
+      ],
+    },
+    {
+      day: "MERCOLED\u00cc",
+      classes: [
+        { time: "10:00", name: "Benessere Mamme / Pilates / Aerobica" },
+        { time: "16:00", name: "Danza Aerea Kids" },
+        { time: "17:00", name: "Predanza" },
+        { time: "18:15", name: "Aerobica" },
+        { time: "19:15", name: "Danza Aerea Avanzato" },
+      ],
+    },
+    {
+      day: "GIOVED\u00cc",
+      classes: [
+        { time: "10:00", name: "Danza Per Adulti" },
+        { time: "16:00", name: "Moderno Principianti II" },
+        { time: "17:00", name: "Classico Principianti II" },
+        { time: "18:00", name: "Moderno Intermedio" },
+        { time: "19:00", name: "Bungee Dance / Danza Aerea / Discipline a Richiesta" },
+      ],
+    },
+    {
+      day: "VENERD\u00cc",
+      classes: [
+        { time: "10:00", name: "Benessere Mamme / Pilates / Aerobica" },
+        { time: "16:30", name: "Video Proiezioni / Attivit\u00e0 Fiabe in Movimento" },
+        { time: "18:30", name: "Workshop" },
+      ],
+    },
+  ]
+
+  const salaRitmoSchedule = [
+    {
+      day: "LUNED\u00cc",
+      classes: [
+        { time: "17:00", name: "Benessere Mamme / Pilates / Potenziamento Muscolare" },
+        { time: "18:00", name: "Hip Hop Kids (opzione ore 17:00)" },
+        { time: "19:00", name: "Danze Popolari" },
+      ],
+    },
+    {
+      day: "MARTED\u00cc",
+      classes: [
+        { time: "16:30", name: "Principianti I" },
+        { time: "18:00", name: "Classico Avanzato" },
+        { time: "19:00", name: "Classico Intermedio" },
+      ],
+    },
+    {
+      day: "MERCOLED\u00cc",
+      classes: [
+        { time: "15:00", name: "Potenziamento Muscolare / Aerobica" },
+        { time: "17:00", name: "Hip Hop Kids (opzione ore 18)" },
+        { time: "17:00", name: "Sala Melodia: Benessere Mamme / Pilates" },
+        { time: "18:00", name: "Hip Hop Avanzato" },
+      ],
+    },
+    {
+      day: "GIOVED\u00cc",
+      classes: [
+        { time: "16:30", name: "Principianti I" },
+        { time: "18:00", name: "Pilates" },
+        { time: "19:00", name: "Classico Intermedio e Avanzato" },
+        { time: "20:00", name: "Contemporaneo" },
+      ],
+    },
+    {
+      day: "VENERD\u00cc",
+      classes: [
+        { time: "15:00", name: "Potenziamento Muscolare / Aerobica" },
+        { time: "16:00", name: "Aerea Principianti I + II" },
+        { time: "17:00", name: "Recitazione / Repertorio Musical" },
+        { time: "18:15", name: "Aerobica" },
+        { time: "19:15", name: "Moderno Avanzato" },
+      ],
+    },
   ]
 
   const testimonials = [
     { name: "Sofia M.", course: "Danza Classica", quote: "Mia figlia aspetta con ansia ogni lezione. Ha trovato non solo una passione, ma anche una seconda famiglia." },
-    { name: "Marco R.", course: "Hip Hop", quote: "I maestri sono incredibili. Ho imparato più in sei mesi qui che in anni altrove. Consigliatissimo!" },
-    { name: "Giulia T.", course: "Pilates", quote: "Un'oasi di benessere. L'atmosfera è accogliente e professionale allo stesso tempo." },
+    { name: "Marco R.", course: "Hip Hop", quote: "I maestri sono incredibili. Ho imparato pi\u00f9 in sei mesi qui che in anni altrove. Consigliatissimo!" },
+    { name: "Giulia T.", course: "Pilates", quote: "Un\u2019oasi di benessere. L\u2019atmosfera \u00e8 accogliente e professionale allo stesso tempo." },
   ]
+
+  const ScheduleCard = ({ title, subtitle, schedule }: { title: string; subtitle: string; schedule: typeof salaArmoniaSchedule }) => (
+    <div className="bg-[#0A0905] border border-[#2A2010] rounded-sm p-8">
+      <h3 className="font-serif text-2xl font-bold text-[#C9980A] mb-1 text-center">{title}</h3>
+      <p className="text-[#B8A080] text-sm mb-6 text-center">{subtitle}</p>
+      <div className="space-y-5">
+        {schedule.map((day, i) => (
+          <div key={i} className="mb-5">
+            <div className="uppercase font-sans font-semibold text-[#F5EDD8] border-b border-[#2A2010] pb-1 mb-2 text-sm text-center">
+              {day.day}
+            </div>
+            <div className="space-y-1.5">
+              {day.classes.map((cls, j) => (
+                <div key={j} className="flex gap-2 justify-center">
+                  <span className="text-[#C9980A] font-sans font-semibold text-sm whitespace-nowrap">{cls.time}</span>
+                  <span className="text-[#B8A080] text-sm">&mdash; {cls.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -293,44 +483,127 @@ export default function LAteneoDanzaLanding() {
           <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-4 text-left lg:text-center">I Nostri Corsi</h2>
             <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
-              Dalla danza classica al fitness, offriamo un percorso completo per ogni età e livello
+              Dalla danza classica al fitness, offriamo un percorso completo per ogni et&agrave; e livello
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course, index) => (
-              <div
-                key={index}
-                className="group bg-[#0A0905] border border-[#2A2010] rounded-sm p-6 transition-all duration-300 hover:bg-[#120F06] hover:border-l-[3px] hover:border-l-[#C9980A]"
-              >
-                <div className="w-full h-48 bg-secondary rounded-sm mb-6 overflow-hidden relative">
-                  {course.image ? (
-                    <Image
-                      src={course.image}
-                      alt={course.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-transparent flex items-center justify-center">
-                      <Music className="w-12 h-12 text-primary/50" />
-                    </div>
-                  )}
-                </div>
-                <div className="inline-block bg-[#C9980A]/10 text-[#C9980A] border border-[#C9980A]/25 px-3 py-1 rounded-sm text-xs font-semibold mb-3">
-                  {course.age}
-                </div>
-                <h3 className="font-serif text-2xl font-bold text-[#F5EDD8] mb-3">{course.title}</h3>
-                <p className="text-[#F5EDD8] mb-4 text-pretty">{course.description}</p>
-                <a
-                  href="#contatti"
-                  className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
-                >
-                  Scopri di più
-                  <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
-                </a>
+          {courseCategories.map((category, catIndex) => (
+            <div key={catIndex} className={catIndex > 0 ? "mt-12" : ""}>
+              <div className="uppercase text-xs tracking-widest text-[#C9980A] mb-3">
+                {category.label}
               </div>
-            ))}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {category.courses.map((course, index) => (
+                  <div
+                    key={index}
+                    className="group bg-[#0A0905] border border-[#2A2010] rounded-sm p-6 transition-all duration-300 hover:bg-[#120F06] hover:border-l-[3px] hover:border-l-[#C9980A]"
+                  >
+                    <div className="w-full h-48 bg-secondary rounded-sm mb-6 overflow-hidden relative">
+                      {course.image ? (
+                        <Image
+                          src={course.image}
+                          alt={course.title}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-transparent flex items-center justify-center">
+                          <Music className="w-12 h-12 text-primary/50" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="inline-block bg-[#C9980A]/10 text-[#C9980A] border border-[#C9980A]/25 px-3 py-1 rounded-sm text-xs font-semibold mb-3">
+                      {course.age}
+                    </div>
+                    <h3 className="font-serif text-2xl font-bold text-[#F5EDD8] mb-3">{course.title}</h3>
+                    <p className="text-[#F5EDD8] mb-4 text-pretty">{course.description}</p>
+                    <a
+                      href="#contatti"
+                      className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
+                    >
+                      Scopri di pi&ugrave;
+                      <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Formazione Professionale Section */}
+      <section
+        id="formazione"
+        ref={(el) => { sectionRefs.current["formazione"] = el }}
+        className={`py-20 sm:py-28 bg-card transition-all duration-700 ${visibleSections.has("formazione") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-4 text-left lg:text-center">Formazione Professionale</h2>
+            <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
+              Corsi riconosciuti dalla federazione Opes Danza per futuri danzatori e insegnanti
+            </p>
+          </div>
+
+          <div className="bg-[#0A0905] border border-[#2A2010] rounded-sm p-10">
+            <div className="grid md:grid-cols-2 gap-12">
+              {/* Column 1 */}
+              <div>
+                <h3 className="font-serif text-2xl font-bold text-[#C9980A] mb-6">Per Futuri Danzatori</h3>
+                <ul className="space-y-3">
+                  {["Corso di Danza Professionale", "Corso di Coreografia", "Corso di Tecnica di Danza"].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-[#C9980A]">&#10003;</span>
+                      <span className="text-[#B8A080] text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* Column 2 */}
+              <div>
+                <h3 className="font-serif text-2xl font-bold text-[#C9980A] mb-6">Per Futuri Docenti</h3>
+                <ul className="space-y-3">
+                  {[
+                    "Corso di Metodologia dell\u2019Insegnamento della Danza",
+                    "Corso di Didattica della Danza",
+                    "Corso di Preparazione all\u2019Esame di Stato per l\u2019Insegnamento della Danza",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-[#C9980A]">&#10003;</span>
+                      <span className="text-[#B8A080] text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            {/* Divider */}
+            <div className="border-t border-[#2A2010] mt-8 mb-6" />
+            {/* Footer text */}
+            <p className="text-[#B8A080] text-sm italic text-center mb-6">
+              Per informazioni sui corsi e sui docenti contattaci direttamente
+            </p>
+            {/* CTA button */}
+            <div className="flex justify-center">
+              <a
+                href="#contatti"
+                className="px-8 py-3 rounded-sm text-[#C9980A] border border-[#C9980A] bg-transparent hover:bg-[#C9980A] hover:text-[#0A0905] transition-colors"
+              >
+                Contattaci per Info
+              </a>
+            </div>
+          </div>
+
+          <div className="flex justify-center mt-8">
+            <span
+              className="text-sm font-semibold text-[#C9980A] px-5 py-1.5 rounded-full"
+              style={{
+                background: "#C9980A18",
+                border: "1px solid #C9980A44",
+              }}
+            >
+              Certificato Opes Danza
+            </span>
           </div>
         </div>
       </section>
@@ -339,7 +612,7 @@ export default function LAteneoDanzaLanding() {
       <section className="bg-[#C9980A]/10 border-t border-b border-[#C9980A]/20 py-8 sm:py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-foreground text-lg sm:text-xl mb-4">
-            La prima lezione è gratuita — vieni a trovarci
+            La prima lezione &egrave; gratuita &mdash; vieni a trovarci
           </p>
           <a
             href="#contatti"
@@ -388,12 +661,12 @@ export default function LAteneoDanzaLanding() {
               </h2>
               <p className="text-[#F5EDD8] text-lg mb-6 leading-relaxed text-pretty">
                 Rita Polidoro, fondatrice de L&apos;Ateneo, vanta oltre 20 anni di esperienza nella danza classica e contemporanea.
-                Formatasi presso le più prestigiose accademie italiane, ha dedicato la sua vita a trasmettere la passione
+                Formatasi presso le pi&ugrave; prestigiose accademie italiane, ha dedicato la sua vita a trasmettere la passione
                 per la danza alle nuove generazioni di Agropoli e del Cilento.
               </p>
               <blockquote className="border-l-4 border-accent pl-6 py-2 mb-8">
                 <p className="font-serif text-xl sm:text-2xl text-foreground italic text-balance">
-                  &ldquo;La danza non è solo movimento — è espressione dell&apos;anima.&rdquo;
+                  &ldquo;La danza non &egrave; solo movimento &mdash; &egrave; espressione dell&apos;anima.&rdquo;
                 </p>
               </blockquote>
               <a
@@ -422,32 +695,13 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {schedule.map((day, index) => (
-              <div
-                key={index}
-                className="group bg-[#0A0905] border border-[#2A2010] rounded-sm p-6 transition-all duration-300 hover:bg-[#120F06] hover:border-l-[3px] hover:border-l-[#C9980A]"
-              >
-                <h3 className="font-serif text-xl font-bold text-[#F5EDD8] mb-4 pb-3 border-b border-[#2A2010] group-hover:text-[#C9980A] transition-colors">
-                  {day.day}
-                </h3>
-                <div className="space-y-4">
-                  {day.classes.map((cls, idx) => (
-                    <div key={idx}>
-                      <div className="font-semibold text-[#F5EDD8]">{cls.name}</div>
-                      <div className="text-sm text-[#B8A080]">{cls.time}</div>
-                      <div className="inline-block bg-[#C9980A]/10 text-[#C9980A] border border-[#C9980A]/25 px-2 py-0.5 rounded-sm text-xs mt-1">
-                        {cls.level}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="grid md:grid-cols-2 gap-6">
+            <ScheduleCard title="Sala Armonia" subtitle="Via Moio, 16" schedule={salaArmoniaSchedule} />
+            <ScheduleCard title="Sala Ritmo" subtitle="Via Moio, 16" schedule={salaRitmoSchedule} />
           </div>
 
-          <p className="text-center text-[#F5EDD8] mt-8 text-sm">
-            * Gli orari possono variare — contattaci per confermare
+          <p className="text-center text-[#B8A080] mt-6 text-sm italic">
+            * Gli orari possono variare &mdash; contattaci per confermare
           </p>
         </div>
       </section>
@@ -462,7 +716,7 @@ export default function LAteneoDanzaLanding() {
           <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4 text-left lg:text-center">Iscrizioni & Prezzi</h2>
             <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
-              Scegli il piano più adatto alle tue esigenze
+              Scegli il piano pi&ugrave; adatto alle tue esigenze
             </p>
           </div>
 
@@ -470,19 +724,19 @@ export default function LAteneoDanzaLanding() {
             {[
               {
                 name: "Corso Singolo",
-                price: "€ —",
+                price: "\u20AC \u2014",
                 features: ["Accesso a un corso a scelta", "1 lezione a settimana", "Materiale didattico incluso"],
                 popular: false,
               },
               {
                 name: "Abbonamento Mensile",
-                price: "€ —",
+                price: "\u20AC \u2014",
                 features: ["Accesso illimitato ai corsi", "Sconti su eventi speciali", "Prenotazione prioritaria", "Accesso area relax"],
                 popular: true,
               },
               {
                 name: "Abbonamento Annuale",
-                price: "€ —",
+                price: "\u20AC \u2014",
                 features: ["Tutti i vantaggi mensili", "2 mesi gratuiti", "Workshop esclusivi", "T-shirt ufficiale"],
                 popular: false,
               },
@@ -496,7 +750,7 @@ export default function LAteneoDanzaLanding() {
               >
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C9980A] text-[#0A0905] px-4 py-1 rounded-full text-xs font-bold tracking-wider whitespace-nowrap">
-                    Più Popolare
+                    Pi&ugrave; Popolare
                   </div>
                 )}
                 <h3 className="font-serif text-2xl font-bold mb-2 text-foreground group-hover:text-[#C9980A] transition-colors">{plan.name}</h3>
@@ -506,7 +760,7 @@ export default function LAteneoDanzaLanding() {
                 <ul className="space-y-3 mb-8 mt-6">
                   {plan.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <span className="text-[#C9980A]">✓</span>
+                      <span className="text-[#C9980A]">&#10003;</span>
                       <span className="text-[#B8A080] text-sm">{feature}</span>
                     </li>
                   ))}
@@ -566,8 +820,136 @@ export default function LAteneoDanzaLanding() {
               </div>
             ))}
           </div>
+
+          {/* Vedi tutte le foto button */}
+          <div className="flex justify-center mt-8">
+            <button
+              onClick={() => setGalleryOpen(true)}
+              className="px-8 py-3 rounded-sm text-sm font-semibold transition-colors"
+              style={{ border: "1px solid #C9980A", color: "#C9980A", background: "transparent" }}
+            >
+              Vedi tutte le foto
+            </button>
+          </div>
+
+          {/* Instagram Reels Subsection */}
+          <div className="mt-20 pb-20">
+            <div className="text-left lg:text-center mb-12 px-4 lg:px-0">
+              <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-4 text-left lg:text-center">Seguici su Instagram</h2>
+              <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
+                Vivi l&apos;energia dell&apos;Ateneo
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {([
+                { ref: videoRef1, src: "/reel1.mp4", index: 0 },
+                { ref: videoRef2, src: "/reel2.mp4", index: 1 },
+                { ref: videoRef3, src: "/reel3.mp4", index: 2 },
+              ] as { ref: React.RefObject<HTMLVideoElement>; src: string; index: number }[]).map(({ ref, src, index }) => (
+                <div key={index} className="aspect-[9/16] overflow-hidden rounded-sm bg-black relative">
+                  <video
+                    ref={ref}
+                    src={src}
+                    className="w-full h-full object-cover"
+                    loop
+                    playsInline
+                    muted
+                    controls
+                    onPlay={() => {
+                      setPlayingVideos(prev => new Set(prev).add(index))
+                      videoRefs.forEach((r, i) => {
+                        if (r.current && i !== index) {
+                          r.current.pause()
+                          setPlayingVideos(prev => { const s = new Set(prev); s.delete(i); return s })
+                        }
+                      })
+                    }}
+                    onPause={() => setPlayingVideos(prev => { const s = new Set(prev); s.delete(index); return s })}
+                  />
+                  {!playingVideos.has(index) && (
+                    <button
+                      className="absolute inset-0 flex items-center justify-center"
+                      style={{ background: "rgba(0,0,0,0.5)" }}
+                      onClick={() => ref.current?.play()}
+                      aria-label="Play video"
+                    >
+                      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <polygon points="18,12 38,24 18,36" fill="#C9980A" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* Gallery Modal */}
+      {galleryOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto"
+          style={{ background: "rgba(0,0,0,0.95)" }}
+          onClick={(e) => { if (e.target === e.currentTarget) setGalleryOpen(false) }}
+        >
+          <button
+            onClick={() => setGalleryOpen(false)}
+            className="fixed top-6 right-6 z-[110] text-[#F5EDD8] text-3xl font-light hover:opacity-70 transition-opacity"
+            aria-label="Close gallery"
+          >
+            <X size={32} />
+          </button>
+          <div className="w-full max-w-7xl mx-auto px-4 py-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {allGalleryPhotos.map((src, i) => (
+                <button
+                  key={i}
+                  onClick={() => setEnlargedPhoto(src)}
+                  className="relative aspect-square overflow-hidden rounded-sm cursor-pointer group"
+                >
+                  <div className="aspect-square overflow-hidden">
+                    <Image
+                      src={src}
+                      alt={`Gallery photo ${i + 1}`}
+                      width={400}
+                      height={400}
+                      quality={75}
+                      loading="lazy"
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Enlarged Photo Modal */}
+      {enlargedPhoto && (
+        <div
+          className="fixed inset-0 z-[120] flex items-center justify-center"
+          style={{ background: "rgba(0,0,0,0.95)" }}
+          onClick={() => setEnlargedPhoto(null)}
+        >
+          <button
+            onClick={() => setEnlargedPhoto(null)}
+            className="fixed top-6 right-6 z-[130] text-[#F5EDD8] text-3xl font-light hover:opacity-70 transition-opacity"
+            aria-label="Close photo"
+          >
+            <X size={32} />
+          </button>
+          <div className="relative w-[90vw] h-[90vh]">
+            <Image
+              src={enlargedPhoto}
+              alt="Enlarged photo"
+              fill
+              className="object-contain"
+              sizes="90vw"
+            />
+          </div>
+        </div>
+      )}
 
       {/* Testimonials Section */}
       <section
@@ -586,7 +968,7 @@ export default function LAteneoDanzaLanding() {
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-6">Voci dall&apos;Accademia</h2>
             <div className="h-1 w-24 bg-[#C9980A] lg:mx-auto mb-8" />
             <p className="text-[#F5EDD8] text-lg max-w-2xl lg:mx-auto leading-relaxed">
-              La nostra più grande soddisfazione è il successo e il benessere dei nostri allievi.
+              La nostra pi&ugrave; grande soddisfazione &egrave; il successo e il benessere dei nostri allievi.
             </p>
           </div>
 
@@ -629,7 +1011,7 @@ export default function LAteneoDanzaLanding() {
       <section className="bg-[#C9980A]/10 border-t border-b border-[#C9980A]/20 py-8 sm:py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-foreground text-lg sm:text-xl mb-4">
-            La prima lezione è gratuita — vieni a trovarci
+            La prima lezione &egrave; gratuita &mdash; vieni a trovarci
           </p>
           <a
             href="#contatti"
@@ -736,11 +1118,18 @@ export default function LAteneoDanzaLanding() {
               <div>
                 <h3 className="font-serif text-2xl font-bold text-foreground mb-6">Contatti</h3>
                 <div className="space-y-4">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4" id="sedi">
                     <MapPin className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <div className="font-semibold text-foreground">Indirizzo</div>
-                      <div className="text-[#F5EDD8]">Via Moio, 8 — 84043 Agropoli (SA), Italia</div>
+                      <div className="font-semibold text-foreground mb-2">Indirizzo</div>
+                      <div className="mb-2">
+                        <span className="text-xs uppercase tracking-wider text-[#C9980A] mr-2">Sede Storica</span>
+                        <span className="text-[#F5EDD8]">Via Moio, 8 &mdash; 84043 Agropoli (SA)</span>
+                      </div>
+                      <div>
+                        <span className="text-xs uppercase tracking-wider text-[#C9980A] mr-2">Nuova Sala</span>
+                        <span className="text-[#F5EDD8]">Via Moio, 16 &mdash; 84043 Agropoli (SA)</span>
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -829,7 +1218,7 @@ export default function LAteneoDanzaLanding() {
           </div>
 
           <div className="border-t border-[#2A2010] pt-8 text-center text-xs text-[#B8A080]">
-            © 2025 L&apos;Ateneo Danza Musical e Fitness · Agropoli, Cilento · P.IVA
+            &copy; 2025 L&apos;Ateneo Danza Musical e Fitness &middot; Agropoli, Cilento &middot; P.IVA
           </div>
         </div>
       </footer>
