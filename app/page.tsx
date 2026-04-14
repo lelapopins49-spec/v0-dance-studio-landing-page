@@ -16,6 +16,7 @@ export default function LAteneoDanzaLanding() {
   const videoRef3 = useRef<HTMLVideoElement>(null)
   const videoRefs = [videoRef1, videoRef2, videoRef3]
   const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set())
+  const [bioOpen, setBioOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -301,9 +302,18 @@ export default function LAteneoDanzaLanding() {
           <div className="flex items-center justify-between py-4 h-24 sm:h-28 lg:h-24">
             {/* Logo - Stacked Layout */}
             <a href="#" className="flex flex-col space-y-0 z-[60]">
-              <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
-              <span className="font-dancing text-lg font-semibold text-[#C9980A] leading-tight">di Rita Polidoro</span>
-              <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">DANZA MUSICAL E FITNESS</span>
+              <div className="flex items-center gap-3">
+                <img
+                  src="/logo.png"
+                  alt="L'Ateneo logo"
+                  className="h-12 w-auto object-contain opacity-90"
+                />
+                <div className="flex flex-col space-y-0">
+                  <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
+                  <span className="font-dancing text-lg font-semibold text-[#C9980A] leading-tight">di Rita Polidoro</span>
+                  <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">DANZA MUSICAL E FITNESS</span>
+                </div>
+              </div>
             </a>
 
             {/* Desktop Navigation */}
@@ -461,8 +471,8 @@ export default function LAteneoDanzaLanding() {
             {[
               { number: "20+", label: "ANNI DI ESPERIENZA" },
               { number: "200+", label: "ALLIEVI OGNI ANNO" },
-              { number: "Dai 3", label: "ANNI IN SU" },
-              { number: "2", label: "SAGGIO ANNUALE" },
+              { number: "Dai 2", label: "ANNI IN SU" },
+              { number: "1", label: "SAGGIO ANNUALE" },
             ].map((stat, index) => (
               <div key={index}>
                 <div className="font-serif text-4xl sm:text-5xl font-bold mb-1 text-[#C9980A]">{stat.number}</div>
@@ -660,22 +670,80 @@ export default function LAteneoDanzaLanding() {
                 Conosci la Tua Insegnante
               </h2>
               <p className="text-[#F5EDD8] text-lg mb-6 leading-relaxed text-pretty">
-                Rita Polidoro, fondatrice de L&apos;Ateneo, vanta oltre 20 anni di esperienza nella danza classica e contemporanea.
-                Formatasi presso le pi&ugrave; prestigiose accademie italiane, ha dedicato la sua vita a trasmettere la passione
-                per la danza alle nuove generazioni di Agropoli e del Cilento.
+                Rita Polidoro è la fondatrice e direttrice artistica de L&apos;Ateneo Danza Musical e Fitness.
+                Dal 1999 guida la scuola con una visione chiara: unire tecnica, creatività e passione per formare
+                non solo danzatori, ma persone complete. Con oltre 25 anni di esperienza, ha formato centinaia di
+                giovani talenti ad Agropoli e nel Cilento.
               </p>
-              <blockquote className="border-l-4 border-accent pl-6 py-2 mb-8">
+              <ul className="font-sans text-sm text-[#B8A080] mb-6 space-y-1.5">
+                <li><span className="text-[#C9980A] mr-2">·</span>Laureata in Lettere Moderne — Università di Salerno</li>
+                <li><span className="text-[#C9980A] mr-2">·</span>Formazione internazionale — New York, Miami, Chicago</li>
+                <li><span className="text-[#C9980A] mr-2">·</span>Regia e coreografie — The Greatest Showman, Mamma Mia, Hairspray, Notre Dame de Paris</li>
+                <li><span className="text-[#C9980A] mr-2">·</span>Ospite Rai — Raccomandati con Carlo Conti</li>
+                <li><span className="text-[#C9980A] mr-2">·</span>Maratoneta — New York City Marathon 2024</li>
+              </ul>
+              <blockquote className="border-l-4 border-accent pl-6 py-2 mb-6">
                 <p className="font-serif text-xl sm:text-2xl text-foreground italic text-balance">
-                  &ldquo;La danza non &egrave; solo movimento &mdash; &egrave; espressione dell&apos;anima.&rdquo;
+                  &ldquo;La mia filosofia mira a creare un ambiente inclusivo dove la trasmissione dei saperi
+                  si unisce alla gioia del movimento — preparando ogni allievo non solo al palcoscenico,
+                  ma alle sfide della vita.&rdquo;
                 </p>
+                <footer className="mt-3 font-sans text-sm text-[#B8A080]">— Rita Polidoro</footer>
               </blockquote>
-              <a
-                href="#contatti"
-                className="inline-flex items-center text-primary hover:text-primary/80 font-semibold transition-colors"
+              <button
+                onClick={() => setBioOpen(!bioOpen)}
+                className="font-sans text-sm text-[#C9980A] cursor-pointer bg-transparent border-none p-0 mb-4 hover:opacity-80 transition-opacity"
               >
-                La Nostra Storia
-                <ChevronRight size={20} className="ml-1" />
-              </a>
+                {bioOpen ? "Chiudi ↑" : "Leggi la sua storia completa ↓"}
+              </button>
+              <div
+                style={{
+                  maxHeight: bioOpen ? "2000px" : "0",
+                  opacity: bioOpen ? 1 : 0,
+                  overflow: "hidden",
+                  transition: "max-height 0.5s ease, opacity 0.5s ease",
+                }}
+              >
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  Rita Polidoro è una professionista con una formazione accademica e artistica d&apos;eccellenza.
+                  Laureata in Lettere Moderne con indirizzo Arte e Spettacolo presso l&apos;Università degli Studi
+                  di Salerno, è diplomata in dizione e recitazione e ha perfezionato il suo linguaggio artistico
+                  partecipando a masterclass di alto livello — tra cui quella di recitazione cinematografica con
+                  il regista Ferzan Ozpetek.
+                </p>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  La sua tecnica è stata plasmata da esperienze internazionali di primo piano. Ha studiato presso
+                  i centri CRUNCH di New York, Miami e Chicago con maestri di fama mondiale come Madonna Grimes e
+                  Leslie Feliciano. È diplomata C.S.E.N - C.O.N.I. in danza classica, moderna, contemporary fusion,
+                  musical, funk, hip hop, discipline aeree e fitness.
+                </p>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  Specialista nel genere Musical, Rita ha curato la regia e le coreografie di produzioni iconiche
+                  come The Greatest Showman, Mamma Mia, Hairspray e Notre Dame de Paris. Il suo talento l&apos;ha
+                  portata anche in televisione, con partecipazioni a programmi Rai come Raccomandati condotto da
+                  Carlo Conti e alla serie TV L&apos;Avvocato Malinconico.
+                </p>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  Nel novembre 2024 ha portato a termine la Maratona di New York — un&apos;impresa che racconta
+                  meglio di qualsiasi parola la sua filosofia di vita e di insegnamento.
+                </p>
+                <div style={{ borderTop: "1px solid #2A2010" }} className="my-6" />
+                <h3 className="font-serif text-xl text-[#C9980A] mb-4">La Nostra Storia</h3>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  L&apos;Ateneo nasce nel settembre 1999 da un sogno semplice e potente: creare ad Agropoli un luogo
+                  dove chiunque — bambino o adulto, principiante o esperto — potesse scoprire la propria creatività
+                  e trovare la propria espressione artistica.
+                </p>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  In oltre venticinque anni, la scuola è cresciuta fino a diventare un punto di riferimento per la
+                  danza e la formazione nel Cilento. Oggi L&apos;Ateneo conta due sedi in Via Moio, un team di
+                  insegnanti esperti e centinaia di allievi che ogni anno salgono sul palcoscenico per il saggio annuale.
+                </p>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  La nostra missione non è cambiata dal primo giorno: offrire una formazione di alta qualità in un
+                  ambiente accogliente e professionale, dove ogni allievo si senta a casa e possa dare il meglio di sé.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -1031,7 +1099,7 @@ export default function LAteneoDanzaLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
             <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-4 text-left lg:text-center">
-              Pronta a <span className="text-primary">Ballare</span>?
+              Pronti a <span className="text-primary">Ballare</span>?
             </h2>
             <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
               Iscriviti oggi o vieni a trovarci per una lezione gratuita di prova
@@ -1174,6 +1242,11 @@ export default function LAteneoDanzaLanding() {
             {/* Logo & Tagline */}
             <div className="md:col-span-2">
               <a href="#" className="flex flex-col space-y-0 mb-6">
+                <img
+                  src="/logo.png"
+                  alt="L'Ateneo logo"
+                  className="h-16 w-auto object-contain opacity-90 mb-2"
+                />
                 <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
                 <span className="font-dancing text-lg font-semibold text-[#C9980A] leading-tight">di Rita Polidoro</span>
                 <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">DANZA MUSICAL E FITNESS</span>
@@ -1204,13 +1277,13 @@ export default function LAteneoDanzaLanding() {
             <div>
               <h4 className="font-semibold text-[#F5EDD8] mb-6 text-sm uppercase tracking-wider">Seguici</h4>
               <div className="flex gap-5">
-                <a href="#" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="Instagram">
+                <a href="https://www.instagram.com/ateneodanza/" target="_blank" rel="noopener noreferrer" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="Instagram">
                   <Instagram size={26} />
                 </a>
-                <a href="#" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="Facebook">
+                <a href="https://www.facebook.com/ateneo6" target="_blank" rel="noopener noreferrer" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="Facebook">
                   <Facebook size={26} />
                 </a>
-                <a href="#" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="TikTok">
+                <a href="#" target="_blank" rel="noopener noreferrer" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="TikTok">
                   <Music size={26} />
                 </a>
               </div>
@@ -1227,7 +1300,7 @@ export default function LAteneoDanzaLanding() {
       <div className="fixed bottom-0 left-0 right-0 bg-[#0F0E0A] border-t border-[#2A2010] h-14 md:hidden z-50 flex items-center">
         <div className="flex w-full">
           <a
-            href="tel:+390000000000"
+            href="tel:+393393565655"
             className="flex-1 flex items-center justify-center gap-2 bg-transparent text-[#F5EDD8] font-semibold transition-colors"
           >
             <Phone size={18} />
