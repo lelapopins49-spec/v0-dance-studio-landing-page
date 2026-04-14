@@ -56,6 +56,7 @@ export default function LAteneoDanzaLanding() {
 
   const navLinks = [
     { href: "#chi-siamo", label: "Chi Siamo" },
+    { href: "#team", label: "Team" },
     { href: "#corsi", label: "Corsi" },
     { href: "#formazione", label: "Formazione" },
     { href: "#orari", label: "Orari" },
@@ -307,6 +308,7 @@ export default function LAteneoDanzaLanding() {
                   src="/logo.png"
                   alt="L'Ateneo logo"
                   className="h-12 w-auto object-contain opacity-90"
+                  style={{ filter: 'brightness(0) invert(1)' }}
                 />
                 <div className="flex flex-col space-y-0">
                   <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
@@ -745,6 +747,71 @@ export default function LAteneoDanzaLanding() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section
+        id="team"
+        ref={(el) => { sectionRefs.current["team"] = el }}
+        className={`py-24 transition-all duration-700 ${visibleSections.has("team") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        style={{ background: "#0F0E0A", borderTop: "1px solid #2A2010" }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4 text-left lg:text-center">Il Nostro Team</h2>
+            <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty text-left lg:text-center">
+              Professionisti appassionati al tuo servizio
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                photo: "/amedeomonzo.jpeg",
+                name: "Amedeo Monzo",
+                role: "Insegnante di Danza",
+                bio: "Amedeo Monzo è un danzatore professionista con un curriculum di altissimo livello. Ha calcato i palcoscenici più prestigiosi d'Italia ed Europa, collaborando con artisti come Gigi D'Alessio e Claudio Baglioni, e partecipando all'XFactor Italy Final. Ha danzato per brand iconici come Dolce & Gabbana, Fendi e Moncler, e nel 2025 ha recitato nel film \"The Saints\", prodotto da Martin Scorsese. Porta all'Ateneo un'energia unica e un'esperienza internazionale rara.",
+              },
+              {
+                photo: "/carolinaMonzo.jpg",
+                name: "Carolina Monzo",
+                role: "Insegnante di Danza e Recitazione",
+                bio: "Carolina Monzo è originaria di Agropoli — ha mosso i suoi primi passi di danza proprio qui all'Ateneo all'età di tre anni. La sua formazione l'ha portata alle più prestigiose istituzioni italiane: la Scuola di Danza del Teatro dell'Opera di Roma e l'Accademia Nazionale di Danza. Ha calcato palcoscenici internazionali con lo spettacolo \"Marenostrum\" tra Barcellona, Tunisi e Salerno, e ha partecipato a produzioni RAI e videoclip di artisti come Tropico e Rossella Brescia. Insegna anche Heels — una delle discipline più richieste del momento.",
+              },
+              {
+                photo: "/federicabarretta.jpeg",
+                name: "Federica Barretta",
+                role: "Insegnante di Danza Classica e Contemporanea",
+                bio: "Federica Barretta è diplomata al Liceo Coreutico di Salerno con indirizzo Contemporaneo e diplomata Accademia Abracadanza con Stefania Ciancio. Tecnico certificato in Danza Moderna, ha affinato la sua formazione con maestri di rilievo come Francesco Ventriglia, Luca Calzolaro e Fabrizio Esposito. Dal 2021 insegna danza classica e contemporanea all'Ateneo di Rita Polidoro, portando in sala un approccio empatico e attento alle esigenze di ogni allievo.",
+              },
+            ].map((member) => (
+              <div
+                key={member.name}
+                className="rounded-sm overflow-hidden transition-all duration-300"
+                style={{
+                  background: "#0A0905",
+                  border: "1px solid #2A2010",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#C9980A")}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#2A2010")}
+              >
+                <div style={{ maxHeight: "280px", overflow: "hidden" }}>
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    className="w-full h-full object-cover object-top"
+                    style={{ aspectRatio: "1 / 1", display: "block" }}
+                  />
+                </div>
+                <div className="p-4">
+                  <p className="font-serif font-bold text-lg text-[#F5EDD8] mb-1">{member.name}</p>
+                  <p className="font-sans text-xs text-[#C9980A] uppercase tracking-wider mb-3">{member.role}</p>
+                  <div style={{ borderTop: "1px solid #2A2010" }} className="mb-3" />
+                  <p className="font-sans text-sm text-[#B8A080] leading-relaxed">{member.bio}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1241,15 +1308,18 @@ export default function LAteneoDanzaLanding() {
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             {/* Logo & Tagline */}
             <div className="md:col-span-2">
-              <a href="#" className="flex flex-col space-y-0 mb-6">
+              <a href="#" className="flex items-center gap-3 mb-6">
                 <img
                   src="/logo.png"
                   alt="L'Ateneo logo"
-                  className="h-16 w-auto object-contain opacity-90 mb-2"
+                  className="h-12 w-auto object-contain opacity-90"
+                  style={{ filter: 'brightness(0) invert(1)' }}
                 />
-                <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
-                <span className="font-dancing text-lg font-semibold text-[#C9980A] leading-tight">di Rita Polidoro</span>
-                <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">DANZA MUSICAL E FITNESS</span>
+                <div className="flex flex-col space-y-0">
+                  <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
+                  <span className="font-dancing text-lg font-semibold text-[#C9980A] leading-tight">di Rita Polidoro</span>
+                  <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">DANZA MUSICAL E FITNESS</span>
+                </div>
               </a>
               <p className="text-[#B8A080] text-sm max-w-[280px] mt-4 leading-relaxed">
                 Da oltre 20 anni, la casa della danza ad Agropoli.
