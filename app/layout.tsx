@@ -24,8 +24,9 @@ const dancingScript = Dancing_Script({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://v0-dance-studio-landing-page-one.vercel.app'),
   title: "L'Ateneo di Rita Polidoro | Scuola di Danza ad Agropoli",
-  description: "Benvenuti ne L'Ateneo di Rita Polidoro ad Agropoli. Oltre 20 anni di esperienza nell'insegnamento della danza classica, moderna, hip hop e contemporanea. Corsi per bambini e adulti dai 3 anni in su.",
+  description: "Benvenuti ne L'Ateneo di Rita Polidoro ad Agropoli. Oltre 25 anni di esperienza nell'insegnamento della danza classica, moderna, hip hop e contemporanea. Corsi per bambini e adulti dai 3 anni in su.",
   keywords: 'danza Agropoli, scuola danza Cilento, Rita Polidoro, corsi danza bambini, danza classica Agropoli, hip hop Agropoli, musical theatre Cilento, pilates Agropoli, fitness Agropoli, L\'Ateneo danza',
   authors: [{ name: 'Rita Polidoro' }],
   creator: 'Rita Polidoro',
@@ -37,17 +38,17 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "L'Ateneo di Rita Polidoro | Il Tuo Palcoscenico Inizia Qui",
-    description: "Scopri l'eccellenza della danza ad Agropoli con Rita Polidoro. Oltre 20 anni di passione e professionalità. Iscriviti per una lezione gratuita.",
+    description: "Scopri l'eccellenza della danza ad Agropoli con Rita Polidoro. Oltre 25 anni di passione e professionalità. Iscriviti per una lezione gratuita.",
     url: 'https://www.atenodanza.it',
     siteName: "L'Ateneo Danza",
     locale: 'it_IT',
     type: 'website',
     images: [
       {
-        url: '/Screenshot_2.jpg',
+        url: '/OGimage.jpg',
         width: 1200,
         height: 630,
-        alt: "L'Ateneo Danza - Gruppo e Insegnante",
+        alt: "L'Ateneo di Rita Polidoro - Scuola di Danza Agropoli",
       },
     ],
   },
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "L'Ateneo di Rita Polidoro | Danza ad Agropoli",
     description: "Corsi di danza per bambini e adulti. Il tuo percorso nel mondo della danza inizia qui.",
-    images: ['/Screenshot_2.jpg'],
+    images: ['/OGimage.jpg'],
   },
   robots: {
     index: true,

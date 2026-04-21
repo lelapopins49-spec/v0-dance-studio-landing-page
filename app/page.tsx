@@ -491,7 +491,7 @@ export default function LAteneoDanzaLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
             {[
-              { number: "20+", label: "ANNI DI ESPERIENZA" },
+              { number: "25+", label: "ANNI DI ESPERIENZA" },
               { number: "200+", label: "ALLIEVI OGNI ANNO" },
               { number: "Dai 3", label: "ANNI IN SU" },
               { number: "2", label: "SPETTACOLI ANNUALI" },
@@ -1413,7 +1413,7 @@ export default function LAteneoDanzaLanding() {
                 />
               </a>
               <p className="text-[#B8A080] text-sm max-w-[280px] mt-4 leading-relaxed">
-                Da oltre 20 anni, la casa della danza ad Agropoli.
+                Da oltre 25 anni, la casa della danza ad Agropoli.
               </p>
             </div>
 
