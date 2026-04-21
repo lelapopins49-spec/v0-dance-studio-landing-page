@@ -197,7 +197,7 @@ export default function PrivacyPolicyPage() {
                 />
               </a>
               <p className="text-[#B8A080] text-sm max-w-[280px] mt-4 leading-relaxed">
-                Da oltre 25 anni, la casa della danza ad Agropoli.
+                Da oltre 30 anni, la casa della danza ad Agropoli.
               </p>
             </div>
 

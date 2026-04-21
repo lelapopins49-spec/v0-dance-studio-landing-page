@@ -491,7 +491,7 @@ export default function LAteneoDanzaLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
             {[
-              { number: "25+", label: "ANNI DI ESPERIENZA" },
+              { number: "30+", label: "ANNI DI ESPERIENZA" },
               { number: "200+", label: "ALLIEVI OGNI ANNO" },
               { number: "Dai 3", label: "ANNI IN SU" },
               { number: "2", label: "SPETTACOLI ANNUALI" },
@@ -697,7 +697,7 @@ export default function LAteneoDanzaLanding() {
               <p className="text-[#F5EDD8] text-lg mb-6 leading-relaxed text-pretty">
                 Rita Polidoro è la fondatrice e direttrice artistica de L&apos;Ateneo Danza Musical e Fitness.
                 Dal 1999 guida la scuola con una visione chiara: unire tecnica, creatività e passione per formare
-                non solo danzatori, ma persone complete. Con oltre 25 anni di esperienza, ha formato centinaia di
+                non solo danzatori, ma persone complete. Con oltre 30 anni di esperienza, ha formato centinaia di
                 giovani talenti ad Agropoli e nel Cilento.
               </p>
               <ul className="font-sans text-sm text-[#B8A080] mb-6 space-y-1.5">
@@ -1413,7 +1413,7 @@ export default function LAteneoDanzaLanding() {
                 />
               </a>
               <p className="text-[#B8A080] text-sm max-w-[280px] mt-4 leading-relaxed">
-                Da oltre 25 anni, la casa della danza ad Agropoli.
+                Da oltre 30 anni, la casa della danza ad Agropoli.
               </p>
             </div>
 

@@ -26,7 +26,7 @@ const dancingScript = Dancing_Script({
 export const metadata: Metadata = {
   metadataBase: new URL('https://v0-dance-studio-landing-page-one.vercel.app'),
   title: "L'Ateneo di Rita Polidoro | Scuola di Danza ad Agropoli",
-  description: "Benvenuti ne L'Ateneo di Rita Polidoro ad Agropoli. Oltre 25 anni di esperienza nell'insegnamento della danza classica, moderna, hip hop e contemporanea. Corsi per bambini e adulti dai 3 anni in su.",
+  description: "Benvenuti ne L'Ateneo di Rita Polidoro ad Agropoli. Oltre 30 anni di esperienza nell'insegnamento della danza classica, moderna, hip hop e contemporanea. Corsi per bambini e adulti dai 3 anni in su.",
   keywords: 'danza Agropoli, scuola danza Cilento, Rita Polidoro, corsi danza bambini, danza classica Agropoli, hip hop Agropoli, musical theatre Cilento, pilates Agropoli, fitness Agropoli, L\'Ateneo danza',
   authors: [{ name: 'Rita Polidoro' }],
   creator: 'Rita Polidoro',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "L'Ateneo di Rita Polidoro | Il Tuo Palcoscenico Inizia Qui",
-    description: "Scopri l'eccellenza della danza ad Agropoli con Rita Polidoro. Oltre 25 anni di passione e professionalità. Iscriviti per una lezione gratuita.",
+    description: "Scopri l'eccellenza della danza ad Agropoli con Rita Polidoro. Oltre 30 anni di passione e professionalità. Iscriviti per una lezione gratuita.",
     url: 'https://www.atenodanza.it',
     siteName: "L'Ateneo Danza",
     locale: 'it_IT',
