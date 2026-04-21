@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
-import { Phone, Mail, MapPin, Instagram, Facebook, Music, Star, Menu, X, ChevronRight } from "lucide-react"
+import { Phone, Mail, MapPin, Instagram, Facebook, Music, Star, Menu, X, ChevronRight, Clock, Calendar, Users } from "lucide-react"
 
 export default function LAteneoDanzaLanding() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -305,16 +305,11 @@ export default function LAteneoDanzaLanding() {
             <a href="#" className="flex flex-col space-y-0 z-[60]">
               <div className="flex items-center gap-3">
                 <img
-                  src="/logo.png"
+                  src="/logo2.png"
                   alt="L'Ateneo logo"
-                  className="h-12 w-auto object-contain opacity-90"
+                  className="h-20 w-auto object-contain"
                   style={{ filter: 'brightness(0) invert(1)' }}
                 />
-                <div className="flex flex-col space-y-0">
-                  <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
-                  <span className="font-dancing text-lg font-semibold text-[#C9980A] leading-tight">di Rita Polidoro</span>
-                  <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">DANZA MUSICAL E FITNESS</span>
-                </div>
               </div>
             </a>
 
@@ -381,10 +376,6 @@ export default function LAteneoDanzaLanding() {
               </a>
             </div>
             <div className="mt-auto pt-10 border-t border-[#B8A080]/10">
-              <div className="flex flex-col">
-                <span className="font-serif text-xl font-bold text-[#F5EDD8]">L&apos;Ateneo</span>
-                <span className="font-dancing text-base text-[#C9980A]">di Rita Polidoro</span>
-              </div>
             </div>
           </div>
         </div>
@@ -473,8 +464,8 @@ export default function LAteneoDanzaLanding() {
             {[
               { number: "20+", label: "ANNI DI ESPERIENZA" },
               { number: "200+", label: "ALLIEVI OGNI ANNO" },
-              { number: "Dai 2", label: "ANNI IN SU" },
-              { number: "1", label: "SAGGIO ANNUALE" },
+              { number: "Dai 3", label: "ANNI IN SU" },
+              { number: "2", label: "SPETTACOLI ANNUALI" },
             ].map((stat, index) => (
               <div key={index}>
                 <div className="font-serif text-4xl sm:text-5xl font-bold mb-1 text-[#C9980A]">{stat.number}</div>
@@ -606,16 +597,19 @@ export default function LAteneoDanzaLanding() {
             </div>
           </div>
 
-          <div className="flex justify-center mt-8">
-            <span
-              className="text-sm font-semibold text-[#C9980A] px-5 py-1.5 rounded-full"
-              style={{
-                background: "#C9980A18",
-                border: "1px solid #C9980A44",
-              }}
-            >
-              Certificato Opes Danza
-            </span>
+          <div className="flex justify-center">
+            <div className="flex flex-col items-center gap-3 mt-8">
+              <p className="text-xs font-sans uppercase tracking-wider text-[#B8A080]">
+                Scuola Certificata
+              </p>
+              <Image
+                src="/opeslogo.png"
+                alt="Opes Danza - Scuola Certificata"
+                width={120}
+                height={120}
+                className="object-contain opacity-90"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -765,7 +759,7 @@ export default function LAteneoDanzaLanding() {
               Professionisti appassionati al tuo servizio
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
             {[
               {
                 photo: "/amedeomonzo.jpeg",
@@ -784,6 +778,12 @@ export default function LAteneoDanzaLanding() {
                 name: "Federica Barretta",
                 role: "Insegnante di Danza Classica e Contemporanea",
                 bio: "Federica Barretta è diplomata al Liceo Coreutico di Salerno con indirizzo Contemporaneo e diplomata Accademia Abracadanza con Stefania Ciancio. Tecnico certificato in Danza Moderna, ha affinato la sua formazione con maestri di rilievo come Francesco Ventriglia, Luca Calzolaro e Fabrizio Esposito. Dal 2021 insegna danza classica e contemporanea all'Ateneo di Rita Polidoro, portando in sala un approccio empatico e attento alle esigenze di ogni allievo.",
+              },
+              {
+                photo: "/GiorgioSannino.jpg",
+                name: "Giorgio Sannino",
+                role: "Insegnante di Danza Classica e Contemporanea",
+                bio: "Giorgio Sannino è un danzatore classico e contemporaneo formatosi presso istituzioni di primo piano a Napoli, tra cui il Teatro San Carlo e la Crown Ballet School diretta da Luigi Ferrone. Specializzato in danza classica, contemporanea e modern, ha approfondito la sua tecnica con maestri internazionali come Vladimir Derevianko e Mauro Astolfi. Ha fatto parte della compagnia Kataklo' di danza contemporanea e ha partecipato alla produzione di Giselle con il Nuovo Balletto Italiano. Porta all'Ateneo una solida preparazione accademica e una profonda conoscenza delle tecniche classiche e contemporanee.",
               },
             ].map((member) => (
               <div
@@ -836,7 +836,7 @@ export default function LAteneoDanzaLanding() {
           </div>
 
           <p className="text-center text-[#B8A080] mt-6 text-sm italic">
-            * Gli orari possono variare &mdash; contattaci per confermare
+            * Gli orari possono variare &mdash; contattaci per confermare. Durante l&apos;anno accademico sono previsti lo Spettacolo Natalizio, lo Spettacolo di Fine Anno e vari eventi socio-culturali.
           </p>
         </div>
       </section>
@@ -851,65 +851,80 @@ export default function LAteneoDanzaLanding() {
           <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4 text-left lg:text-center">Iscrizioni & Prezzi</h2>
             <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
-              Scegli il piano pi&ugrave; adatto alle tue esigenze
+              Scegli la formula più adatta a te. Per informazioni sui costi contattaci direttamente.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          {/* ROW 1 — Subscription cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             {[
               {
-                name: "Corso Singolo",
-                price: "\u20AC \u2014",
-                features: ["Accesso a un corso a scelta", "1 lezione a settimana", "Materiale didattico incluso"],
-                popular: false,
+                icon: <Clock size={32} className="text-[#C9980A]" />,
+                title: "Lezione Singola",
+                description: "Ideale per provare un corso prima di iscriverti. Nessun impegno, massima flessibilità.",
               },
               {
-                name: "Abbonamento Mensile",
-                price: "\u20AC \u2014",
-                features: ["Accesso illimitato ai corsi", "Sconti su eventi speciali", "Prenotazione prioritaria", "Accesso area relax"],
-                popular: true,
+                icon: <Calendar size={32} className="text-[#C9980A]" />,
+                title: "Abbonamento Mensile",
+                description: "La soluzione più flessibile per chi vuole ballare con regolarità ogni mese.",
               },
               {
-                name: "Abbonamento Annuale",
-                price: "\u20AC \u2014",
-                features: ["Tutti i vantaggi mensili", "2 mesi gratuiti", "Workshop esclusivi", "T-shirt ufficiale"],
-                popular: false,
+                icon: <Calendar size={32} className="text-[#C9980A]" />,
+                title: "Abbonamento Semestrale",
+                description: "Sei mesi di lezioni con un risparmio rispetto all'abbonamento mensile.",
               },
-            ].map((plan, index) => (
+              {
+                icon: <Star size={32} className="text-[#C9980A]" />,
+                title: "Abbonamento Annuale",
+                description: "La scelta di chi vuole dare continuità al proprio percorso artistico. Massimo risparmio.",
+              },
+            ].map((card, index) => (
               <div
                 key={index}
-                className={`relative group rounded-sm p-8 transition-all duration-300 bg-[#0A0905] h-full flex flex-col hover:bg-[#120F06] hover:border-l-[3px] hover:border-l-[#C9980A] ${plan.popular
-                  ? "border-2 border-[#C9980A] scale-[1.02] z-10"
-                  : "border border-[#2A2010] hover:border-[#C9980A]/30"
-                  }`}
+                className="bg-[#0A0905] border border-[#2A2010] p-6 rounded-sm"
+                style={{ transition: "border-color 0.3s ease" }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#C9980A")}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#2A2010")}
               >
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C9980A] text-[#0A0905] px-4 py-1 rounded-full text-xs font-bold tracking-wider whitespace-nowrap">
-                    Pi&ugrave; Popolare
-                  </div>
-                )}
-                <h3 className="font-serif text-2xl font-bold mb-2 text-foreground group-hover:text-[#C9980A] transition-colors">{plan.name}</h3>
-                <div className="font-serif text-4xl font-bold mb-6 text-[#F5EDD8] border-b border-[#2A2010] pb-6">
-                  {plan.price}
-                </div>
-                <ul className="space-y-3 mb-8 mt-6">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="text-[#C9980A]">&#10003;</span>
-                      <span className="text-[#B8A080] text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto">
-                  <a
-                    href="#contatti"
-                    className="block text-center py-3 rounded-sm font-semibold transition-colors bg-[#C9980A] text-[#0A0905] hover:bg-[#C9980A]/90"
-                  >
-                    Scegli questo piano
-                  </a>
-                </div>
+                <div className="mb-4">{card.icon}</div>
+                <h3 className="font-serif text-lg font-bold text-[#F5EDD8] mb-3">{card.title}</h3>
+                <p className="text-[#B8A080] text-sm leading-relaxed">{card.description}</p>
               </div>
             ))}
+          </div>
+
+          {/* ROW 2 — Discounts info strip */}
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#0A0905] border border-[#2A2010] p-6 mt-6 rounded-sm"
+          >
+            <div className="flex gap-4">
+              <Users size={28} className="text-[#C9980A] shrink-0 mt-1" />
+              <div>
+                <h4 className="font-serif font-bold text-[#F5EDD8] mb-2">Tariffe Differenziate</h4>
+                <p className="text-[#B8A080] text-sm leading-relaxed">I costi variano in base al corso scelto e all&apos;età dell&apos;allievo. Contattaci per ricevere il preventivo personalizzato.</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <Star size={28} className="text-[#C9980A] shrink-0 mt-1" />
+              <div>
+                <h4 className="font-serif font-bold text-[#F5EDD8] mb-2">Sconti Famiglia</h4>
+                <p className="text-[#B8A080] text-sm leading-relaxed">Sono previste riduzioni speciali per fratelli e/o sorelle e per mamme e figlie che si iscrivono insieme.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* ROW 3 — CTA strip */}
+          <div className="text-center mt-8">
+            <p className="text-[#B8A080] text-sm italic mb-4">
+              Vuoi sapere di più? Contattaci per un preventivo personalizzato — la prima lezione è gratuita.
+            </p>
+            <a
+              href="#contatti"
+              className="inline-block rounded-sm"
+              style={{ background: "#C9980A", color: "#0A0905", fontWeight: 700, padding: "12px 32px" }}
+            >
+              Richiedi Informazioni
+            </a>
           </div>
         </div>
       </section>
@@ -1107,37 +1122,21 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((t, index) => (
-              <div
-                key={index}
-                className="bg-[#0F0E0A] border border-[#2A2010] p-10 rounded-sm relative group hover:border-[#C9980A]/40 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col h-full"
-              >
-                <div className="absolute -top-4 -left-4 w-12 h-12 bg-[#0F0E0A] border border-[#2A2010] flex items-center justify-center text-[#C9980A] text-2xl font-serif">
-                  &ldquo;
-                </div>
-
-                <div className="flex gap-1 mb-8">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={15} className="text-[#C9980A]" fill="currentColor" />
-                  ))}
-                </div>
-
-                <p className="text-[#F5EDD8] text-lg leading-relaxed mb-10 italic font-light flex-grow">
-                  {t.quote}
-                </p>
-
-                <div className="flex items-center gap-5 border-t border-[#2A2010] pt-8 mt-auto">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#1A1408] to-[#0A0905] border border-[#2A2010] flex items-center justify-center text-[#C9980A] font-serif text-xl font-bold group-hover:border-[#C9980A]/30 transition-colors">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <div className="font-serif text-[#F5EDD8] text-lg font-bold">{t.name}</div>
-                    <div className="text-[10px] text-[#F5EDD8] uppercase tracking-[0.2em] font-medium">{t.course}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <Image
+              src="/testimonial1.jpeg"
+              alt="Testimonianza cliente"
+              width={500}
+              height={700}
+              className="w-full rounded-sm object-contain shadow-lg"
+            />
+            <Image
+              src="/testimonial2.jpeg"
+              alt="Testimonianza cliente"
+              width={500}
+              height={700}
+              className="w-full rounded-sm object-contain shadow-lg"
+            />
           </div>
         </div>
       </section>
@@ -1310,16 +1309,11 @@ export default function LAteneoDanzaLanding() {
             <div className="md:col-span-2">
               <a href="#" className="flex items-center gap-3 mb-6">
                 <img
-                  src="/logo.png"
+                  src="/logo2.png"
                   alt="L'Ateneo logo"
-                  className="h-12 w-auto object-contain opacity-90"
+                  className="h-20 w-auto object-contain"
                   style={{ filter: 'brightness(0) invert(1)' }}
                 />
-                <div className="flex flex-col space-y-0">
-                  <span className="font-serif text-2xl font-bold text-[#F5EDD8] leading-tight">L&apos;Ateneo</span>
-                  <span className="font-dancing text-lg font-semibold text-[#C9980A] leading-tight">di Rita Polidoro</span>
-                  <span className="font-sans text-[9px] font-normal text-[#B8A080] tracking-[0.2em] uppercase leading-tight mt-0.5">DANZA MUSICAL E FITNESS</span>
-                </div>
               </a>
               <p className="text-[#B8A080] text-sm max-w-[280px] mt-4 leading-relaxed">
                 Da oltre 20 anni, la casa della danza ad Agropoli.
