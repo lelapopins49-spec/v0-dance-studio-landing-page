@@ -24,7 +24,7 @@ const dancingScript = Dancing_Script({
 })
 
 export const metadata: Metadata = {
-  title: "L'Ateneo di Rita Polidoro | Danza, Musical e Fitness ad Agropoli",
+  title: "L'Ateneo di Rita Polidoro | Scuola di Danza ad Agropoli",
   description: "Benvenuti ne L'Ateneo di Rita Polidoro ad Agropoli. Oltre 20 anni di esperienza nell'insegnamento della danza classica, moderna, hip hop e contemporanea. Corsi per bambini e adulti dai 3 anni in su.",
   keywords: 'danza Agropoli, scuola danza Cilento, Rita Polidoro, corsi danza bambini, danza classica Agropoli, hip hop Agropoli, musical theatre Cilento, pilates Agropoli, fitness Agropoli, L\'Ateneo danza',
   authors: [{ name: 'Rita Polidoro' }],
