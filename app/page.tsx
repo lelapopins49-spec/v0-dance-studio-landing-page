@@ -17,6 +17,26 @@ export default function LAteneoDanzaLanding() {
   const videoRefs = [videoRef1, videoRef2, videoRef3]
   const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set())
   const [bioOpen, setBioOpen] = useState(false)
+  const [formSubmitted, setFormSubmitted] = useState(false)
+  const [formErrors, setFormErrors] = useState<{ [key: string]: boolean }>({})
+  const [cookieVisible, setCookieVisible] = useState(false)
+  const [cookieFading, setCookieFading] = useState(false)
+  const [whatsappHover, setWhatsappHover] = useState(false)
+
+  useEffect(() => {
+    if (!localStorage.getItem("cookieConsent")) {
+      setCookieVisible(true)
+    }
+  }, [])
+
+  const acceptCookies = () => {
+    setCookieFading(true)
+    setTimeout(() => {
+      localStorage.setItem("cookieConsent", "accepted")
+      setCookieVisible(false)
+      setCookieFading(false)
+    }, 300)
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,7 +80,6 @@ export default function LAteneoDanzaLanding() {
     { href: "#corsi", label: "Corsi" },
     { href: "#formazione", label: "Formazione" },
     { href: "#orari", label: "Orari" },
-    { href: "#sedi", label: "Sedi" },
     { href: "#prezzi", label: "Prezzi" },
     { href: "#gallery", label: "Gallery" },
     { href: "#contatti", label: "Contatti" },
@@ -356,14 +375,24 @@ export default function LAteneoDanzaLanding() {
             }`}
         >
           <div className="flex flex-col h-full pt-32 px-8 pb-10">
-            <div className="flex flex-col space-y-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-xl font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
+            <div className="flex flex-col">
+              {/* Group 1 */}
+              {[{ href: "#chi-siamo", label: "Chi Siamo" }, { href: "#team", label: "Team" }].map((link) => (
+                <a key={link.href} href={link.href} className="text-xl font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors py-4" onClick={() => setMobileMenuOpen(false)}>
+                  {link.label}
+                </a>
+              ))}
+              <div style={{ borderTop: "1px solid #2A2010" }} className="my-2" />
+              {/* Group 2 */}
+              {[{ href: "#corsi", label: "Corsi" }, { href: "#formazione", label: "Formazione" }, { href: "#orari", label: "Orari" }].map((link) => (
+                <a key={link.href} href={link.href} className="text-xl font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors py-4" onClick={() => setMobileMenuOpen(false)}>
+                  {link.label}
+                </a>
+              ))}
+              <div style={{ borderTop: "1px solid #2A2010" }} className="my-2" />
+              {/* Group 3 */}
+              {[{ href: "#prezzi", label: "Prezzi" }, { href: "#gallery", label: "Gallery" }, { href: "#contatti", label: "Contatti" }].map((link) => (
+                <a key={link.href} href={link.href} className="text-xl font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors py-4" onClick={() => setMobileMenuOpen(false)}>
                   {link.label}
                 </a>
               ))}
@@ -733,7 +762,7 @@ export default function LAteneoDanzaLanding() {
                 <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
                   In oltre venticinque anni, la scuola è cresciuta fino a diventare un punto di riferimento per la
                   danza e la formazione nel Cilento. Oggi L&apos;Ateneo conta due sedi in Via Moio, un team di
-                  insegnanti esperti e centinaia di allievi che ogni anno salgono sul palcoscenico per il saggio annuale.
+                  insegnanti esperti e centinaia di allievi che ogni anno salgono sul palcoscenico per gli spettacoli annuali.
                 </p>
                 <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
                   La nostra missione non è cambiata dal primo giorno: offrire una formazione di alta qualità in un
@@ -759,7 +788,7 @@ export default function LAteneoDanzaLanding() {
               Professionisti appassionati al tuo servizio
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
             {[
               {
                 photo: "/amedeomonzo.jpeg",
@@ -1174,78 +1203,146 @@ export default function LAteneoDanzaLanding() {
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Contact Form */}
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
-                    Nome
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
-                    placeholder="Il tuo nome"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
-                    placeholder="La tua email"
-                  />
-                </div>
+            {formSubmitted ? (
+              <div className="text-center py-8">
+                <p className="font-sans text-lg" style={{ color: "#C9980A" }}>
+                  Grazie! Il tuo messaggio è stato inviato. Ti risponderemo al più presto.
+                </p>
+                <button
+                  onClick={() => setFormSubmitted(false)}
+                  className="mt-4 font-sans text-sm underline cursor-pointer"
+                  style={{ color: "#B8A080" }}
+                >
+                  Invia un altro messaggio
+                </button>
               </div>
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="phone" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
-                    Telefono
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
-                    placeholder="Il tuo numero"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="course" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
-                    Corso di Interesse
-                  </label>
-                  <select
-                    id="course"
-                    className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
-                  >
-                    <option value="">Seleziona un corso</option>
-                    <option value="classica">Danza Classica</option>
-                    <option value="moderna">Danza Moderna / Hip Hop</option>
-                    <option value="contemporanea">Danza Contemporanea</option>
-                    <option value="musical">Musical Theatre</option>
-                    <option value="pilates">Pilates & Fitness</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
-                  Messaggio
-                </label>
-                <textarea
-                  id="message"
-                  rows={4}
-                  className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors resize-none"
-                  placeholder="Raccontaci di te..."
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-4 rounded-sm font-semibold text-lg transition-colors"
+            ) : (
+              <form
+                className="space-y-6"
+                action="https://formspree.io/f/xpqkjkdn"
+                method="POST"
+                onSubmit={async (e) => {
+                  e.preventDefault()
+                  const form = e.currentTarget
+                  const nome = (form.elements.namedItem("nome") as HTMLInputElement).value.trim()
+                  const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim()
+                  const telefono = (form.elements.namedItem("telefono") as HTMLInputElement).value.trim()
+                  const corso = (form.elements.namedItem("corso") as HTMLSelectElement).value
+                  const errors: { [key: string]: boolean } = {}
+                  if (!nome) errors.nome = true
+                  if (!email) errors.email = true
+                  if (!telefono) errors.telefono = true
+                  if (!corso) errors.corso = true
+                  if (Object.keys(errors).length > 0) {
+                    setFormErrors(errors)
+                    return
+                  }
+                  setFormErrors({})
+                  const data = new FormData(form)
+                  await fetch("https://formspree.io/f/xpqkjkdn", {
+                    method: "POST",
+                    body: data,
+                    headers: { Accept: "application/json" },
+                  })
+                  setFormSubmitted(true)
+                  form.reset()
+                }}
               >
-                Invia Messaggio
-              </button>
-            </form>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
+                      Nome
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="nome"
+                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
+                      style={{ border: `1px solid ${formErrors.nome ? "#C8003A" : "#2A2010"}` }}
+                      onFocus={() => setFormErrors((prev) => ({ ...prev, nome: false }))}
+                      placeholder="Il tuo nome"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
+                      style={{ border: `1px solid ${formErrors.email ? "#C8003A" : "#2A2010"}` }}
+                      onFocus={() => setFormErrors((prev) => ({ ...prev, email: false }))}
+                      placeholder="La tua email"
+                    />
+                  </div>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="phone" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
+                      Telefono
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="telefono"
+                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
+                      style={{ border: `1px solid ${formErrors.telefono ? "#C8003A" : "#2A2010"}` }}
+                      onFocus={() => setFormErrors((prev) => ({ ...prev, telefono: false }))}
+                      placeholder="Il tuo numero"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="course" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
+                      Corso di Interesse
+                    </label>
+                    <select
+                      id="course"
+                      name="corso"
+                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground focus:outline-none transition-colors"
+                      style={{ border: `1px solid ${formErrors.corso ? "#C8003A" : "#2A2010"}` }}
+                      onFocus={() => setFormErrors((prev) => ({ ...prev, corso: false }))}
+                      defaultValue=""
+                    >
+                      <option value="" disabled>Seleziona un corso</option>
+                      <option value="classica">Danza Classica</option>
+                      <option value="moderna">Danza Moderna</option>
+                      <option value="contemporanea">Danza Contemporanea</option>
+                      <option value="hiphop">Hip Hop</option>
+                      <option value="jazz">Jazz</option>
+                      <option value="aeree">Discipline Aeree</option>
+                      <option value="canto">Corsi di Canto</option>
+                      <option value="recitazione">Corsi di Recitazione</option>
+                      <option value="musical">Danza per Musical</option>
+                      <option value="aerobica">Aerobica & Step</option>
+                      <option value="zumba">Zumba</option>
+                      <option value="pilates">Pilates</option>
+                      <option value="formazione">Formazione Professionale</option>
+                      <option value="altro">Altro</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
+                    Messaggio
+                  </label>
+                  <textarea
+                    id="message"
+                    name="messaggio"
+                    rows={4}
+                    className="w-full bg-card border border-[#2A2010] rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors resize-none"
+                    placeholder="Raccontaci di te..."
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-4 rounded-sm font-semibold text-lg transition-colors"
+                >
+                  Invia Messaggio
+                </button>
+              </form>
+            )}
 
             {/* Contact Info */}
             <div className="space-y-8">
@@ -1355,7 +1452,7 @@ export default function LAteneoDanzaLanding() {
           </div>
 
           <div className="border-t border-[#2A2010] pt-8 text-center text-xs text-[#B8A080]">
-            &copy; 2025 L&apos;Ateneo Danza Musical e Fitness &middot; Agropoli, Cilento &middot; P.IVA
+            &copy; 2025 L&apos;Ateneo Danza Musical e Fitness &middot; Agropoli, Cilento
           </div>
         </div>
       </footer>
@@ -1381,6 +1478,78 @@ export default function LAteneoDanzaLanding() {
 
       {/* Bottom padding for mobile sticky bar */}
       <div className="h-14 md:hidden" />
+
+      {/* WhatsApp Floating Button */}
+      <div
+        style={{ position: "fixed", zIndex: 10000 }}
+        className="bottom-20 right-4 md:bottom-6 md:right-6 flex items-center gap-2"
+        onMouseEnter={() => setWhatsappHover(true)}
+        onMouseLeave={() => setWhatsappHover(false)}
+      >
+        {whatsappHover && (
+          <span
+            className="text-xs px-3 py-1 rounded-sm whitespace-nowrap"
+            style={{ background: "#0F0E0A", border: "1px solid #2A2010", color: "#F5EDD8" }}
+          >
+            Scrivici su WhatsApp
+          </span>
+        )}
+        <a
+          href="https://wa.me/393393565655"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-14 h-14 rounded-full flex items-center justify-center"
+          style={{
+            background: "#25D366",
+            boxShadow: "0 4px 12px rgba(37, 211, 102, 0.4)",
+            transform: whatsappHover ? "scale(1.1)" : "scale(1)",
+            transition: "transform 0.2s ease",
+            cursor: "pointer",
+          }}
+        >
+          <svg viewBox="0 0 24 24" fill="white" width={28} height={28}>
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </a>
+      </div>
+
+      {/* Cookie Consent Banner */}
+      {cookieVisible && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 9999,
+            background: "#0F0E0A",
+            borderTop: "1px solid #2A2010",
+            opacity: cookieFading ? 0 : 1,
+            transition: cookieFading ? "opacity 0.3s ease" : "opacity 0.5s ease",
+          }}
+          className="py-4 px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+        >
+          <p className="font-sans text-sm max-w-2xl" style={{ color: "#B8A080" }}>
+            🍪 Questo sito utilizza cookie tecnici necessari al funzionamento. Continuando la navigazione accetti il loro utilizzo.
+          </p>
+          <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+            <button
+              onClick={acceptCookies}
+              className="w-full md:w-auto rounded-sm font-bold px-6 py-2"
+              style={{ background: "#C9980A", color: "#0A0905", fontWeight: 700 }}
+            >
+              Accetta
+            </button>
+            <a
+              href="/privacy-policy"
+              className="w-full md:w-auto rounded-sm text-center px-6 py-2"
+              style={{ background: "transparent", color: "#B8A080", border: "1px solid #2A2010" }}
+            >
+              Scopri di più
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
