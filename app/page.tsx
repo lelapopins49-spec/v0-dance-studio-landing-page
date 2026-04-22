@@ -182,6 +182,55 @@ export default function LAteneoDanzaLanding() {
     "/IMG_8377.JPG.webp", "/IMG_8378.JPG.webp", "/IMG_8379.JPG.webp", "/IMG_8380.JPG.webp",
     "/IMG_8382.JPG.webp", "/IMG_8383.JPG.webp", "/IMG_8385.JPG.webp", "/IMG_8387.JPG.webp",
     "/IMG_8390.JPG.webp", "/IMG_8396.JPG.webp", "/IMG_8402.JPG.webp", "/IMG_8413.webp",
+    "/additional/saggio-ateneo-agropoli-1.webp",
+    "/additional/saggio-ateneo-agropoli-2.webp",
+    "/additional/performance-ateneo-agropoli.webp",
+    "/additional/spettacolo-fine-anno-ateneo-1.webp",
+    "/additional/spettacolo-fine-anno-ateneo-3.webp",
+    "/additional/spettacolo-fine-anno-ateneo.webp",
+    "/additional/danza-femminile-sedia-agropoli.webp",
+    "/additional/female-perform-sitting-chair.webp",
+    "/additional/female-solo.webp",
+    "/additional/females-group-perform.webp",
+    "/additional/females-perform-stage.webp",
+    "/additional/females-performs3.webp",
+    "/additional/group-performance-4.webp",
+    "/additional/group-performance-all-black.webp",
+    "/additional/groupd-perform-1.webp",
+    "/additional/kid-perform-solo.webp",
+    "/additional/kid-solo-performance.webp",
+    "/additional/kids-group-performance.webp",
+    "/additional/kids-performance.webp",
+    "/additional/kids-performance1.webp",
+    "/additional/m-f-performa1.webp",
+    "/additional/male-dancer.webp",
+    "/additional/male-fdemale-performance4.webp",
+    "/additional/male-female-ballet-1.webp",
+    "/additional/coppia-balletto-ateneo-agropoli.webp",
+    "/additional/coppia-balletto-ateneo-agropoli-3.webp",
+    "/additional/duo-danza-ateneo-agropoli.webp",
+    "/additional/gruppo-misto-performance-ateneo.webp",
+    "/additional/coppia-performance-ateneo-cilento.webp",
+    "/additional/coppia-danza-moderna-agropoli.webp",
+    "/additional/coppia-danza-moderna-agropoli-1.webp",
+    "/additional/coppia-danza-moderna-agropoli-2.webp",
+    "/additional/coppia-danza-moderna-agropoli-4.webp",
+    "/additional/coppia-performance-palcoscenico-1.webp",
+    "/additional/coppia-performance-palcoscenico-2.webp",
+    "/additional/coppia-performance-palcoscenico-3.webp",
+    "/additional/coppia-danza-ateneo.webp",
+    "/additional/gruppo-misto-danza-ateneo-3.webp",
+    "/additional/danzatore-performance-agropoli-2.webp",
+    "/additional/danzatore-solo-ateneo-agropoli.webp",
+    "/additional/danzatore-solo-palcoscenico-agropoli.webp",
+    "/additional/danzatore-solo-palcoscenico-agropoli-1.webp",
+    "/additional/duo-misto-performance-ateneo.webp",
+    "/additional/uomo-danza-performance-agropoli.webp",
+    "/additional/performance-danza-ateneo-agropoli.webp",
+    "/additional/due-ragazze-palcoscenico-ateneo.webp",
+    "/additional/donna-danza-performance-agropoli-3.webp",
+    "/additional/donna-danza-rosso-ateneo-agropoli.webp",
+    "/additional/donne-performance-ateneo-agropoli-2.webp",
   ]
 
   const salaArmoniaSchedule = [
@@ -236,47 +285,48 @@ export default function LAteneoDanzaLanding() {
 
   const salaRitmoSchedule = [
     {
-      day: "LUNED\u00cc",
+      day: "LUNEDÌ",
       classes: [
-        { time: "17:00", name: "Benessere Mamme / Pilates / Potenziamento Muscolare" },
-        { time: "18:00", name: "Hip Hop Kids (opzione ore 17:00)" },
-        { time: "19:00", name: "Danze Popolari" },
+        { time: "17:00", name: "Predanza" },
+        { time: "18:15", name: "Aerobica / GAG" },
+        { time: "19:15", name: "Modern Avanzato" },
       ],
     },
     {
-      day: "MARTED\u00cc",
+      day: "MARTEDÌ",
       classes: [
-        { time: "16:30", name: "Principianti I" },
-        { time: "18:00", name: "Classico Avanzato" },
-        { time: "19:00", name: "Classico Intermedio" },
+        { time: "16:00", name: "Danza Classica Principianti" },
+        { time: "17:00", name: "Danza Moderna Principianti" },
+        { time: "18:00", name: "Modern Intermedio" },
+        { time: "19:15", name: "Danza Classica Intermedio" },
       ],
     },
     {
-      day: "MERCOLED\u00cc",
+      day: "MERCOLEDÌ",
       classes: [
-        { time: "15:00", name: "Potenziamento Muscolare / Aerobica" },
-        { time: "17:00", name: "Hip Hop Kids (opzione ore 18)" },
-        { time: "17:00", name: "Sala Melodia: Benessere Mamme / Pilates" },
-        { time: "18:00", name: "Hip Hop Avanzato" },
+        { time: "15:00", name: "Aerobica / Step / GAG" },
+        { time: "17:00", name: "Predanza" },
+        { time: "18:15", name: "Aerobica / Step / GAG" },
+        { time: "19:15", name: "Musical" },
       ],
     },
     {
-      day: "GIOVED\u00cc",
+      day: "GIOVEDÌ",
       classes: [
-        { time: "16:30", name: "Principianti I" },
-        { time: "18:00", name: "Pilates" },
-        { time: "19:00", name: "Classico Intermedio e Avanzato" },
-        { time: "20:00", name: "Contemporaneo" },
+        { time: "16:00", name: "Danza Classica Principianti" },
+        { time: "17:00", name: "Danza Moderna Principianti" },
+        { time: "18:00", name: "Modern Intermedio" },
+        { time: "19:15", name: "Danza Classica Intermedio" },
+        { time: "20:15", name: "Danza Contemporanea" },
       ],
     },
     {
-      day: "VENERD\u00cc",
+      day: "VENERDÌ",
       classes: [
-        { time: "15:00", name: "Potenziamento Muscolare / Aerobica" },
-        { time: "16:00", name: "Aerea Principianti I + II" },
-        { time: "17:00", name: "Recitazione / Repertorio Musical" },
-        { time: "18:15", name: "Aerobica" },
-        { time: "19:15", name: "Moderno Avanzato" },
+        { time: "15:00", name: "Aerobica e GAG" },
+        { time: "16:30", name: "Fiabe in Movimento" },
+        { time: "18:15", name: "Aerobica / Step / GAG" },
+        { time: "19:15", name: "Modern Avanzato" },
       ],
     },
   ]
@@ -1151,21 +1201,23 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            <Image
-              src="/testimonial1.jpeg"
-              alt="Testimonianza cliente"
-              width={500}
-              height={700}
-              className="w-full rounded-sm object-contain shadow-lg"
-            />
-            <Image
-              src="/testimonial2.jpeg"
-              alt="Testimonianza cliente"
-              width={500}
-              height={700}
-              className="w-full rounded-sm object-contain shadow-lg"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto">
+            {["/testimonial1.jpeg", "/testimonial2.jpeg"].map((src) => (
+              <button
+                key={src}
+                onClick={() => setEnlargedPhoto(src)}
+                className="cursor-zoom-in focus:outline-none group"
+                aria-label="Ingrandisci testimonianza"
+              >
+                <Image
+                  src={src}
+                  alt="Testimonianza cliente"
+                  width={280}
+                  height={390}
+                  className="w-full rounded-sm object-contain shadow-lg opacity-90 group-hover:opacity-100 transition-opacity"
+                />
+              </button>
+            ))}
           </div>
         </div>
       </section>

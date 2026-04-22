@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv \"male-female-ballet.webp\" \"coppia-balletto-ateneo-agropoli.webp\")",
+      "Bash(mv \"male-female-ballet3.webp\" \"coppia-balletto-ateneo-agropoli-3.webp\")",
+      "Bash(mv \"male-female-duo.webp\" \"duo-danza-ateneo-agropoli.webp\")",
+      "Bash(mv \"male-female-group-performance.webp\" \"gruppo-misto-performance-ateneo.webp\")",
+      "Bash(mv \"male-female-perfor114.webp\" \"coppia-performance-ateneo-cilento.webp\")",
+      "Bash(node *)"
+    ]
+  }
+}
