@@ -278,7 +278,7 @@ export default function LAteneoDanzaLanding() {
       day: "VENERD\u00cc",
       classes: [
         { time: "16:00", name: "Danza Aerea Principianti" },
-        { time: "17:00", name: "Recitazione" },
+        { time: "17:00-18:30", name: "Recitazione" },
         { time: "18:00", name: "Hip Hop Intermedio/Avanzato" },
         { time: "19:00", name: "Workshop con Professionisti" },
       ],
@@ -349,11 +349,11 @@ export default function LAteneoDanzaLanding() {
             <div className="uppercase font-sans font-semibold text-[#F5EDD8] border-b border-[#2A2010] pb-1 mb-2 text-sm text-center">
               {day.day}
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-3">
               {day.classes.map((cls, j) => (
-                <div key={j} className="flex gap-2 justify-center">
-                  <span className="text-[#C9980A] font-sans font-semibold text-sm whitespace-nowrap">{cls.time}</span>
-                  <span className="text-[#B8A080] text-sm">&mdash; {cls.name}</span>
+                <div key={j} className="grid grid-cols-[80px_1fr] gap-4 items-baseline border-b border-[#2A2010]/20 pb-2 last:border-0 last:pb-0">
+                  <span className="text-[#C9980A] font-sans font-bold text-sm text-right">{cls.time}</span>
+                  <span className="text-[#F5EDD8] text-sm font-medium uppercase tracking-wide text-left">{cls.name}</span>
                 </div>
               ))}
             </div>
