@@ -278,7 +278,7 @@ export default function LAteneoDanzaLanding() {
       day: "VENERD\u00cc",
       classes: [
         { time: "16:00", name: "Danza Aerea Principianti" },
-        { time: "17:00", name: "Hip Hop Principianti" },
+        { time: "17:00", name: "Recitazione" },
         { time: "18:00", name: "Hip Hop Intermedio/Avanzato" },
         { time: "19:00", name: "Workshop con Professionisti" },
       ],
