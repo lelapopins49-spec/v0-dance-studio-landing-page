@@ -207,6 +207,7 @@ export default function LAteneoDanzaLanding() {
   const allGalleryPhotos = [
     "/group_outside_.jpg", "/inside_school_children_lesson.jpg", "/male_female_duo.jpg",
     "/outside_event_students.jpg", "/solo_female_air_dance.jpg", "/student_green_dress.jpg",
+    "/air_dance_student.jpg", "/collage_children_group.jpg", "/group_male_female_stuends_stage.jpg",
     "/IMG_8356.JPG.webp", "/IMG_8357.JPG.webp", "/IMG_8359.JPG.webp", "/IMG_8360.JPG.webp",
     "/IMG_8363.JPG.webp", "/IMG_8364.JPG.webp", "/IMG_8367.JPG.webp", "/IMG_8368.JPG.webp",
     "/IMG_8369.JPG.webp", "/IMG_8370.JPG.webp", "/IMG_8371.JPG.webp", "/IMG_8373.JPG.webp",
@@ -362,11 +363,7 @@ export default function LAteneoDanzaLanding() {
     },
   ]
 
-  const testimonials = [
-    { name: "Sofia M.", course: "Danza Classica", quote: "Mia figlia aspetta con ansia ogni lezione. Ha trovato non solo una passione, ma anche una seconda famiglia." },
-    { name: "Marco R.", course: "Hip Hop", quote: "I maestri sono incredibili. Ho imparato pi\u00f9 in sei mesi qui che in anni altrove. Consigliatissimo!" },
-    { name: "Giulia T.", course: "Pilates", quote: "Un\u2019oasi di benessere. L\u2019atmosfera \u00e8 accogliente e professionale allo stesso tempo." },
-  ]
+
 
   const ScheduleCard = ({ title, subtitle, schedule }: { title: string; subtitle: string; schedule: typeof salaArmoniaSchedule }) => {
     const [activeDayIndex, setActiveDayIndex] = useState(0)
@@ -1178,11 +1175,12 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-3 gap-1.5 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 sm:gap-4">
             {[
-              { src: "/air_dance_student.jpg", alt: "Studente di danza aerea" },
-              { src: "/collage_children_group.jpg", alt: "Gruppo di bambini" },
-              { src: "/group_male_female_stuends_stage.jpg", alt: "Studenti sul palco" },
+              { src: "/additional/coppia-balletto-ateneo-agropoli-3.webp", alt: "Coppia balletto Ateneo Agropoli" },
+              { src: "/additional/females-group-perform.webp", alt: "Gruppo femminile in scena" },
+              { src: "/additional/coppia-performance-palcoscenico-2.webp", alt: "Coppia performance palcoscenico" },
+              { src: "/female_pair_modern_dance.jpg", alt: "Coppia femminile danza moderna" },
             ].map((image, index) => (
               <button
                 key={index}
@@ -1280,6 +1278,17 @@ export default function LAteneoDanzaLanding() {
                 </button>
               </div>
             )}
+            {reelsExpanded && (
+              <div className="flex justify-center mt-6">
+                <button
+                  onClick={() => setReelsExpanded(false)}
+                  className="px-8 py-3 rounded-sm text-sm font-semibold transition-colors"
+                  style={{ border: "1px solid #C9980A", color: "#C9980A", background: "transparent" }}
+                >
+                  Chiudi video ↑
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -1287,13 +1296,13 @@ export default function LAteneoDanzaLanding() {
       {/* Gallery Modal */}
       {galleryOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto"
+          className="fixed inset-0 z-[10500] flex items-start justify-center overflow-y-auto"
           style={{ background: "rgba(0,0,0,0.95)" }}
           onClick={(e) => { if (e.target === e.currentTarget) setGalleryOpen(false) }}
         >
           <button
             onClick={() => setGalleryOpen(false)}
-            className="fixed top-6 right-6 z-[110] text-[#F5EDD8] text-3xl font-light hover:opacity-70 transition-opacity"
+            className="fixed top-6 right-6 z-[10510] text-[#F5EDD8] text-3xl font-light hover:opacity-70 transition-opacity"
             aria-label="Close gallery"
           >
             <X size={32} />
@@ -1339,13 +1348,13 @@ export default function LAteneoDanzaLanding() {
       {/* Enlarged Photo Modal */}
       {enlargedPhoto && (
         <div
-          className="fixed inset-0 z-[120] flex items-center justify-center"
+          className="fixed inset-0 z-[10500] flex items-center justify-center"
           style={{ background: "rgba(0,0,0,0.95)" }}
           onClick={() => setEnlargedPhoto(null)}
         >
           <button
             onClick={() => setEnlargedPhoto(null)}
-            className="fixed top-6 right-6 z-[130] text-[#F5EDD8] text-3xl font-light hover:opacity-70 transition-opacity"
+            className="fixed top-6 right-6 z-[10510] text-[#F5EDD8] text-3xl font-light hover:opacity-70 transition-opacity"
             aria-label="Close photo"
           >
             <X size={32} />
@@ -1383,12 +1392,12 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
             {["/testimonial1.jpeg", "/testimonial2.jpeg"].map((src) => (
               <button
                 key={src}
                 onClick={() => setEnlargedPhoto(src)}
-                className="cursor-zoom-in focus:outline-none group max-w-[200px]"
+                className="cursor-zoom-in focus:outline-none group"
                 aria-label="Ingrandisci testimonianza"
               >
                 <Image
@@ -1649,7 +1658,7 @@ export default function LAteneoDanzaLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             {/* Column 1 — Logo & Tagline */}
-            <div>
+            <div className="flex flex-col items-center md:items-start">
               <a href="#" className="flex items-center gap-3 mb-6">
                 <img
                   src="/logo2.png"
@@ -1658,7 +1667,7 @@ export default function LAteneoDanzaLanding() {
                   style={{ filter: 'brightness(0) invert(1)' }}
                 />
               </a>
-              <p className="text-[#B8A080] text-sm max-w-[280px] mt-4 leading-relaxed">
+              <p className="text-[#B8A080] text-sm max-w-[280px] mt-4 leading-relaxed text-center md:text-left">
                 Da oltre 30 anni, la casa della danza ad Agropoli.
               </p>
               <div className="flex gap-5 mt-6">
@@ -1674,9 +1683,9 @@ export default function LAteneoDanzaLanding() {
             </div>
 
             {/* Column 2 — Link Rapidi */}
-            <div>
+            <div className="flex flex-col items-center md:items-start">
               <h4 className="font-semibold text-[#F5EDD8] mb-6 text-sm uppercase tracking-wider">Link Rapidi</h4>
-              <ul className="space-y-3">
+              <ul className="space-y-3 text-center md:text-left">
                 {navLinks.map((link) => (
                   <li key={link.href}>
                     <a
@@ -1691,7 +1700,7 @@ export default function LAteneoDanzaLanding() {
             </div>
 
             {/* Column 3 — Contatti */}
-            <div>
+            <div className="flex flex-col items-center md:items-start">
               <h4 className="font-semibold text-[#F5EDD8] mb-6 text-sm uppercase tracking-wider">Contatti</h4>
               <ul>
                 <li className="flex items-center gap-2 mb-3">
@@ -1714,9 +1723,9 @@ export default function LAteneoDanzaLanding() {
             </div>
 
             {/* Column 4 — Dove Siamo */}
-            <div>
+            <div className="flex flex-col items-center md:items-start">
               <h4 className="font-semibold text-[#F5EDD8] mb-6 text-sm uppercase tracking-wider">Dove Siamo</h4>
-              <p className="text-[#B8A080] text-sm leading-relaxed mb-3">
+              <p className="text-[#B8A080] text-sm leading-relaxed mb-3 text-center md:text-left">
                 Sede Storica: Via Moio, 8<br />
                 Nuova Sala: Via Moio, 16<br />
                 84043 Agropoli (SA)
@@ -1763,7 +1772,7 @@ export default function LAteneoDanzaLanding() {
 
       {/* WhatsApp Floating Button */}
       <div
-        style={{ position: "fixed", zIndex: 10000 }}
+        style={{ position: "fixed", zIndex: 9000 }}
         className="bottom-20 right-4 md:bottom-6 md:right-6 flex items-center gap-2"
         onMouseEnter={() => setWhatsappHover(true)}
         onMouseLeave={() => setWhatsappHover(false)}
@@ -1811,7 +1820,7 @@ export default function LAteneoDanzaLanding() {
             bottom: 0,
             left: 0,
             right: 0,
-            zIndex: 9999,
+            zIndex: 8999,
             background: "#0F0E0A",
             borderTop: "1px solid #2A2010",
             opacity: cookieFading ? 0 : 1,
