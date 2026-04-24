@@ -88,7 +88,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it" className={`${jost.variable} ${bodoni.variable} ${dancingScript.variable}`}>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased" suppressHydrationWarning={true}>
         {children}
         <Analytics />
       </body>

@@ -26,6 +26,7 @@ export default function LAteneoDanzaLanding() {
   const [expandedBios, setExpandedBios] = useState<boolean[]>([false, false, false, false])
   const [visibleCount, setVisibleCount] = useState(20)
   const [reelsExpanded, setReelsExpanded] = useState(false)
+  const [coursesExpanded, setCoursesExpanded] = useState(false)
 
   useEffect(() => {
     if (!localStorage.getItem("cookieConsent")) {
@@ -367,29 +368,62 @@ export default function LAteneoDanzaLanding() {
     { name: "Giulia T.", course: "Pilates", quote: "Un\u2019oasi di benessere. L\u2019atmosfera \u00e8 accogliente e professionale allo stesso tempo." },
   ]
 
-  const ScheduleCard = ({ title, subtitle, schedule }: { title: string; subtitle: string; schedule: typeof salaArmoniaSchedule }) => (
-    <div className="bg-[#0A0905] border border-[#2A2010] rounded-sm p-8">
-      <h3 className="font-serif text-2xl font-bold text-[#C9980A] mb-1 text-center">{title}</h3>
-      <p className="text-[#B8A080] text-sm mb-6 text-center">{subtitle}</p>
-      <div className="space-y-5">
-        {schedule.map((day, i) => (
-          <div key={i} className="mb-5">
-            <div className="uppercase font-sans font-semibold text-[#F5EDD8] border-b border-[#2A2010] pb-1 mb-2 text-sm text-center">
-              {day.day}
-            </div>
-            <div className="space-y-3">
-              {day.classes.map((cls, j) => (
-                <div key={j} className="grid grid-cols-[80px_1fr] gap-4 items-baseline border-b border-[#2A2010]/20 pb-2 last:border-0 last:pb-0">
-                  <span className="text-[#C9980A] font-sans font-bold text-sm text-right">{cls.time}</span>
-                  <span className="text-[#F5EDD8] text-sm font-medium uppercase tracking-wide text-left">{cls.name}</span>
-                </div>
-              ))}
-            </div>
+  const ScheduleCard = ({ title, subtitle, schedule }: { title: string; subtitle: string; schedule: typeof salaArmoniaSchedule }) => {
+    const [activeDayIndex, setActiveDayIndex] = useState(0)
+
+    return (
+      <div className="bg-[#0A0905] border border-[#2A2010] rounded-sm p-6 sm:p-8">
+        <h3 className="font-serif text-2xl font-bold text-[#C9980A] mb-1 text-center">{title}</h3>
+        <p className="text-[#B8A080] text-sm mb-6 text-center">{subtitle}</p>
+
+        {/* Mobile Tabs System */}
+        <div className="md:hidden">
+          <div className="grid grid-cols-5 gap-1 pb-4">
+            {schedule.map((day, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveDayIndex(i)}
+                className={`py-2.5 text-[10px] font-bold uppercase tracking-tighter border transition-all duration-300 ${activeDayIndex === i
+                    ? "bg-[#C9980A] text-[#0A0905] border-[#C9980A]"
+                    : "bg-transparent text-[#B8A080] border-[#2A2010] hover:border-[#C9980A]/40"
+                  }`}
+              >
+                {day.day.substring(0, 3)}
+              </button>
+            ))}
           </div>
-        ))}
+
+          <div className="mt-4 space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            {schedule[activeDayIndex].classes.map((cls, j) => (
+              <div key={j} className="grid grid-cols-[70px_1fr] gap-4 items-baseline border-b border-[#2A2010]/20 pb-3 last:border-0 last:pb-0">
+                <span className="text-[#C9980A] font-sans font-bold text-xs text-right">{cls.time}</span>
+                <span className="text-[#F5EDD8] text-sm font-medium uppercase tracking-wide text-left">{cls.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop Layout (Hidden on Mobile) */}
+        <div className="hidden md:block space-y-5">
+          {schedule.map((day, i) => (
+            <div key={i} className="mb-5">
+              <div className="uppercase font-sans font-semibold text-[#F5EDD8] border-b border-[#2A2010] pb-1 mb-2 text-sm text-center">
+                {day.day}
+              </div>
+              <div className="space-y-3">
+                {day.classes.map((cls, j) => (
+                  <div key={j} className="grid grid-cols-[80px_1fr] gap-4 items-baseline border-b border-[#2A2010]/20 pb-2 last:border-0 last:pb-0">
+                    <span className="text-[#C9980A] font-sans font-bold text-sm text-right">{cls.time}</span>
+                    <span className="text-[#F5EDD8] text-sm font-medium uppercase tracking-wide text-left">{cls.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -583,6 +617,122 @@ export default function LAteneoDanzaLanding() {
         </div>
       </section>
 
+      {/* Chi Siamo Section */}
+      <section
+        id="chi-siamo"
+        ref={(el) => { sectionRefs.current["chi-siamo"] = el }}
+        className={`py-20 sm:py-28 bg-card transition-all duration-700 ${visibleSections.has("chi-siamo") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Portrait Placeholder */}
+            <div className="relative aspect-[4/5] w-full overflow-hidden">
+              <Image
+                src="/founder.jpg"
+                alt="Founder"
+                fill
+                className="object-cover bg-[#1A1408] border border-[#2A2010] rounded-sm"
+              />
+              {/* Right edge fade — blends image into background toward the text */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(to left, #0F0E0A 0%, transparent 40%)'
+                }}
+              />
+              {/* Bottom edge fade */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(to top, #0F0E0A 0%, transparent 35%)'
+                }}
+              />
+            </div>
+
+            <div>
+              <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-6">
+                Conosci la Tua Insegnante
+              </h2>
+              <p className="text-[#F5EDD8] text-lg mb-6 leading-relaxed text-pretty">
+                Rita Polidoro è la fondatrice e direttrice artistica de L&apos;Ateneo Danza Musical e Fitness.
+                Dal 1999 guida la scuola con una visione chiara: unire tecnica, creatività e passione per formare
+                non solo danzatori, ma persone complete. Con oltre 30 anni di esperienza, ha formato centinaia di
+                giovani talenti ad Agropoli e nel Cilento.
+              </p>
+              <ul className="font-sans text-sm text-[#B8A080] mb-6 space-y-1.5">
+                <li><span className="text-[#C9980A] mr-2">·</span>Laureata in Lettere Moderne — Università di Salerno</li>
+                <li><span className="text-[#C9980A] mr-2">·</span>Formazione internazionale — New York, Miami, Chicago</li>
+                <li><span className="text-[#C9980A] mr-2">·</span>Regia e coreografie — The Greatest Showman, Mamma Mia, Hairspray, Notre Dame de Paris</li>
+                <li><span className="text-[#C9980A] mr-2">·</span>Ospite Rai — Raccomandati con Carlo Conti</li>
+                <li><span className="text-[#C9980A] mr-2">·</span>Maratoneta — New York City Marathon 2024</li>
+              </ul>
+              <blockquote className="border-l-4 border-accent pl-6 py-2 mb-6">
+                <p className="font-serif text-xl sm:text-2xl text-foreground italic text-balance">
+                  &ldquo;La mia filosofia mira a creare un ambiente inclusivo dove la trasmissione dei saperi
+                  si unisce alla gioia del movimento — preparando ogni allievo non solo al palcoscenico,
+                  ma alle sfide della vita.&rdquo;
+                </p>
+                <footer className="mt-3 font-sans text-sm text-[#B8A080]">— Rita Polidoro</footer>
+              </blockquote>
+              <button
+                onClick={() => setBioOpen(!bioOpen)}
+                className="font-sans text-sm text-[#C9980A] cursor-pointer bg-transparent border-none p-0 mb-4 hover:opacity-80 transition-opacity"
+              >
+                {bioOpen ? "Chiudi ↑" : "Leggi la sua storia completa ↓"}
+              </button>
+              <div
+                style={{
+                  maxHeight: bioOpen ? "2000px" : "0",
+                  opacity: bioOpen ? 1 : 0,
+                  overflow: "hidden",
+                  transition: "max-height 0.5s ease, opacity 0.5s ease",
+                }}
+              >
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  Rita Polidoro è una professionista con una formation accademica e artistica d&apos;eccellenza.
+                  Laureata in Lettere Moderne con indirizzo Arte e Spettacolo presso l&apos;Università degli Studi
+                  di Salerno, è diplomata in dizione e recitazione e ha perfezionato il suo linguaggio artistico
+                  partecipando a masterclass di alto livello — tra cui quella di recitazione cinematografica con
+                  il regista Ferzan Ozpetek.
+                </p>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  La sua tecnica è stata plasmata da esperienze internazionali di primo piano. Ha studiato presso
+                  i centri CRUNCH di New York, Miami e Chicago con maestri di fama mondiale come Madonna Grimes e
+                  Leslie Feliciano. È diplomata C.S.E.N - C.O.N.I. in danza classica, moderna, contemporary fusion,
+                  musical, funk, hip hop, discipline aeree e fitness.
+                </p>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  Specialista nel genere Musical, Rita ha curato la regia e le coreografie di produzioni iconiche
+                  come The Greatest Showman, Mamma Mia, Hairspray e Notre Dame de Paris. Il suo talento l&apos;ha
+                  portata anche in televisione, con partecipazioni a programmi Rai come Raccomandati condotto da
+                  Carlo Conti e alla serie TV L&apos;Avvocato Malinconico.
+                </p>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  Nel novembre 2024 ha portato a termine la Maratona di New York — un&apos;impresa che racconta
+                  meglio di qualsiasi parola la sua filosofia di vita e di insegnamento.
+                </p>
+                <div style={{ borderTop: "1px solid #2A2010" }} className="my-6" />
+                <h3 className="font-serif text-xl text-[#C9980A] mb-4">La Nostra Storia</h3>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  L&apos;Ateneo nasce nel settembre 1999 da un sogno semplice e potente: creare ad Agropoli un luogo
+                  dove chiunque — bambino o adulto, principiante o esperto — potesse scoprire la propria creatività
+                  e trovare la propria espressione artistica.
+                </p>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  In oltre venticinque anni, la scuola è cresciuta fino a diventare un punto di riferimento per la
+                  danza e la formazione nel Cilento. Oggi L&apos;Ateneo conta due sedi in Via Moio, un team di
+                  insegnanti esperti e centinaia di allievi che ogni anno salgono sul palcoscenico per gli spettacoli annuali.
+                </p>
+                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
+                  La nostra missione non è cambiata dal primo giorno: offrire una formazione di alta qualità in un
+                  ambiente accogliente e professionale, dove ogni allievo si senta a casa e possa dare il meglio di sé.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Corsi Section */}
       <section
         id="corsi"
@@ -597,48 +747,73 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          {courseCategories.map((category, catIndex) => (
-            <div key={catIndex} className={catIndex > 0 ? "mt-12" : ""}>
-              <div className="uppercase text-xs tracking-widest text-[#C9980A] mb-3">
-                {category.label}
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {category.courses.map((course, index) => (
-                  <div
-                    key={index}
-                    className="group bg-[#0A0905] border border-[#2A2010] border-l-[3px] border-l-transparent rounded-sm p-6 transition-all duration-300 hover:bg-[#120F06] hover:border-l-[#C9980A]"
-                  >
-                    <div className="w-full h-48 bg-secondary rounded-sm mb-6 overflow-hidden relative">
-                      {course.image ? (
-                        <Image
-                          src={course.image}
-                          alt={course.title}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-transparent flex items-center justify-center">
-                          {course.icon}
+          {courseCategories.map((category, catIndex) => {
+            let previousCoursesCount = 0
+            for (let i = 0; i < catIndex; i++) {
+              previousCoursesCount += courseCategories[i].courses.length
+            }
+
+            const isCategoryHiddenOnMobile = !coursesExpanded && previousCoursesCount >= 6
+
+            return (
+              <div key={catIndex} className={`${catIndex > 0 ? "mt-12" : ""} ${isCategoryHiddenOnMobile ? "hidden md:block" : "block"}`}>
+                <div className="uppercase text-xs tracking-widest text-[#C9980A] mb-3">
+                  {category.label}
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {category.courses.map((course, index) => {
+                    const globalIdx = previousCoursesCount + index
+                    const isHiddenOnMobile = !coursesExpanded && globalIdx >= 6
+                    return (
+                      <div
+                        key={index}
+                        className={`group bg-[#0A0905] border border-[#2A2010] border-l-[3px] border-l-transparent rounded-sm p-6 transition-all duration-300 hover:bg-[#120F06] hover:border-l-[#C9980A] ${isHiddenOnMobile ? "hidden md:block" : "block"}`}
+                      >
+                        <div className="w-full h-48 bg-secondary rounded-sm mb-6 overflow-hidden relative">
+                          {course.image ? (
+                            <Image
+                              src={course.image}
+                              alt={course.title}
+                              fill
+                              className="object-cover group-hover:scale-110 transition-transform duration-500"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-transparent flex items-center justify-center">
+                              {course.icon}
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    <div className="inline-block bg-[#C9980A]/10 text-[#C9980A] border border-[#C9980A]/25 px-3 py-1 rounded-sm text-xs font-semibold mb-3">
-                      {course.age}
-                    </div>
-                    <h3 className="font-serif text-2xl font-bold text-[#F5EDD8] mb-3">{course.title}</h3>
-                    <p className="text-[#F5EDD8] mb-4 text-pretty">{course.description}</p>
-                    <a
-                      href="#contatti"
-                      className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
-                    >
-                      Richiedi Info
-                      <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
-                    </a>
-                  </div>
-                ))}
+                        <div className="inline-block bg-[#C9980A]/10 text-[#C9980A] border border-[#C9980A]/25 px-3 py-1 rounded-sm text-xs font-semibold mb-3">
+                          {course.age}
+                        </div>
+                        <h3 className="font-serif text-2xl font-bold text-[#F5EDD8] mb-3">{course.title}</h3>
+                        <p className="text-[#F5EDD8] mb-4 text-pretty">{course.description}</p>
+                        <a
+                          href="#contatti"
+                          className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
+                        >
+                          Richiedi Info
+                          <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                        </a>
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
+            )
+          })}
+
+          {!coursesExpanded && (
+            <div className="mt-12 text-center md:hidden">
+              <button
+                onClick={() => setCoursesExpanded(true)}
+                className="bg-[#C9980A] hover:bg-[#C9980A]/90 text-[#0A0905] px-8 py-3 rounded-sm font-bold transition-all active:scale-95 flex items-center justify-center gap-2 mx-auto"
+              >
+                Vedi tutti i corsi
+                <ChevronRight size={18} />
+              </button>
             </div>
-          ))}
+          )}
         </div>
       </section>
 
@@ -797,123 +972,6 @@ export default function LAteneoDanzaLanding() {
         </div>
       </section>
 
-
-      {/* Chi Siamo Section */}
-      <section
-        id="chi-siamo"
-        ref={(el) => { sectionRefs.current["chi-siamo"] = el }}
-        className={`py-20 sm:py-28 bg-card transition-all duration-700 ${visibleSections.has("chi-siamo") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Portrait Placeholder */}
-            <div className="relative aspect-[4/5] w-full overflow-hidden">
-              <Image
-                src="/founder.jpg"
-                alt="Founder"
-                fill
-                className="object-cover bg-[#1A1408] border border-[#2A2010] rounded-sm"
-              />
-              {/* Right edge fade — blends image into background toward the text */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(to left, #0F0E0A 0%, transparent 40%)'
-                }}
-              />
-              {/* Bottom edge fade */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(to top, #0F0E0A 0%, transparent 35%)'
-                }}
-              />
-            </div>
-
-            <div>
-              <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-6">
-                Conosci la Tua Insegnante
-              </h2>
-              <p className="text-[#F5EDD8] text-lg mb-6 leading-relaxed text-pretty">
-                Rita Polidoro è la fondatrice e direttrice artistica de L&apos;Ateneo Danza Musical e Fitness.
-                Dal 1999 guida la scuola con una visione chiara: unire tecnica, creatività e passione per formare
-                non solo danzatori, ma persone complete. Con oltre 30 anni di esperienza, ha formato centinaia di
-                giovani talenti ad Agropoli e nel Cilento.
-              </p>
-              <ul className="font-sans text-sm text-[#B8A080] mb-6 space-y-1.5">
-                <li><span className="text-[#C9980A] mr-2">·</span>Laureata in Lettere Moderne — Università di Salerno</li>
-                <li><span className="text-[#C9980A] mr-2">·</span>Formazione internazionale — New York, Miami, Chicago</li>
-                <li><span className="text-[#C9980A] mr-2">·</span>Regia e coreografie — The Greatest Showman, Mamma Mia, Hairspray, Notre Dame de Paris</li>
-                <li><span className="text-[#C9980A] mr-2">·</span>Ospite Rai — Raccomandati con Carlo Conti</li>
-                <li><span className="text-[#C9980A] mr-2">·</span>Maratoneta — New York City Marathon 2024</li>
-              </ul>
-              <blockquote className="border-l-4 border-accent pl-6 py-2 mb-6">
-                <p className="font-serif text-xl sm:text-2xl text-foreground italic text-balance">
-                  &ldquo;La mia filosofia mira a creare un ambiente inclusivo dove la trasmissione dei saperi
-                  si unisce alla gioia del movimento — preparando ogni allievo non solo al palcoscenico,
-                  ma alle sfide della vita.&rdquo;
-                </p>
-                <footer className="mt-3 font-sans text-sm text-[#B8A080]">— Rita Polidoro</footer>
-              </blockquote>
-              <button
-                onClick={() => setBioOpen(!bioOpen)}
-                className="font-sans text-sm text-[#C9980A] cursor-pointer bg-transparent border-none p-0 mb-4 hover:opacity-80 transition-opacity"
-              >
-                {bioOpen ? "Chiudi ↑" : "Leggi la sua storia completa ↓"}
-              </button>
-              <div
-                style={{
-                  maxHeight: bioOpen ? "2000px" : "0",
-                  opacity: bioOpen ? 1 : 0,
-                  overflow: "hidden",
-                  transition: "max-height 0.5s ease, opacity 0.5s ease",
-                }}
-              >
-                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
-                  Rita Polidoro è una professionista con una formazione accademica e artistica d&apos;eccellenza.
-                  Laureata in Lettere Moderne con indirizzo Arte e Spettacolo presso l&apos;Università degli Studi
-                  di Salerno, è diplomata in dizione e recitazione e ha perfezionato il suo linguaggio artistico
-                  partecipando a masterclass di alto livello — tra cui quella di recitazione cinematografica con
-                  il regista Ferzan Ozpetek.
-                </p>
-                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
-                  La sua tecnica è stata plasmata da esperienze internazionali di primo piano. Ha studiato presso
-                  i centri CRUNCH di New York, Miami e Chicago con maestri di fama mondiale come Madonna Grimes e
-                  Leslie Feliciano. È diplomata C.S.E.N - C.O.N.I. in danza classica, moderna, contemporary fusion,
-                  musical, funk, hip hop, discipline aeree e fitness.
-                </p>
-                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
-                  Specialista nel genere Musical, Rita ha curato la regia e le coreografie di produzioni iconiche
-                  come The Greatest Showman, Mamma Mia, Hairspray e Notre Dame de Paris. Il suo talento l&apos;ha
-                  portata anche in televisione, con partecipazioni a programmi Rai come Raccomandati condotto da
-                  Carlo Conti e alla serie TV L&apos;Avvocato Malinconico.
-                </p>
-                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
-                  Nel novembre 2024 ha portato a termine la Maratona di New York — un&apos;impresa che racconta
-                  meglio di qualsiasi parola la sua filosofia di vita e di insegnamento.
-                </p>
-                <div style={{ borderTop: "1px solid #2A2010" }} className="my-6" />
-                <h3 className="font-serif text-xl text-[#C9980A] mb-4">La Nostra Storia</h3>
-                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
-                  L&apos;Ateneo nasce nel settembre 1999 da un sogno semplice e potente: creare ad Agropoli un luogo
-                  dove chiunque — bambino o adulto, principiante o esperto — potesse scoprire la propria creatività
-                  e trovare la propria espressione artistica.
-                </p>
-                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
-                  In oltre venticinque anni, la scuola è cresciuta fino a diventare un punto di riferimento per la
-                  danza e la formazione nel Cilento. Oggi L&apos;Ateneo conta due sedi in Via Moio, un team di
-                  insegnanti esperti e centinaia di allievi che ogni anno salgono sul palcoscenico per gli spettacoli annuali.
-                </p>
-                <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-4">
-                  La nostra missione non è cambiata dal primo giorno: offrire una formazione di alta qualità in un
-                  ambiente accogliente e professionale, dove ogni allievo si senta a casa e possa dare il meglio di sé.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Team Section */}
       <section
         id="team"
@@ -957,7 +1015,7 @@ export default function LAteneoDanzaLanding() {
             ].map((member, idx) => (
               <div
                 key={member.name}
-                className="rounded-sm overflow-hidden transition-all duration-300"
+                className="rounded-sm overflow-hidden transition-all duration-300 flex flex-col"
                 style={{
                   background: "#0A0905",
                   border: "1px solid #2A2010",
@@ -973,11 +1031,11 @@ export default function LAteneoDanzaLanding() {
                     style={{ aspectRatio: "1 / 1", display: "block" }}
                   />
                 </div>
-                <div className="p-4">
+                <div className="p-4 flex flex-col flex-grow">
                   <p className="font-serif font-bold text-lg text-[#F5EDD8] mb-1">{member.name}</p>
                   <p className="font-sans text-xs text-[#C9980A] uppercase tracking-wider mb-3">{member.role}</p>
                   <div style={{ borderTop: "1px solid #2A2010" }} className="mb-3" />
-                  <p className={`font-sans text-sm text-[#B8A080] leading-relaxed ${expandedBios[idx] ? "" : "line-clamp-2 md:line-clamp-none"}`}>
+                  <p className={`font-sans text-sm text-[#B8A080] leading-relaxed flex-grow ${expandedBios[idx] ? "" : "line-clamp-2 md:line-clamp-none"}`}>
                     {member.bio}
                   </p>
                   <button
@@ -1120,7 +1178,7 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-4">
             {[
               { src: "/air_dance_student.jpg", alt: "Studente di danza aerea" },
               { src: "/collage_children_group.jpg", alt: "Gruppo di bambini" },
@@ -1246,7 +1304,7 @@ export default function LAteneoDanzaLanding() {
                 <button
                   key={i}
                   onClick={() => setEnlargedPhoto(src)}
-                  className="relative aspect-square overflow-hidden rounded-sm cursor-pointer group"
+                  className="relative aspect-square overflow-hidden rounded-sm cursor-zoom-in group"
                 >
                   <div className="aspect-square overflow-hidden">
                     <Image
@@ -1256,9 +1314,10 @@ export default function LAteneoDanzaLanding() {
                       height={400}
                       quality={75}
                       loading="lazy"
-                      className="object-cover w-full h-full"
+                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-400"
                     />
                   </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
                 </button>
               ))}
             </div>
@@ -1345,17 +1404,18 @@ export default function LAteneoDanzaLanding() {
         </div>
       </section>
 
-      {/* Prima Lezione Gratuita CTA Banner 2 */}
+      {/* CTA Banner 2 — Team & Opes certification */}
       <section className="bg-[#C9980A]/10 border-t border-b border-[#C9980A]/20 py-8 sm:py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-foreground text-lg sm:text-xl mb-4">
-            La prima lezione &egrave; gratuita &mdash; vieni a trovarci
+          <p className="text-foreground text-lg sm:text-xl mb-1">
+            Scuola certificata <span className="text-[#C9980A] font-semibold">Opes Danza</span> &mdash; un team di professionisti al tuo fianco
           </p>
+          <p className="text-[#B8A080] text-sm mb-4">Insegnanti con formazione internazionale e anni di palcoscenico</p>
           <a
-            href="#contatti"
+            href="#team"
             className="inline-block bg-[#C9980A] hover:bg-[#C9980A]/90 text-[#0A0905] px-8 py-3 rounded-sm font-semibold transition-colors"
           >
-            Prenota Ora
+            Conosci il Team
           </a>
         </div>
       </section>
@@ -1364,7 +1424,7 @@ export default function LAteneoDanzaLanding() {
       <section
         id="contatti"
         ref={(el) => { sectionRefs.current["contatti"] = el }}
-        className={`py-24 border-t border-[#2A2010] transition-all duration-700 ${visibleSections.has("contatti") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className={`relative z-10 py-24 border-t border-[#2A2010] transition-all duration-700 ${visibleSections.has("contatti") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-left lg:text-center mb-16 px-4 lg:px-0">
@@ -1549,20 +1609,20 @@ export default function LAteneoDanzaLanding() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  <a href="tel:+393393565655" className="flex items-start gap-4 group cursor-pointer">
+                    <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1 group-hover:scale-110 transition-transform" />
                     <div>
-                      <div className="font-semibold text-[#F5EDD8]">Telefono</div>
-                      <div className="text-[#F5EDD8]">+39 339 356 5655</div>
+                      <div className="font-semibold text-[#F5EDD8] group-hover:text-[#C9980A] transition-colors">Telefono</div>
+                      <div className="text-[#F5EDD8] group-hover:text-[#C9980A] transition-colors">+39 339 356 5655</div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  </a>
+                  <a href="mailto:ritapolidoro4@gmail.com" className="flex items-start gap-4 group cursor-pointer">
+                    <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1 group-hover:scale-110 transition-transform" />
                     <div>
-                      <div className="font-semibold text-[#F5EDD8]">Email</div>
-                      <div className="text-[#F5EDD8]">ritapolidoro4@gmail.com</div>
+                      <div className="font-semibold text-[#F5EDD8] group-hover:text-[#C9980A] transition-colors">Email</div>
+                      <div className="text-[#F5EDD8] group-hover:text-[#C9980A] transition-colors">ritapolidoro4@gmail.com</div>
                     </div>
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>
