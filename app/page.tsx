@@ -25,6 +25,7 @@ export default function LAteneoDanzaLanding() {
   const [whatsappHover, setWhatsappHover] = useState(false)
   const [expandedBios, setExpandedBios] = useState<boolean[]>([false, false, false, false])
   const [visibleCount, setVisibleCount] = useState(20)
+  const [reelsExpanded, setReelsExpanded] = useState(false)
 
   useEffect(() => {
     if (!localStorage.getItem("cookieConsent")) {
@@ -203,6 +204,8 @@ export default function LAteneoDanzaLanding() {
   ]
 
   const allGalleryPhotos = [
+    "/group_outside_.jpg", "/inside_school_children_lesson.jpg", "/male_female_duo.jpg",
+    "/outside_event_students.jpg", "/solo_female_air_dance.jpg", "/student_green_dress.jpg",
     "/IMG_8356.JPG.webp", "/IMG_8357.JPG.webp", "/IMG_8359.JPG.webp", "/IMG_8360.JPG.webp",
     "/IMG_8363.JPG.webp", "/IMG_8364.JPG.webp", "/IMG_8367.JPG.webp", "/IMG_8368.JPG.webp",
     "/IMG_8369.JPG.webp", "/IMG_8370.JPG.webp", "/IMG_8371.JPG.webp", "/IMG_8373.JPG.webp",
@@ -1117,21 +1120,16 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             {[
               { src: "/air_dance_student.jpg", alt: "Studente di danza aerea" },
               { src: "/collage_children_group.jpg", alt: "Gruppo di bambini" },
               { src: "/group_male_female_stuends_stage.jpg", alt: "Studenti sul palco" },
-              { src: "/group_outside_.jpg", alt: "Gruppo all'aperto" },
-              { src: "/inside_school_children_lesson.jpg", alt: "Lezione all'interno" },
-              { src: "/male_female_duo.jpg", alt: "Duo maschile e femminile" },
-              { src: "/outside_event_students.jpg", alt: "Evento all'aperto" },
-              { src: "/solo_female_air_dance.jpg", alt: "Solo danza aerea" },
-              { src: "/student_green_dress.jpg", alt: "Studentessa in abito verde" },
             ].map((image, index) => (
-              <div
+              <button
                 key={index}
-                className="relative overflow-hidden rounded-sm group aspect-square"
+                onClick={() => setEnlargedPhoto(image.src)}
+                className="relative overflow-hidden rounded-sm group aspect-square cursor-zoom-in"
               >
                 <Image
                   src={image.src}
@@ -1141,7 +1139,7 @@ export default function LAteneoDanzaLanding() {
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
-              </div>
+              </button>
             ))}
           </div>
 
@@ -1156,21 +1154,25 @@ export default function LAteneoDanzaLanding() {
             </button>
           </div>
 
+          <div className="border-t border-[#2A2010] mt-20" />
+
           {/* Instagram Reels Subsection */}
-          <div className="mt-20 pb-20">
+          <div className="mt-0 pb-20">
             <div className="text-left lg:text-center mb-12 px-4 lg:px-0">
               <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-4 text-left lg:text-center">I Nostri Video</h2>
               <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
                 L&apos;Ateneo in scena — momenti di passione e talento
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className={reelsExpanded ? "grid grid-cols-1 md:grid-cols-3 gap-6" : "flex justify-center"}>
               {([
                 { ref: videoRef1, src: "/reel1.mp4", index: 0 },
                 { ref: videoRef2, src: "/reel2.mp4", index: 1 },
                 { ref: videoRef3, src: "/reel3.mp4", index: 2 },
-              ] as { ref: React.RefObject<HTMLVideoElement>; src: string; index: number }[]).map(({ ref, src, index }) => (
-                <div key={index} className="aspect-[9/16] overflow-hidden rounded-sm bg-black relative">
+              ] as { ref: React.RefObject<HTMLVideoElement>; src: string; index: number }[])
+                .filter(({ index }) => reelsExpanded || index === 0)
+                .map(({ ref, src, index }) => (
+                <div key={index} className={`aspect-[9/16] overflow-hidden rounded-sm bg-black relative ${reelsExpanded ? "" : "w-full max-w-sm"}`}>
                   <video
                     ref={ref}
                     src={src}
@@ -1209,6 +1211,17 @@ export default function LAteneoDanzaLanding() {
                 </div>
               ))}
             </div>
+            {!reelsExpanded && (
+              <div className="flex justify-center mt-6">
+                <button
+                  onClick={() => setReelsExpanded(true)}
+                  className="px-8 py-3 rounded-sm text-sm font-semibold transition-colors"
+                  style={{ border: "1px solid #C9980A", color: "#C9980A", background: "transparent" }}
+                >
+                  Vedi altri video
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -1311,20 +1324,20 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-6">
             {["/testimonial1.jpeg", "/testimonial2.jpeg"].map((src) => (
               <button
                 key={src}
                 onClick={() => setEnlargedPhoto(src)}
-                className="cursor-zoom-in focus:outline-none group"
+                className="cursor-zoom-in focus:outline-none group max-w-[200px]"
                 aria-label="Ingrandisci testimonianza"
               >
                 <Image
                   src={src}
                   alt="Testimonianza cliente"
-                  width={280}
-                  height={390}
-                  className="w-full rounded-sm object-contain shadow-lg opacity-90 group-hover:opacity-100 transition-opacity"
+                  width={200}
+                  height={280}
+                  className="rounded-sm object-contain shadow-lg opacity-90 group-hover:opacity-100 transition-opacity"
                 />
               </button>
             ))}
