@@ -2,13 +2,16 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
-import { Phone, Mail, MapPin, Instagram, Facebook, Music, Star, Menu, X, ChevronRight, Clock, Calendar, Users, Zap, Wind, Radio, Mic, Mic2, Flame, Activity, Ticket, CalendarRange, Crown, Tag, Map, GraduationCap, BookOpen, Sparkles, Heart, Drama } from "lucide-react"
+import { Phone, Mail, MapPin, Instagram, Facebook, Music, Star, Menu, X, ChevronRight, ChevronUp, ChevronDown, Clock, Calendar, Users, Zap, Wind, Radio, Mic, Mic2, Flame, Activity, Ticket, CalendarRange, Crown, Tag, Map as MapIcon, GraduationCap, BookOpen, Sparkles, Heart, Drama } from "lucide-react"
 
 export default function LAteneoDanzaLanding() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
+  const [activeSection, setActiveSection] = useState<string | null>(null)
+  const intersectingRef = useRef<Map<string, number>>(new Map())
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
+  const touchStartXRef = useRef<number | null>(null)
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [enlargedPhoto, setEnlargedPhoto] = useState<string | null>(null)
   const videoRef1 = useRef<HTMLVideoElement>(null)
@@ -56,11 +59,20 @@ export default function LAteneoDanzaLanding() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            intersectingRef.current.set(entry.target.id, entry.intersectionRatio)
             setVisibleSections((prev) => new Set([...prev, entry.target.id]))
+          } else {
+            intersectingRef.current.delete(entry.target.id)
           }
         })
+        let best: string | null = null
+        let bestRatio = 0
+        intersectingRef.current.forEach((ratio, id) => {
+          if (ratio > bestRatio) { bestRatio = ratio; best = id }
+        })
+        setActiveSection(best)
       },
-      { threshold: 0.1 }
+      { threshold: [0.1, 0.25, 0.5] }
     )
 
     Object.values(sectionRefs.current).forEach((ref) => {
@@ -430,14 +442,14 @@ export default function LAteneoDanzaLanding() {
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-4 h-24 sm:h-28 lg:h-24">
+          <div className="flex items-center justify-between py-4 h-16 sm:h-20 lg:h-24">
             {/* Logo - Stacked Layout */}
             <a href="#" className="flex flex-col space-y-0 z-[60]">
               <div className="flex items-center gap-3">
                 <img
                   src="/logo2.png"
                   alt="L'Ateneo logo"
-                  className="h-20 w-auto object-contain"
+                  className="h-12 sm:h-16 lg:h-20 w-auto object-contain"
                   style={{ filter: 'brightness(0) invert(1)' }}
                 />
               </div>
@@ -450,7 +462,7 @@ export default function LAteneoDanzaLanding() {
                   <a
                     key={link.href}
                     href={link.href}
-                    className={`text-sm font-medium transition-colors ${visibleSections.has(link.href.slice(1)) ? "text-[#C9980A]" : "text-[#F5EDD8] hover:text-[#C9980A]"}`}
+                    className={`text-sm font-medium transition-colors ${activeSection === link.href.slice(1) ? "text-[#C9980A]" : "text-[#F5EDD8] hover:text-[#C9980A]"}`}
                   >
                     {link.label}
                   </a>
@@ -484,8 +496,17 @@ export default function LAteneoDanzaLanding() {
         <div
           className={`fixed top-0 right-0 bottom-0 w-[300px] bg-[#0F0E0A] z-[55] transition-transform duration-300 ease-out lg:hidden border-l border-[#C9980A]/20 ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
             }`}
+          onTouchStart={(e) => { touchStartXRef.current = e.touches[0].clientX }}
+          onTouchEnd={(e) => {
+            if (touchStartXRef.current !== null) {
+              const delta = e.changedTouches[0].clientX - touchStartXRef.current
+              if (delta > 60) setMobileMenuOpen(false)
+              touchStartXRef.current = null
+            }
+          }}
         >
-          <div className="flex flex-col h-full pt-32 px-8 pb-10">
+          <div className="flex flex-col h-full pt-20 px-8 pb-10">
+            <div className="w-10 h-1 bg-[#2A2010] rounded-full mx-auto mb-6" />
             <div className="flex flex-col">
               {/* Group 1: Chi Siamo · Corsi · Mamma & Figlia · Formazione */}
               {[{ href: "#chi-siamo", label: "Chi Siamo" }, { href: "#corsi", label: "Corsi" }, { href: "#mamma-e-figlia", label: "Mamma & Figlia" }, { href: "#formazione", label: "Formazione" }].map((link) => (
@@ -589,8 +610,8 @@ export default function LAteneoDanzaLanding() {
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-foreground/30 rounded-full flex justify-center pt-2">
-            <div className="w-1 h-2 bg-foreground/50 rounded-full" />
+          <div className="w-6 h-10 border-2 border-foreground/50 rounded-full flex justify-center pt-2">
+            <div className="w-1 h-2 bg-foreground/70 rounded-full" />
           </div>
         </div>
       </section>
@@ -602,7 +623,7 @@ export default function LAteneoDanzaLanding() {
             {[
               { number: "30+", label: "ANNI DI ESPERIENZA" },
               { number: "200+", label: "ALLIEVI OGNI ANNO" },
-              { number: "3 anni", label: "ETÀ MINIMA" },
+              { number: "3", label: "ETÀ MINIMA (ANNI)" },
               { number: "2", label: "SPETTACOLI ANNUALI" },
             ].map((stat, index) => (
               <div key={index}>
@@ -673,9 +694,9 @@ export default function LAteneoDanzaLanding() {
               </blockquote>
               <button
                 onClick={() => setBioOpen(!bioOpen)}
-                className="font-sans text-sm text-[#C9980A] cursor-pointer bg-transparent border-none p-0 mb-4 hover:opacity-80 transition-opacity"
+                className="font-sans text-sm text-[#C9980A] cursor-pointer bg-transparent border-none p-0 mb-4 hover:opacity-80 transition-opacity inline-flex items-center gap-1"
               >
-                {bioOpen ? "Chiudi ↑" : "Leggi la sua storia completa ↓"}
+                {bioOpen ? <>Chiudi <ChevronUp size={14} /></> : <>Leggi la sua storia completa <ChevronDown size={14} /></>}
               </button>
               <div
                 style={{
@@ -1036,10 +1057,10 @@ export default function LAteneoDanzaLanding() {
                     {member.bio}
                   </p>
                   <button
-                    className="font-sans text-xs text-[#C9980A] cursor-pointer bg-transparent border-none p-0 mt-2 block md:hidden"
+                    className="font-sans text-xs text-[#C9980A] cursor-pointer bg-transparent border-none p-0 mt-2 block md:hidden inline-flex items-center gap-1"
                     onClick={() => setExpandedBios(prev => prev.map((v, i) => i === idx ? !v : v))}
                   >
-                    {expandedBios[idx] ? "Chiudi ↑" : "Leggi di più ↓"}
+                    {expandedBios[idx] ? <>Chiudi <ChevronUp size={12} /></> : <>Leggi di più <ChevronDown size={12} /></>}
                   </button>
                 </div>
               </div>
@@ -1063,7 +1084,7 @@ export default function LAteneoDanzaLanding() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <ScheduleCard title="Sala Armonia" subtitle="Via Moio, 16" schedule={salaArmoniaSchedule} />
+            <ScheduleCard title="Sala Armonia" subtitle="Via Moio, 8" schedule={salaArmoniaSchedule} />
             <ScheduleCard title="Sala Ritmo" subtitle="Via Moio, 16" schedule={salaRitmoSchedule} />
           </div>
 
@@ -1220,7 +1241,7 @@ export default function LAteneoDanzaLanding() {
                 L&apos;Ateneo in scena — momenti di passione e talento
               </p>
             </div>
-            <div className={reelsExpanded ? "grid grid-cols-1 md:grid-cols-3 gap-6" : "flex justify-center"}>
+            <div className={reelsExpanded ? "flex overflow-x-auto snap-x snap-mandatory gap-4 md:grid md:grid-cols-3 md:overflow-x-visible pb-4 md:pb-0" : "flex justify-center"}>
               {([
                 { ref: videoRef1, src: "/reel1.mp4", index: 0 },
                 { ref: videoRef2, src: "/reel2.mp4", index: 1 },
@@ -1228,7 +1249,7 @@ export default function LAteneoDanzaLanding() {
               ] as { ref: React.RefObject<HTMLVideoElement>; src: string; index: number }[])
                 .filter(({ index }) => reelsExpanded || index === 0)
                 .map(({ ref, src, index }) => (
-                <div key={index} className={`aspect-[9/16] overflow-hidden rounded-sm bg-black relative ${reelsExpanded ? "" : "w-full max-w-sm"}`}>
+                <div key={index} className={`aspect-[9/16] overflow-hidden rounded-sm bg-black relative ${reelsExpanded ? "snap-start flex-shrink-0 w-[80vw] md:w-auto" : "w-full max-w-sm"}`}>
                   <video
                     ref={ref}
                     src={src}
@@ -1375,24 +1396,17 @@ export default function LAteneoDanzaLanding() {
       <section
         id="testimonials"
         ref={(el) => { sectionRefs.current["testimonials"] = el }}
-        className={`py-24 sm:py-32 relative overflow-hidden transition-all duration-1000 ${visibleSections.has("testimonials") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        className={`py-24 sm:py-32 transition-all duration-1000 ${visibleSections.has("testimonials") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
       >
-        {/* Background Decorative Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#C9980A]/5 rounded-full blur-[140px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#C9980A]/5 rounded-full blur-[140px]" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-left lg:text-center mb-20 px-4 lg:px-0">
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-6">Voci dall&apos;Accademia</h2>
-            <div className="h-1 w-24 bg-[#C9980A] lg:mx-auto mb-8" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-left lg:text-center mb-12 px-4 lg:px-0">
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-4">Voci dall&apos;Accademia</h2>
             <p className="text-[#F5EDD8] text-lg max-w-2xl lg:mx-auto leading-relaxed">
               La nostra pi&ugrave; grande soddisfazione &egrave; il successo e il benessere dei nostri allievi.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
+          <div className="grid grid-cols-2 gap-6 max-w-2xl mx-auto">
             {["/testimonial1.jpeg", "/testimonial2.jpeg"].map((src) => (
               <button
                 key={src}
@@ -1403,8 +1417,8 @@ export default function LAteneoDanzaLanding() {
                 <Image
                   src={src}
                   alt="Testimonianza cliente"
-                  width={200}
-                  height={280}
+                  width={280}
+                  height={380}
                   className="rounded-sm object-contain shadow-lg opacity-90 group-hover:opacity-100 transition-opacity"
                 />
               </button>
@@ -1421,10 +1435,10 @@ export default function LAteneoDanzaLanding() {
           </p>
           <p className="text-[#B8A080] text-sm mb-4">Insegnanti con formazione internazionale e anni di palcoscenico</p>
           <a
-            href="#team"
+            href="#contatti"
             className="inline-block bg-[#C9980A] hover:bg-[#C9980A]/90 text-[#0A0905] px-8 py-3 rounded-sm font-semibold transition-colors"
           >
-            Conosci il Team
+            Iscriviti Ora
           </a>
         </div>
       </section>
@@ -1507,7 +1521,7 @@ export default function LAteneoDanzaLanding() {
                       type="text"
                       id="name"
                       name="nome"
-                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
+                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
                       style={{ border: `1px solid ${formErrors.nome ? "#C8003A" : "#2A2010"}` }}
                       onFocus={() => setFormErrors((prev) => ({ ...prev, nome: false }))}
                       placeholder="Il tuo nome"
@@ -1521,7 +1535,7 @@ export default function LAteneoDanzaLanding() {
                       type="email"
                       id="email"
                       name="email"
-                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
+                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
                       style={{ border: `1px solid ${formErrors.email ? "#C8003A" : "#2A2010"}` }}
                       onFocus={() => setFormErrors((prev) => ({ ...prev, email: false }))}
                       placeholder="La tua email"
@@ -1537,7 +1551,7 @@ export default function LAteneoDanzaLanding() {
                       type="tel"
                       id="phone"
                       name="telefono"
-                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors"
+                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#C9980A] transition-colors"
                       style={{ border: `1px solid ${formErrors.telefono ? "#C8003A" : "#2A2010"}` }}
                       onFocus={() => setFormErrors((prev) => ({ ...prev, telefono: false }))}
                       placeholder="Il tuo numero"
@@ -1547,30 +1561,33 @@ export default function LAteneoDanzaLanding() {
                     <label htmlFor="course" className="block text-[12px] font-medium text-[#B8A080] tracking-wider uppercase mb-2">
                       Corso di Interesse
                     </label>
-                    <select
-                      id="course"
-                      name="corso"
-                      className="w-full bg-card rounded-sm px-4 py-3 text-foreground focus:outline-none transition-colors"
-                      style={{ border: `1px solid ${formErrors.corso ? "#C8003A" : "#2A2010"}` }}
-                      onFocus={() => setFormErrors((prev) => ({ ...prev, corso: false }))}
-                      defaultValue=""
-                    >
-                      <option value="" disabled>Seleziona un corso</option>
-                      <option value="classica">Danza Classica</option>
-                      <option value="moderna">Danza Moderna</option>
-                      <option value="contemporanea">Danza Contemporanea</option>
-                      <option value="hiphop">Hip Hop</option>
-                      <option value="jazz">Jazz</option>
-                      <option value="aeree">Discipline Aeree</option>
-                      <option value="canto">Corsi di Canto</option>
-                      <option value="recitazione">Corsi di Recitazione</option>
-                      <option value="musical">Danza per Musical</option>
-                      <option value="aerobica">Aerobica & Step</option>
-                      <option value="zumba">Zumba</option>
-                      <option value="pilates">Pilates</option>
-                      <option value="formazione">Formazione Professionale</option>
-                      <option value="altro">Altro</option>
-                    </select>
+                    <div className="relative">
+                      <select
+                        id="course"
+                        name="corso"
+                        className="w-full bg-card rounded-sm px-4 py-3 text-foreground focus:outline-none appearance-none pr-10 transition-colors"
+                        style={{ border: `1px solid ${formErrors.corso ? "#C8003A" : "#2A2010"}` }}
+                        onFocus={() => setFormErrors((prev) => ({ ...prev, corso: false }))}
+                        defaultValue=""
+                      >
+                        <option value="" disabled>Seleziona un corso</option>
+                        <option value="classica">Danza Classica</option>
+                        <option value="moderna">Danza Moderna</option>
+                        <option value="contemporanea">Danza Contemporanea</option>
+                        <option value="hiphop">Hip Hop</option>
+                        <option value="jazz">Jazz</option>
+                        <option value="aeree">Discipline Aeree</option>
+                        <option value="canto">Corsi di Canto</option>
+                        <option value="recitazione">Corsi di Recitazione</option>
+                        <option value="musical">Danza per Musical</option>
+                        <option value="aerobica">Aerobica & Step</option>
+                        <option value="zumba">Zumba</option>
+                        <option value="pilates">Pilates</option>
+                        <option value="formazione">Formazione Professionale</option>
+                        <option value="altro">Altro</option>
+                      </select>
+                      <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#B8A080] pointer-events-none" />
+                    </div>
                   </div>
                 </div>
                 <div>
@@ -1736,7 +1753,7 @@ export default function LAteneoDanzaLanding() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-[#C9980A] hover:text-[#C9980A]/80 transition-colors text-sm font-medium"
               >
-                <Map size={14} />
+                <MapIcon size={14} />
                 Vedi su Google Maps
               </a>
             </div>
@@ -1777,13 +1794,6 @@ export default function LAteneoDanzaLanding() {
         onMouseEnter={() => setWhatsappHover(true)}
         onMouseLeave={() => setWhatsappHover(false)}
       >
-        {/* Mobile: static label always visible */}
-        <span
-          className="md:hidden text-xs px-3 py-1 rounded-sm whitespace-nowrap"
-          style={{ background: "#0F0E0A", border: "1px solid #2A2010", color: "#F5EDD8" }}
-        >
-          WhatsApp
-        </span>
         {/* Desktop: label appears on hover */}
         {whatsappHover && (
           <span
@@ -1817,7 +1827,6 @@ export default function LAteneoDanzaLanding() {
         <div
           style={{
             position: "fixed",
-            bottom: 0,
             left: 0,
             right: 0,
             zIndex: 8999,
@@ -1826,10 +1835,10 @@ export default function LAteneoDanzaLanding() {
             opacity: cookieFading ? 0 : 1,
             transition: cookieFading ? "opacity 0.3s ease" : "opacity 0.5s ease",
           }}
-          className="py-3 px-6 mb-14 md:mb-0 flex flex-col md:flex-row items-start md:items-center justify-between gap-3"
+          className="bottom-14 md:bottom-0 py-3 px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-3"
         >
           <p className="font-sans text-sm max-w-2xl line-clamp-2 md:line-clamp-none" style={{ color: "#B8A080" }}>
-            🍪 Questo sito utilizza cookie tecnici necessari al funzionamento. Continuando la navigazione accetti il loro utilizzo.
+            Questo sito utilizza cookie tecnici necessari al funzionamento. Continuando la navigazione accetti il loro utilizzo.
           </p>
           <div className="flex flex-row md:flex-row gap-2 md:gap-3 w-full md:w-auto">
             <button
