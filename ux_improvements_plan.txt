@@ -1,0 +1,179 @@
+UX IMPROVEMENTS — IMPLEMENTATION PLAN
+L'Ateneo Danza Musical e Fitness
+=====================================
+
+PROMPT 1 — Quick fixes (low risk, high impact)
+------------------------------------------------
+Make the following small UX fixes only.
+Do not change any styling, layout, or content.
+
+1. PHONE FIELD:
+   In the contact form, find the Telefono input field.
+   Change type="text" to type="tel"
+
+2. VIDEO PRELOAD:
+   Find all 3 video elements for reel1.mp4, 
+   reel2.mp4, reel3.mp4.
+   Add preload="none" to all three video elements.
+
+3. COURSE CARDS — fix hover border shift:
+   Find all course cards that have a hover 
+   border-left effect.
+   Change the default border to match the hover 
+   border-left width so content does not shift 
+   on hover.
+   Use: border-l-[3px] border-l-transparent 
+   on default state.
+   On hover: border-l-[3px] border-l-[#C9980A]
+   This prevents the 2px content shift on hover.
+
+4. COURSE CARDS — fix CTA label:
+   Find all 12 course card "Scopri di più" links.
+   Replace the text with "Richiedi Info"
+   Keep the same styling and href="#contatti".
+
+Do not change anything else.
+
+
+PROMPT 2 — Team bio toggle on mobile
+--------------------------------------
+Update the team cards to show a truncated bio 
+on mobile with a toggle to expand.
+Do not change the desktop layout.
+
+For each of the 4 team cards 
+(Amedeo, Carolina, Federica, Giorgio):
+
+1. Wrap the bio paragraph in a div that:
+   - On mobile (below md): shows only 2 lines 
+     by default using line-clamp-2
+   - Has a "Leggi di più ↓" button below 
+     on mobile only (hidden md+)
+   - On click: removes line-clamp, 
+     shows full bio
+   - Button text changes to "Chiudi ↑" 
+     when expanded
+
+2. Use React useState for each card 
+   independently — expanding one card 
+   should not affect others.
+
+3. Button style:
+   color #C9980A, text-xs, font-sans,
+   cursor-pointer, no background,
+   mt-2, block, md:hidden
+
+4. Desktop (md+): always show full bio,
+   no button visible.
+
+Do not change anything else.
+
+
+PROMPT 3 — Formazione card mobile padding
+------------------------------------------
+In the Formazione Professionale section,
+find the main card that wraps both columns.
+
+Change the padding from p-10 to:
+className="p-6 md:p-10"
+
+This gives more content width on mobile 
+(375px screen) without affecting desktop.
+
+Do not change anything else.
+
+
+PROMPT 4 — Gallery modal pagination
+-------------------------------------
+Update the gallery modal to show images 
+in batches instead of all at once.
+
+1. Show first 20 images by default 
+   when modal opens.
+
+2. Add a "Carica altre foto" button 
+   at the bottom of the grid:
+   - Background transparent
+   - Border: 1px solid #C9980A
+   - Color: #C9980A
+   - Padding: px-8 py-3
+   - Font-sans, font-weight 600
+   - Centered, mt-6
+
+3. On click: load next 20 images.
+   Button disappears when all images 
+   are shown.
+
+4. Use React useState to track 
+   how many images are currently visible.
+   Start with visibleCount = 20,
+   increment by 20 on each click.
+
+5. Total images in modal: ~73
+   So button will appear maximum 3 times 
+   before all photos are loaded.
+
+Do not change anything else.
+
+
+PROMPT 5 — Mobile drawer cleanup
+----------------------------------
+Fix the mobile drawer navigation grouping.
+
+1. ORPHAN GROUP FIX:
+   Merge "Chi Siamo" into the same group 
+   as "Corsi", "Mamma & Figlia", "Formazione".
+   
+   New grouping:
+   Group 1: Chi Siamo · Team · Corsi · 
+             Mamma & Figlia · Formazione
+   Group 2: Orari · Prezzi · Gallery
+   Group 3: Contatti
+   
+   Remove the divider that makes 
+   Chi Siamo appear alone.
+
+2. DEAD BORDER FIX:
+   Find the mt-auto pt-10 border-t div 
+   at the bottom of the mobile drawer 
+   that contains no visible content.
+   Either add the "Iscriviti Ora" CTA 
+   button inside it, or remove the 
+   empty div entirely.
+
+Do not change anything else.
+
+
+CHECKLIST
+----------
+[x] Prompt 1 — Quick fixes
+    [x] Phone field type="tel"
+    [x] Video preload="none" on all 3 videos
+    [x] Course card hover border fix
+    [x] Course card CTA → "Richiedi Info"
+
+[x] Prompt 2 — Team bio toggle mobile
+    [x] Amedeo bio truncated on mobile
+    [x] Carolina bio truncated on mobile
+    [x] Federica bio truncated on mobile
+    [x] Giorgio bio truncated on mobile
+
+[x] Prompt 3 — Formazione padding mobile
+    [x] p-6 md:p-10 applied
+
+[x] Prompt 4 — Gallery pagination
+    [x] First 20 images shown by default
+    [x] "Carica altre foto" button working
+    [x] All ~73 images accessible
+
+[ ] Prompt 5 — Mobile drawer cleanup
+    [ ] Grouping fixed
+    [ ] Dead border removed or filled
+
+NOTES
+------
+- Send prompts one at a time
+- Review after each prompt before sending next
+- Use Sonnet 4.6 + Medium effort for all prompts
+- Schedule subtitle (Sala Armonia vs Sala Ritmo 
+  address) — confirm with Rita before changing

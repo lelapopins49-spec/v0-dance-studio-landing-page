@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
-import { Phone, Mail, MapPin, Instagram, Facebook, Music, Star, Menu, X, ChevronRight, Clock, Calendar, Users } from "lucide-react"
+import { Phone, Mail, MapPin, Instagram, Facebook, Music, Star, Menu, X, ChevronRight, Clock, Calendar, Users, Zap, Wind, Radio, Mic, Mic2, Flame, Activity, Ticket, CalendarRange, Crown, Tag, Map, GraduationCap, BookOpen, Sparkles, Heart, Drama } from "lucide-react"
 
 export default function LAteneoDanzaLanding() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -19,9 +19,12 @@ export default function LAteneoDanzaLanding() {
   const [bioOpen, setBioOpen] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [formErrors, setFormErrors] = useState<{ [key: string]: boolean }>({})
+  const [formNetworkError, setFormNetworkError] = useState(false)
   const [cookieVisible, setCookieVisible] = useState(false)
   const [cookieFading, setCookieFading] = useState(false)
   const [whatsappHover, setWhatsappHover] = useState(false)
+  const [expandedBios, setExpandedBios] = useState<boolean[]>([false, false, false, false])
+  const [visibleCount, setVisibleCount] = useState(20)
 
   useEffect(() => {
     if (!localStorage.getItem("cookieConsent")) {
@@ -74,9 +77,20 @@ export default function LAteneoDanzaLanding() {
     return () => { document.body.style.overflow = "" }
   }, [galleryOpen, enlargedPhoto])
 
+  useEffect(() => {
+    if (!galleryOpen && !enlargedPhoto) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (enlargedPhoto) setEnlargedPhoto(null)
+        else if (galleryOpen) setGalleryOpen(false)
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [galleryOpen, enlargedPhoto])
+
   const navLinks = [
     { href: "#chi-siamo", label: "Chi Siamo" },
-    { href: "#team", label: "Team" },
     { href: "#corsi", label: "Corsi" },
     { href: "#mamma-e-figlia", label: "Mamma & Figlia" },
     { href: "#formazione", label: "Formazione" },
@@ -95,36 +109,42 @@ export default function LAteneoDanzaLanding() {
           age: "3-6 anni",
           description: "Le basi della tecnica classica per i pi\u00f9 piccoli, in un ambiente giocoso e stimolante.",
           image: "/488642768_2081867468995252_8593027666977621862_n.jpg",
+          icon: <Music className="w-8 h-8 text-[#C9980A]" />,
         },
         {
           title: "Danza Moderna",
           age: "7-14 anni",
           description: "Energia, ritmo e creativit\u00e0 per giovani ballerini che vogliono esprimersi liberamente.",
           image: "/female_pair_modern_dance.jpg",
+          icon: <Zap className="w-8 h-8 text-[#C9980A]" />,
         },
         {
           title: "Danza Contemporanea",
           age: "15-30 anni",
           description: "Esplorazione del movimento, improvvisazione e tecnica avanzata per ballerini esperti.",
           image: "/danza_comp.jpg",
+          icon: <Wind className="w-8 h-8 text-[#C9980A]" />,
         },
         {
           title: "Hip Hop",
           age: "Tutti i livelli",
           description: "Stile urbano, groove e freestyle per chi ama il ritmo e l\u2019energia della street dance.",
           image: "/student_male.jpg",
+          icon: <Radio className="w-8 h-8 text-[#C9980A]" />,
         },
         {
           title: "Jazz",
           age: "Tutti i livelli",
           description: "Tecnica, musicalit\u00e0 e interpretazione per un approccio versatile alla danza.",
           image: "/student_blue_dress.jpg",
+          icon: <Mic className="w-8 h-8 text-[#C9980A]" />,
         },
         {
           title: "Discipline Aeree",
           age: "Dagli 8 anni",
           description: "Cerchio, tessuto, amaca e attrezzi misti \u2014 sperimenta la libert\u00e0 del movimento in volo.",
           image: "/air_dance.jpg",
+          icon: <Star className="w-8 h-8 text-[#C9980A]" />,
         },
       ],
     },
@@ -136,18 +156,21 @@ export default function LAteneoDanzaLanding() {
           age: "Tutti i livelli",
           description: "Tecnica vocale e interpretazione per aspiranti cantanti e performer.",
           image: "/theatre_dance_pair.jpg",
+          icon: <Mic2 className="w-8 h-8 text-[#C9980A]" />,
         },
         {
           title: "Corsi di Recitazione",
           age: "Tutti i livelli",
           description: "Espressivit\u00e0, dizione e presenza scenica per il palcoscenico e oltre.",
           image: "/kids_dance_stage.jpg",
+          icon: <Drama className="w-8 h-8 text-[#C9980A]" />,
         },
         {
           title: "Danza per Musical",
           age: "Tutti i livelli",
           description: "Canto, recitazione e danza combinati per creare performer completi.",
           image: "/dance_theatre.jpg",
+          icon: <Sparkles className="w-8 h-8 text-[#C9980A]" />,
         },
       ],
     },
@@ -159,18 +182,21 @@ export default function LAteneoDanzaLanding() {
           age: "Adulti",
           description: "Allenamento cardiovascolare dinamico a ritmo di musica.",
           image: "/49515778_549482118900469_8702854088280244224_n.jpg",
+          icon: <Activity className="w-8 h-8 text-[#C9980A]" />,
         },
         {
           title: "Zumba",
           age: "Adulti",
           description: "Fitness e divertimento con coreografie ispirate ai ritmi latini.",
           image: "/Zmba_training.jpg",
+          icon: <Flame className="w-8 h-8 text-[#C9980A]" />,
         },
         {
           title: "Pilates",
           age: "Adulti",
           description: "Benessere fisico e mentale attraverso esercizi mirati e controllati.",
           image: "/fitness.jpg",
+          icon: <Heart className="w-8 h-8 text-[#C9980A]" />,
         },
       ],
     },
@@ -238,7 +264,7 @@ export default function LAteneoDanzaLanding() {
     {
       day: "LUNED\u00cc",
       classes: [
-        { time: "10:00", name: "Benessere Mamme / Pilates / Aerobica" },
+        { time: "10:00", name: "Benessere Mamme | Pilates | Aerobica" },
         { time: "17:00", name: "Predanza" },
         { time: "18:15", name: "Aerobica" },
         { time: "19:15", name: "Moderno Avanzato" },
@@ -257,7 +283,7 @@ export default function LAteneoDanzaLanding() {
     {
       day: "MERCOLED\u00cc",
       classes: [
-        { time: "10:00", name: "Benessere Mamme / Pilates / Aerobica" },
+        { time: "10:00", name: "Benessere Mamme | Pilates | Aerobica" },
         { time: "16:00", name: "Danza Aerea Kids" },
         { time: "17:00", name: "Predanza" },
         { time: "18:15", name: "Aerobica" },
@@ -271,7 +297,7 @@ export default function LAteneoDanzaLanding() {
         { time: "16:00", name: "Moderno Principianti II" },
         { time: "17:00", name: "Classico Principianti II" },
         { time: "18:00", name: "Moderno Intermedio" },
-        { time: "19:00", name: "Bungee Dance / Danza Aerea / Discipline a Richiesta" },
+        { time: "19:00", name: "Bungee Dance | Danza Aerea | Discipline a Richiesta" },
       ],
     },
     {
@@ -289,7 +315,7 @@ export default function LAteneoDanzaLanding() {
       day: "LUNEDÌ",
       classes: [
         { time: "17:00", name: "Predanza" },
-        { time: "18:15", name: "Aerobica / GAG" },
+        { time: "18:15", name: "Aerobica | GAG" },
         { time: "19:15", name: "Modern Avanzato" },
       ],
     },
@@ -305,9 +331,9 @@ export default function LAteneoDanzaLanding() {
     {
       day: "MERCOLEDÌ",
       classes: [
-        { time: "15:00", name: "Aerobica / Step / GAG" },
+        { time: "15:00", name: "Aerobica | Step | GAG" },
         { time: "17:00", name: "Predanza" },
-        { time: "18:15", name: "Aerobica / Step / GAG" },
+        { time: "18:15", name: "Aerobica | Step | GAG" },
         { time: "19:15", name: "Musical" },
       ],
     },
@@ -326,7 +352,7 @@ export default function LAteneoDanzaLanding() {
       classes: [
         { time: "15:00", name: "Aerobica e GAG" },
         { time: "16:30", name: "Fiabe in Movimento" },
-        { time: "18:15", name: "Aerobica / Step / GAG" },
+        { time: "18:15", name: "Aerobica | Step | GAG" },
         { time: "19:15", name: "Modern Avanzato" },
       ],
     },
@@ -384,13 +410,13 @@ export default function LAteneoDanzaLanding() {
             </a>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-10">
-              <div className="flex items-center gap-8">
+            <div className="hidden lg:flex items-center gap-6">
+              <div className="flex items-center gap-6">
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
-                    className="text-sm font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors"
+                    className={`text-sm font-medium transition-colors ${visibleSections.has(link.href.slice(1)) ? "text-[#C9980A]" : "text-[#F5EDD8] hover:text-[#C9980A]"}`}
                   >
                     {link.label}
                   </a>
@@ -398,7 +424,7 @@ export default function LAteneoDanzaLanding() {
               </div>
               <a
                 href="#contatti"
-                className="bg-[#C9980A] hover:bg-[#C9980A]/90 text-[#0F0E0A] px-7 py-3 rounded-sm text-sm font-bold transition-all hover:scale-105 active:scale-95"
+                className="bg-[#C9980A] hover:bg-[#C9980A]/90 text-[#0F0E0A] px-5 py-3 rounded-sm text-sm font-bold transition-all hover:scale-105 active:scale-95"
               >
                 Iscriviti Ora
               </a>
@@ -427,22 +453,22 @@ export default function LAteneoDanzaLanding() {
         >
           <div className="flex flex-col h-full pt-32 px-8 pb-10">
             <div className="flex flex-col">
-              {/* Group 1 */}
-              {[{ href: "#chi-siamo", label: "Chi Siamo" }, { href: "#team", label: "Team" }].map((link) => (
+              {/* Group 1: Chi Siamo · Corsi · Mamma & Figlia · Formazione */}
+              {[{ href: "#chi-siamo", label: "Chi Siamo" }, { href: "#corsi", label: "Corsi" }, { href: "#mamma-e-figlia", label: "Mamma & Figlia" }, { href: "#formazione", label: "Formazione" }].map((link) => (
                 <a key={link.href} href={link.href} className="text-xl font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors py-4" onClick={() => setMobileMenuOpen(false)}>
                   {link.label}
                 </a>
               ))}
               <div style={{ borderTop: "1px solid #2A2010" }} className="my-2" />
-              {/* Group 2 */}
-              {[{ href: "#corsi", label: "Corsi" }, { href: "#mamma-e-figlia", label: "Mamma & Figlia" }, { href: "#formazione", label: "Formazione" }, { href: "#orari", label: "Orari" }].map((link) => (
+              {/* Group 2: Orari · Prezzi · Gallery */}
+              {[{ href: "#orari", label: "Orari" }, { href: "#prezzi", label: "Prezzi" }, { href: "#gallery", label: "Gallery" }].map((link) => (
                 <a key={link.href} href={link.href} className="text-xl font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors py-4" onClick={() => setMobileMenuOpen(false)}>
                   {link.label}
                 </a>
               ))}
               <div style={{ borderTop: "1px solid #2A2010" }} className="my-2" />
-              {/* Group 3 */}
-              {[{ href: "#prezzi", label: "Prezzi" }, { href: "#gallery", label: "Gallery" }, { href: "#contatti", label: "Contatti" }].map((link) => (
+              {/* Group 3: Contatti */}
+              {[{ href: "#contatti", label: "Contatti" }].map((link) => (
                 <a key={link.href} href={link.href} className="text-xl font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors py-4" onClick={() => setMobileMenuOpen(false)}>
                   {link.label}
                 </a>
@@ -454,8 +480,6 @@ export default function LAteneoDanzaLanding() {
               >
                 Iscriviti Ora
               </a>
-            </div>
-            <div className="mt-auto pt-10 border-t border-[#B8A080]/10">
             </div>
           </div>
         </div>
@@ -544,7 +568,7 @@ export default function LAteneoDanzaLanding() {
             {[
               { number: "30+", label: "ANNI DI ESPERIENZA" },
               { number: "200+", label: "ALLIEVI OGNI ANNO" },
-              { number: "Dai 3", label: "ANNI IN SU" },
+              { number: "3 anni", label: "ETÀ MINIMA" },
               { number: "2", label: "SPETTACOLI ANNUALI" },
             ].map((stat, index) => (
               <div key={index}>
@@ -579,7 +603,7 @@ export default function LAteneoDanzaLanding() {
                 {category.courses.map((course, index) => (
                   <div
                     key={index}
-                    className="group bg-[#0A0905] border border-[#2A2010] rounded-sm p-6 transition-all duration-300 hover:bg-[#120F06] hover:border-l-[3px] hover:border-l-[#C9980A]"
+                    className="group bg-[#0A0905] border border-[#2A2010] border-l-[3px] border-l-transparent rounded-sm p-6 transition-all duration-300 hover:bg-[#120F06] hover:border-l-[#C9980A]"
                   >
                     <div className="w-full h-48 bg-secondary rounded-sm mb-6 overflow-hidden relative">
                       {course.image ? (
@@ -591,7 +615,7 @@ export default function LAteneoDanzaLanding() {
                         />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-primary/20 to-transparent flex items-center justify-center">
-                          <Music className="w-12 h-12 text-primary/50" />
+                          {course.icon}
                         </div>
                       )}
                     </div>
@@ -604,7 +628,7 @@ export default function LAteneoDanzaLanding() {
                       href="#contatti"
                       className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
                     >
-                      Scopri di pi&ugrave;
+                      Richiedi Info
                       <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
                     </a>
                   </div>
@@ -634,6 +658,7 @@ export default function LAteneoDanzaLanding() {
           <div className="grid lg:grid-cols-2 gap-12 items-start relative">
             {/* Left Column — Per le Bambine */}
             <div className="flex flex-col">
+              <Star className="w-8 h-8 text-[#C9980A] mb-3" />
               <span className="font-sans text-xs tracking-widest text-[#C9980A] uppercase mb-3">
                 PER LE BAMBINE
               </span>
@@ -643,7 +668,9 @@ export default function LAteneoDanzaLanding() {
               <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-6">
                 Mentre tu ti alleni, le tue bambine vivono la magia della danza. Predanza e Baby Dance per le più piccole, Danza Classica, Moderna e Hip Hop, Laboratori Musicali e Teatrali — tutto in un ambiente sicuro, professionale e pieno di gioia.
               </p>
-
+              <a href="#contatti" className="text-sm font-semibold text-[#C9980A] hover:text-[#C9980A]/80 transition-colors mt-2 inline-block">
+                Iscriviti →
+              </a>
             </div>
 
             {/* Desktop Divider */}
@@ -651,6 +678,7 @@ export default function LAteneoDanzaLanding() {
 
             {/* Right Column — Per le Mamme */}
             <div className="flex flex-col lg:pl-12">
+              <Heart className="w-8 h-8 text-[#C9980A] mb-3" />
               <span className="font-sans text-xs tracking-widest text-[#C9980A] uppercase mb-3">
                 PER LE MAMME
               </span>
@@ -660,7 +688,9 @@ export default function LAteneoDanzaLanding() {
               <p className="font-sans text-sm text-[#B8A080] leading-relaxed mb-6">
                 Gli orari dei corsi sono pensati in parallelo — così mentre tua figlia balla, tu puoi dedicare del tempo al tuo benessere. Pilates, Aerobica, Step e Movimento Dolce: scegli il percorso più adatto a te e torna a casa rigenerata.
               </p>
-
+              <a href="#contatti" className="text-sm font-semibold text-[#C9980A] hover:text-[#C9980A]/80 transition-colors mt-2 inline-block">
+                Iscriviti →
+              </a>
             </div>
           </div>
 
@@ -697,10 +727,11 @@ export default function LAteneoDanzaLanding() {
             </p>
           </div>
 
-          <div className="bg-[#0A0905] border border-[#2A2010] rounded-sm p-10">
+          <div className="bg-[#0A0905] border border-[#2A2010] rounded-sm p-6 md:p-10">
             <div className="grid md:grid-cols-2 gap-12">
               {/* Column 1 */}
               <div>
+                <GraduationCap className="w-8 h-8 text-[#C9980A] mb-3" />
                 <h3 className="font-serif text-2xl font-bold text-[#C9980A] mb-6">Per Futuri Danzatori</h3>
                 <ul className="space-y-3">
                   {["Corso di Danza Professionale", "Corso di Coreografia", "Corso di Tecnica di Danza"].map((item, i) => (
@@ -713,6 +744,7 @@ export default function LAteneoDanzaLanding() {
               </div>
               {/* Column 2 */}
               <div>
+                <BookOpen className="w-8 h-8 text-[#C9980A] mb-3" />
                 <h3 className="font-serif text-2xl font-bold text-[#C9980A] mb-6">Per Futuri Docenti</h3>
                 <ul className="space-y-3">
                   {[
@@ -919,7 +951,7 @@ export default function LAteneoDanzaLanding() {
                 role: "Insegnante di Danza Classica e Contemporanea",
                 bio: "Giorgio Sannino è un danzatore classico e contemporaneo formatosi presso istituzioni di primo piano a Napoli, tra cui il Teatro San Carlo e la Crown Ballet School diretta da Luigi Ferrone. Specializzato in danza classica, contemporanea e modern, ha approfondito la sua tecnica con maestri internazionali come Vladimir Derevianko e Mauro Astolfi. Ha fatto parte della compagnia Kataklo' di danza contemporanea e ha partecipato alla produzione di Giselle con il Nuovo Balletto Italiano. Porta all'Ateneo una solida preparazione accademica e una profonda conoscenza delle tecniche classiche e contemporanee.",
               },
-            ].map((member) => (
+            ].map((member, idx) => (
               <div
                 key={member.name}
                 className="rounded-sm overflow-hidden transition-all duration-300"
@@ -942,7 +974,15 @@ export default function LAteneoDanzaLanding() {
                   <p className="font-serif font-bold text-lg text-[#F5EDD8] mb-1">{member.name}</p>
                   <p className="font-sans text-xs text-[#C9980A] uppercase tracking-wider mb-3">{member.role}</p>
                   <div style={{ borderTop: "1px solid #2A2010" }} className="mb-3" />
-                  <p className="font-sans text-sm text-[#B8A080] leading-relaxed">{member.bio}</p>
+                  <p className={`font-sans text-sm text-[#B8A080] leading-relaxed ${expandedBios[idx] ? "" : "line-clamp-2 md:line-clamp-none"}`}>
+                    {member.bio}
+                  </p>
+                  <button
+                    className="font-sans text-xs text-[#C9980A] cursor-pointer bg-transparent border-none p-0 mt-2 block md:hidden"
+                    onClick={() => setExpandedBios(prev => prev.map((v, i) => i === idx ? !v : v))}
+                  >
+                    {expandedBios[idx] ? "Chiudi ↑" : "Leggi di più ↓"}
+                  </button>
                 </div>
               </div>
             ))}
@@ -993,7 +1033,7 @@ export default function LAteneoDanzaLanding() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             {[
               {
-                icon: <Clock size={32} className="text-[#C9980A]" />,
+                icon: <Ticket size={32} className="text-[#C9980A]" />,
                 title: "Lezione Singola",
                 description: "Ideale per provare un corso prima di iscriverti. Nessun impegno, massima flessibilità.",
               },
@@ -1003,12 +1043,12 @@ export default function LAteneoDanzaLanding() {
                 description: "La soluzione più flessibile per chi vuole ballare con regolarità ogni mese.",
               },
               {
-                icon: <Calendar size={32} className="text-[#C9980A]" />,
+                icon: <CalendarRange size={32} className="text-[#C9980A]" />,
                 title: "Abbonamento Semestrale",
                 description: "Sei mesi di lezioni con un risparmio rispetto all'abbonamento mensile.",
               },
               {
-                icon: <Star size={32} className="text-[#C9980A]" />,
+                icon: <Crown size={32} className="text-[#C9980A]" />,
                 title: "Abbonamento Annuale",
                 description: "La scelta di chi vuole dare continuità al proprio percorso artistico. Massimo risparmio.",
               },
@@ -1032,14 +1072,14 @@ export default function LAteneoDanzaLanding() {
             className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#0A0905] border border-[#2A2010] p-6 mt-6 rounded-sm"
           >
             <div className="flex gap-4">
-              <Users size={28} className="text-[#C9980A] shrink-0 mt-1" />
+              <Tag size={28} className="text-[#C9980A] shrink-0 mt-1" />
               <div>
                 <h4 className="font-serif font-bold text-[#F5EDD8] mb-2">Tariffe Differenziate</h4>
                 <p className="text-[#B8A080] text-sm leading-relaxed">I costi variano in base al corso scelto e all&apos;età dell&apos;allievo. Contattaci per ricevere il preventivo personalizzato.</p>
               </div>
             </div>
             <div className="flex gap-4">
-              <Star size={28} className="text-[#C9980A] shrink-0 mt-1" />
+              <Users size={28} className="text-[#C9980A] shrink-0 mt-1" />
               <div>
                 <h4 className="font-serif font-bold text-[#F5EDD8] mb-2">Sconti Famiglia</h4>
                 <p className="text-[#B8A080] text-sm leading-relaxed">Sono previste riduzioni speciali per fratelli e/o sorelle e per mamme e figlie che si iscrivono insieme.</p>
@@ -1108,7 +1148,7 @@ export default function LAteneoDanzaLanding() {
           {/* Vedi tutte le foto button */}
           <div className="flex justify-center mt-8">
             <button
-              onClick={() => setGalleryOpen(true)}
+              onClick={() => { setGalleryOpen(true); setVisibleCount(20) }}
               className="px-8 py-3 rounded-sm text-sm font-semibold transition-colors"
               style={{ border: "1px solid #C9980A", color: "#C9980A", background: "transparent" }}
             >
@@ -1119,9 +1159,9 @@ export default function LAteneoDanzaLanding() {
           {/* Instagram Reels Subsection */}
           <div className="mt-20 pb-20">
             <div className="text-left lg:text-center mb-12 px-4 lg:px-0">
-              <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-4 text-left lg:text-center">Seguici su Instagram</h2>
+              <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-4 text-left lg:text-center">I Nostri Video</h2>
               <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
-                Vivi l&apos;energia dell&apos;Ateneo
+                L&apos;Ateneo in scena — momenti di passione e talento
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1138,7 +1178,11 @@ export default function LAteneoDanzaLanding() {
                     loop
                     playsInline
                     muted
-                    controls
+                    preload="none"
+                    onClick={() => {
+                      if (ref.current?.paused) ref.current.play()
+                      else ref.current?.pause()
+                    }}
                     onPlay={() => {
                       setPlayingVideos(prev => new Set(prev).add(index))
                       videoRefs.forEach((r, i) => {
@@ -1185,7 +1229,7 @@ export default function LAteneoDanzaLanding() {
           </button>
           <div className="w-full max-w-7xl mx-auto px-4 py-16">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {allGalleryPhotos.map((src, i) => (
+              {allGalleryPhotos.slice(0, visibleCount).map((src, i) => (
                 <button
                   key={i}
                   onClick={() => setEnlargedPhoto(src)}
@@ -1205,6 +1249,17 @@ export default function LAteneoDanzaLanding() {
                 </button>
               ))}
             </div>
+            {visibleCount < allGalleryPhotos.length && (
+              <div className="flex justify-center mt-6">
+                <button
+                  onClick={() => setVisibleCount(prev => prev + 20)}
+                  className="font-sans font-semibold px-8 py-3"
+                  style={{ background: "transparent", border: "1px solid #C9980A", color: "#C9980A" }}
+                >
+                  Carica altre foto
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -1345,14 +1400,20 @@ export default function LAteneoDanzaLanding() {
                     return
                   }
                   setFormErrors({})
+                  setFormNetworkError(false)
                   const data = new FormData(form)
-                  await fetch("https://formspree.io/f/xpqkjkdn", {
-                    method: "POST",
-                    body: data,
-                    headers: { Accept: "application/json" },
-                  })
-                  setFormSubmitted(true)
-                  form.reset()
+                  try {
+                    const res = await fetch("https://formspree.io/f/xpqkjkdn", {
+                      method: "POST",
+                      body: data,
+                      headers: { Accept: "application/json" },
+                    })
+                    if (!res.ok) throw new Error("network")
+                    setFormSubmitted(true)
+                    form.reset()
+                  } catch {
+                    setFormNetworkError(true)
+                  }
                 }}
               >
                 <div className="grid sm:grid-cols-2 gap-6">
@@ -1448,6 +1509,11 @@ export default function LAteneoDanzaLanding() {
                 >
                   Invia Messaggio
                 </button>
+                {formNetworkError && (
+                  <p className="font-sans text-sm mt-3" style={{ color: "#C8003A" }}>
+                    Si è verificato un errore. Riprova o scrivici direttamente.
+                  </p>
+                )}
               </form>
             )}
 
@@ -1508,9 +1574,9 @@ export default function LAteneoDanzaLanding() {
       {/* Footer */}
       <footer className="bg-card border-t border-[#C9980A33] pt-16 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
-            {/* Logo & Tagline */}
-            <div className="md:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+            {/* Column 1 — Logo & Tagline */}
+            <div>
               <a href="#" className="flex items-center gap-3 mb-6">
                 <img
                   src="/logo2.png"
@@ -1522,9 +1588,19 @@ export default function LAteneoDanzaLanding() {
               <p className="text-[#B8A080] text-sm max-w-[280px] mt-4 leading-relaxed">
                 Da oltre 30 anni, la casa della danza ad Agropoli.
               </p>
+              <div className="flex gap-5 mt-6">
+                <a href="https://www.instagram.com/ateneodanza/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex flex-col items-center gap-1 text-[#B8A080] hover:text-[#C9980A] transition-colors duration-200">
+                  <Instagram size={24} />
+                  <span className="font-sans text-xs text-[#B8A080]">Instagram</span>
+                </a>
+                <a href="https://www.facebook.com/ateneo6" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="flex flex-col items-center gap-1 text-[#B8A080] hover:text-[#C9980A] transition-colors duration-200">
+                  <Facebook size={24} />
+                  <span className="font-sans text-xs text-[#B8A080]">Facebook</span>
+                </a>
+              </div>
             </div>
 
-            {/* Quick Links */}
+            {/* Column 2 — Link Rapidi */}
             <div>
               <h4 className="font-semibold text-[#F5EDD8] mb-6 text-sm uppercase tracking-wider">Link Rapidi</h4>
               <ul className="space-y-3">
@@ -1541,25 +1617,51 @@ export default function LAteneoDanzaLanding() {
               </ul>
             </div>
 
-            {/* Social */}
+            {/* Column 3 — Contatti */}
             <div>
-              <h4 className="font-semibold text-[#F5EDD8] mb-6 text-sm uppercase tracking-wider">Seguici</h4>
-              <div className="flex gap-5">
-                <a href="https://www.instagram.com/ateneodanza/" target="_blank" rel="noopener noreferrer" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="Instagram">
-                  <Instagram size={26} />
-                </a>
-                <a href="https://www.facebook.com/ateneo6" target="_blank" rel="noopener noreferrer" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="Facebook">
-                  <Facebook size={26} />
-                </a>
-                <a href="#" target="_blank" rel="noopener noreferrer" className="text-[#B8A080] hover:text-[#C9980A] transition-colors" aria-label="TikTok">
-                  <Music size={26} />
-                </a>
-              </div>
+              <h4 className="font-semibold text-[#F5EDD8] mb-6 text-sm uppercase tracking-wider">Contatti</h4>
+              <ul>
+                <li className="flex items-center gap-2 mb-3">
+                  <Phone size={14} className="text-[#C9980A] shrink-0" />
+                  <a href="tel:+393393565655" className="text-[#B8A080] text-sm transition-colors duration-200 hover:text-[#C9980A]">
+                    +39 339 356 5655
+                  </a>
+                </li>
+                <li className="flex items-center gap-2 mb-3">
+                  <Mail size={14} className="text-[#C9980A] shrink-0" />
+                  <a href="mailto:ritapolidoro4@gmail.com" className="text-[#B8A080] text-sm transition-colors duration-200 hover:text-[#C9980A]">
+                    ritapolidoro4@gmail.com
+                  </a>
+                </li>
+                <li className="flex items-center gap-2 mb-3">
+                  <Clock size={14} className="text-[#C9980A] shrink-0" />
+                  <span className="text-[#B8A080] text-sm">Lun — Sab | 10:00 — 21:00</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 4 — Dove Siamo */}
+            <div>
+              <h4 className="font-semibold text-[#F5EDD8] mb-6 text-sm uppercase tracking-wider">Dove Siamo</h4>
+              <p className="text-[#B8A080] text-sm leading-relaxed mb-3">
+                Sede Storica: Via Moio, 8<br />
+                Nuova Sala: Via Moio, 16<br />
+                84043 Agropoli (SA)
+              </p>
+              <a
+                href="https://maps.google.com/?q=Via+Moio+8+Agropoli+SA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-[#C9980A] hover:text-[#C9980A]/80 transition-colors text-sm font-medium"
+              >
+                <Map size={14} />
+                Vedi su Google Maps
+              </a>
             </div>
           </div>
 
           <div className="border-t border-[#2A2010] pt-8 text-center text-xs text-[#B8A080]">
-            &copy; 2025 L&apos;Ateneo Danza Musical e Fitness &middot; Agropoli, Cilento
+            &copy; 2026 L&apos;Ateneo Danza Musical e Fitness &middot; Agropoli, Cilento
           </div>
         </div>
       </footer>
@@ -1593,9 +1695,17 @@ export default function LAteneoDanzaLanding() {
         onMouseEnter={() => setWhatsappHover(true)}
         onMouseLeave={() => setWhatsappHover(false)}
       >
+        {/* Mobile: static label always visible */}
+        <span
+          className="md:hidden text-xs px-3 py-1 rounded-sm whitespace-nowrap"
+          style={{ background: "#0F0E0A", border: "1px solid #2A2010", color: "#F5EDD8" }}
+        >
+          WhatsApp
+        </span>
+        {/* Desktop: label appears on hover */}
         {whatsappHover && (
           <span
-            className="text-xs px-3 py-1 rounded-sm whitespace-nowrap"
+            className="hidden md:inline text-xs px-3 py-1 rounded-sm whitespace-nowrap"
             style={{ background: "#0F0E0A", border: "1px solid #2A2010", color: "#F5EDD8" }}
           >
             Scrivici su WhatsApp
@@ -1634,22 +1744,22 @@ export default function LAteneoDanzaLanding() {
             opacity: cookieFading ? 0 : 1,
             transition: cookieFading ? "opacity 0.3s ease" : "opacity 0.5s ease",
           }}
-          className="py-4 px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+          className="py-3 px-6 mb-14 md:mb-0 flex flex-col md:flex-row items-start md:items-center justify-between gap-3"
         >
-          <p className="font-sans text-sm max-w-2xl" style={{ color: "#B8A080" }}>
+          <p className="font-sans text-sm max-w-2xl line-clamp-2 md:line-clamp-none" style={{ color: "#B8A080" }}>
             🍪 Questo sito utilizza cookie tecnici necessari al funzionamento. Continuando la navigazione accetti il loro utilizzo.
           </p>
-          <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+          <div className="flex flex-row md:flex-row gap-2 md:gap-3 w-full md:w-auto">
             <button
               onClick={acceptCookies}
-              className="w-full md:w-auto rounded-sm font-bold px-6 py-2"
+              className="flex-1 md:flex-none md:w-auto rounded-sm font-bold px-6 py-2"
               style={{ background: "#C9980A", color: "#0A0905", fontWeight: 700 }}
             >
               Accetta
             </button>
             <a
               href="/privacy-policy"
-              className="w-full md:w-auto rounded-sm text-center px-6 py-2"
+              className="flex-1 md:flex-none md:w-auto rounded-sm text-center px-6 py-2"
               style={{ background: "transparent", color: "#B8A080", border: "1px solid #2A2010" }}
             >
               Scopri di più

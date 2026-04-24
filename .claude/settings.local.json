@@ -6,7 +6,8 @@
       "Bash(mv \"male-female-duo.webp\" \"duo-danza-ateneo-agropoli.webp\")",
       "Bash(mv \"male-female-group-performance.webp\" \"gruppo-misto-performance-ateneo.webp\")",
       "Bash(mv \"male-female-perfor114.webp\" \"coppia-performance-ateneo-cilento.webp\")",
-      "Bash(node *)"
+      "Bash(node *)",
+      "Bash(npx tsc *)"
     ]
   }
 }
