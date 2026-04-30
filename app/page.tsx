@@ -1407,7 +1407,7 @@ export default function LAteneoDanzaLanding() {
           </div>
 
           <div className="grid grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {["/testimonial1.jpeg", "/testimonial2.jpeg"].map((src) => (
+            {["/testimonial1.jpeg", "/testimonial2.jpeg", "/testimonial3.15.jpeg"].map((src) => (
               <button
                 key={src}
                 onClick={() => setEnlargedPhoto(src)}
@@ -1734,7 +1734,7 @@ export default function LAteneoDanzaLanding() {
                 </li>
                 <li className="flex items-center gap-2 mb-3">
                   <Clock size={14} className="text-[#C9980A] shrink-0" />
-                  <span className="text-[#B8A080] text-sm">Lun — Sab | 10:00 — 21:00</span>
+                  <span className="text-[#B8A080] text-sm">Lun-Ven 10:00-12:00  14:30-21:00, Sabato 9:00-12:00.</span>
                 </li>
               </ul>
             </div>
