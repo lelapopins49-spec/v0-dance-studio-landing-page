@@ -393,8 +393,8 @@ export default function LAteneoDanzaLanding() {
                 key={i}
                 onClick={() => setActiveDayIndex(i)}
                 className={`py-2.5 text-[10px] font-bold uppercase tracking-tighter border transition-all duration-300 ${activeDayIndex === i
-                    ? "bg-[#C9980A] text-[#0A0905] border-[#C9980A]"
-                    : "bg-transparent text-[#B8A080] border-[#2A2010] hover:border-[#C9980A]/40"
+                  ? "bg-[#C9980A] text-[#0A0905] border-[#C9980A]"
+                  : "bg-transparent text-[#B8A080] border-[#2A2010] hover:border-[#C9980A]/40"
                   }`}
               >
                 {day.day.substring(0, 3)}
@@ -1249,44 +1249,44 @@ export default function LAteneoDanzaLanding() {
               ] as { ref: React.RefObject<HTMLVideoElement>; src: string; index: number }[])
                 .filter(({ index }) => reelsExpanded || index === 0)
                 .map(({ ref, src, index }) => (
-                <div key={index} className={`aspect-[9/16] overflow-hidden rounded-sm bg-black relative ${reelsExpanded ? "snap-start flex-shrink-0 w-[80vw] md:w-auto" : "w-full max-w-sm"}`}>
-                  <video
-                    ref={ref}
-                    src={src}
-                    className="w-full h-full object-cover"
-                    loop
-                    playsInline
-                    muted
-                    preload="none"
-                    onClick={() => {
-                      if (ref.current?.paused) ref.current.play()
-                      else ref.current?.pause()
-                    }}
-                    onPlay={() => {
-                      setPlayingVideos(prev => new Set(prev).add(index))
-                      videoRefs.forEach((r, i) => {
-                        if (r.current && i !== index) {
-                          r.current.pause()
-                          setPlayingVideos(prev => { const s = new Set(prev); s.delete(i); return s })
-                        }
-                      })
-                    }}
-                    onPause={() => setPlayingVideos(prev => { const s = new Set(prev); s.delete(index); return s })}
-                  />
-                  {!playingVideos.has(index) && (
-                    <button
-                      className="absolute inset-0 flex items-center justify-center"
-                      style={{ background: "rgba(0,0,0,0.5)" }}
-                      onClick={() => ref.current?.play()}
-                      aria-label="Play video"
-                    >
-                      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                        <polygon points="18,12 38,24 18,36" fill="#C9980A" />
-                      </svg>
-                    </button>
-                  )}
-                </div>
-              ))}
+                  <div key={index} className={`aspect-[9/16] overflow-hidden rounded-sm bg-black relative ${reelsExpanded ? "snap-start flex-shrink-0 w-[80vw] md:w-auto" : "w-full max-w-sm"}`}>
+                    <video
+                      ref={ref}
+                      src={src}
+                      className="w-full h-full object-cover"
+                      loop
+                      playsInline
+                      muted
+                      preload="none"
+                      onClick={() => {
+                        if (ref.current?.paused) ref.current.play()
+                        else ref.current?.pause()
+                      }}
+                      onPlay={() => {
+                        setPlayingVideos(prev => new Set(prev).add(index))
+                        videoRefs.forEach((r, i) => {
+                          if (r.current && i !== index) {
+                            r.current.pause()
+                            setPlayingVideos(prev => { const s = new Set(prev); s.delete(i); return s })
+                          }
+                        })
+                      }}
+                      onPause={() => setPlayingVideos(prev => { const s = new Set(prev); s.delete(index); return s })}
+                    />
+                    {!playingVideos.has(index) && (
+                      <button
+                        className="absolute inset-0 flex items-center justify-center"
+                        style={{ background: "rgba(0,0,0,0.5)" }}
+                        onClick={() => ref.current?.play()}
+                        aria-label="Play video"
+                      >
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                          <polygon points="18,12 38,24 18,36" fill="#C9980A" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                ))}
             </div>
             {!reelsExpanded && (
               <div className="flex justify-center mt-6">
@@ -1477,7 +1477,7 @@ export default function LAteneoDanzaLanding() {
             ) : (
               <form
                 className="space-y-6"
-                action="https://formspree.io/f/xpqkjkdn"
+                action="https://formspree.io/f/mqengdqy"
                 method="POST"
                 onSubmit={async (e) => {
                   e.preventDefault()
@@ -1499,7 +1499,7 @@ export default function LAteneoDanzaLanding() {
                   setFormNetworkError(false)
                   const data = new FormData(form)
                   try {
-                    const res = await fetch("https://formspree.io/f/xpqkjkdn", {
+                    const res = await fetch("https://formspree.io/f/mqengdqy", {
                       method: "POST",
                       body: data,
                       headers: { Accept: "application/json" },
