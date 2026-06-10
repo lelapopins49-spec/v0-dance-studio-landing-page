@@ -13,6 +13,7 @@ export default function LAteneoDanzaLanding() {
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
   const touchStartXRef = useRef<number | null>(null)
   const [galleryOpen, setGalleryOpen] = useState(false)
+  const [eventiModalOpen, setEventiModalOpen] = useState(false)
   const [enlargedPhoto, setEnlargedPhoto] = useState<string | null>(null)
   const videoRef1 = useRef<HTMLVideoElement>(null)
   const videoRef2 = useRef<HTMLVideoElement>(null)
@@ -30,6 +31,18 @@ export default function LAteneoDanzaLanding() {
   const [visibleCount, setVisibleCount] = useState(20)
   const [reelsExpanded, setReelsExpanded] = useState(false)
   const [coursesExpanded, setCoursesExpanded] = useState(false)
+  const eventiImages = [
+    "/eventi/1.jpeg",
+    "/eventi/3.jpeg",
+    "/eventi/4.jpeg",
+    "/eventi/5.jpeg",
+    "/eventi/54.jpeg",
+    "/eventi/6.jpeg",
+    "/eventi/8.jpeg",
+    "/eventi/88.jpeg",
+    "/eventi/96.jpeg",
+    "/eventi/WhatsApp Image 2026-06-09 at 12.12.54.jpeg",
+  ]
 
   useEffect(() => {
     if (!localStorage.getItem("cookieConsent")) {
@@ -83,25 +96,26 @@ export default function LAteneoDanzaLanding() {
   }, [])
 
   useEffect(() => {
-    if (galleryOpen || enlargedPhoto) {
+    if (galleryOpen || eventiModalOpen || enlargedPhoto) {
       document.body.style.overflow = "hidden"
     } else {
       document.body.style.overflow = ""
     }
     return () => { document.body.style.overflow = "" }
-  }, [galleryOpen, enlargedPhoto])
+  }, [galleryOpen, eventiModalOpen, enlargedPhoto])
 
   useEffect(() => {
-    if (!galleryOpen && !enlargedPhoto) return
+    if (!galleryOpen && !eventiModalOpen && !enlargedPhoto) return
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (enlargedPhoto) setEnlargedPhoto(null)
+        else if (eventiModalOpen) setEventiModalOpen(false)
         else if (galleryOpen) setGalleryOpen(false)
       }
     }
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [galleryOpen, enlargedPhoto])
+  }, [galleryOpen, eventiModalOpen, enlargedPhoto])
 
   const navLinks = [
     { href: "#chi-siamo", label: "Chi Siamo" },
@@ -111,6 +125,7 @@ export default function LAteneoDanzaLanding() {
     { href: "#orari", label: "Orari" },
     { href: "#prezzi", label: "Prezzi" },
     { href: "#gallery", label: "Gallery" },
+    { href: "#eventi", label: "Eventi" },
     { href: "#contatti", label: "Contatti" },
   ]
 
@@ -263,6 +278,7 @@ export default function LAteneoDanzaLanding() {
     "/additional/coppia-performance-palcoscenico-2.webp",
     "/additional/coppia-performance-palcoscenico-3.webp",
     "/additional/coppia-danza-ateneo.webp",
+    "/female_pair_modern_dance.jpg",
     "/additional/gruppo-misto-danza-ateneo-3.webp",
     "/additional/danzatore-performance-agropoli-2.webp",
     "/additional/danzatore-solo-ateneo-agropoli.webp",
@@ -516,7 +532,7 @@ export default function LAteneoDanzaLanding() {
               ))}
               <div style={{ borderTop: "1px solid #2A2010" }} className="my-2" />
               {/* Group 2: Orari · Prezzi · Gallery */}
-              {[{ href: "#orari", label: "Orari" }, { href: "#prezzi", label: "Prezzi" }, { href: "#gallery", label: "Gallery" }].map((link) => (
+              {[{ href: "#orari", label: "Orari" }, { href: "#prezzi", label: "Prezzi" }, { href: "#gallery", label: "Gallery" }, { href: "#eventi", label: "Eventi" }].map((link) => (
                 <a key={link.href} href={link.href} className="text-xl font-medium text-[#F5EDD8] hover:text-[#C9980A] transition-colors py-4" onClick={() => setMobileMenuOpen(false)}>
                   {link.label}
                 </a>
@@ -1198,10 +1214,12 @@ export default function LAteneoDanzaLanding() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 sm:gap-4">
             {[
-              { src: "/additional/coppia-balletto-ateneo-agropoli-3.webp", alt: "Coppia balletto Ateneo Agropoli" },
-              { src: "/additional/females-group-perform.webp", alt: "Gruppo femminile in scena" },
-              { src: "/additional/coppia-performance-palcoscenico-2.webp", alt: "Coppia performance palcoscenico" },
-              { src: "/female_pair_modern_dance.jpg", alt: "Coppia femminile danza moderna" },
+              { src: "/additional/w.jpeg", alt: "Momento in scena 1" },
+              { src: "/additional/444.jpeg", alt: "Momento in scena 2" },
+              { src: "/additional/84.jpeg", alt: "Momento in scena 3" },
+              { src: "/additional/33.jpeg", alt: "Momento in scena 4" },
+              { src: "/additional/23.jpeg", alt: "Momento in scena 5" },
+              { src: "/additional/4.jpeg", alt: "Momento in scena 6" },
             ].map((image, index) => (
               <button
                 key={index}
@@ -1311,8 +1329,82 @@ export default function LAteneoDanzaLanding() {
               </div>
             )}
           </div>
+
+          <div className="border-t border-[#2A2010] mt-4" />
+
+          {/* Eventi Section */}
+          <div
+            id="eventi"
+            ref={(el) => { sectionRefs.current["eventi"] = el }}
+            className="pt-16 pb-20"
+          >
+            <div className="text-left lg:text-center mb-12 px-4 lg:px-0">
+              <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#F5EDD8] mb-4 text-left lg:text-center">Eventi</h2>
+              <p className="text-[#F5EDD8] text-lg max-w-none lg:max-w-2xl lg:mx-auto text-pretty">
+                Scopri i nostri prossimi appuntamenti.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {eventiImages.slice(0, 3).map((src, index) => (
+                <div key={src} className="relative aspect-[4/5] overflow-hidden rounded-sm">
+                  <Image
+                    src={src}
+                    alt={`Evento ${index + 1}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {eventiImages.length > 3 && (
+              <div className="flex justify-center mt-8">
+                <button
+                  onClick={() => setEventiModalOpen(true)}
+                  className="px-8 py-3 rounded-sm text-sm font-semibold transition-colors"
+                  style={{ border: "1px solid #C9980A", color: "#C9980A", background: "transparent" }}
+                >
+                  Vedi tutti gli eventi
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </section>
+
+      {/* Eventi Modal */}
+      {eventiModalOpen && (
+        <div
+          className="fixed inset-0 z-[10500] flex items-start justify-center overflow-y-auto"
+          style={{ background: "rgba(0,0,0,0.95)" }}
+          onClick={(e) => { if (e.target === e.currentTarget) setEventiModalOpen(false) }}
+        >
+          <button
+            onClick={() => setEventiModalOpen(false)}
+            className="fixed top-6 right-6 z-[10510] text-[#F5EDD8] text-3xl font-light hover:opacity-70 transition-opacity"
+            aria-label="Close eventi"
+          >
+            <X size={32} />
+          </button>
+          <div className="w-full max-w-7xl mx-auto px-4 py-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {eventiImages.slice(3).map((src, index) => (
+                <div key={src} className="relative aspect-[4/5] overflow-hidden rounded-sm">
+                  <Image
+                    src={src}
+                    alt={`Evento ${index + 4}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Gallery Modal */}
       {galleryOpen && (
