@@ -18,7 +18,13 @@ export default function LAteneoDanzaLanding() {
   const videoRef1 = useRef<HTMLVideoElement>(null)
   const videoRef2 = useRef<HTMLVideoElement>(null)
   const videoRef3 = useRef<HTMLVideoElement>(null)
-  const videoRefs = [videoRef1, videoRef2, videoRef3]
+  const videoRef4 = useRef<HTMLVideoElement>(null)
+  const videoRef5 = useRef<HTMLVideoElement>(null)
+  const videoRef6 = useRef<HTMLVideoElement>(null)
+  const videoRef7 = useRef<HTMLVideoElement>(null)
+  const videoRef8 = useRef<HTMLVideoElement>(null)
+  const videoRef9 = useRef<HTMLVideoElement>(null)
+  const videoRefs = [videoRef1, videoRef2, videoRef3, videoRef4, videoRef5, videoRef6, videoRef7, videoRef8, videoRef9]
   const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set())
   const [bioOpen, setBioOpen] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -29,7 +35,7 @@ export default function LAteneoDanzaLanding() {
   const [whatsappHover, setWhatsappHover] = useState(false)
   const [expandedBios, setExpandedBios] = useState<boolean[]>([false, false, false, false])
   const [visibleCount, setVisibleCount] = useState(20)
-  const [reelsExpanded, setReelsExpanded] = useState(false)
+  const [reelsModalOpen, setReelsModalOpen] = useState(false)
   const [coursesExpanded, setCoursesExpanded] = useState(false)
   const eventiImages = [
     "/eventi/1.jpeg",
@@ -96,26 +102,27 @@ export default function LAteneoDanzaLanding() {
   }, [])
 
   useEffect(() => {
-    if (galleryOpen || eventiModalOpen || enlargedPhoto) {
+    if (galleryOpen || eventiModalOpen || reelsModalOpen || enlargedPhoto) {
       document.body.style.overflow = "hidden"
     } else {
       document.body.style.overflow = ""
     }
     return () => { document.body.style.overflow = "" }
-  }, [galleryOpen, eventiModalOpen, enlargedPhoto])
+  }, [galleryOpen, eventiModalOpen, reelsModalOpen, enlargedPhoto])
 
   useEffect(() => {
-    if (!galleryOpen && !eventiModalOpen && !enlargedPhoto) return
+    if (!galleryOpen && !eventiModalOpen && !reelsModalOpen && !enlargedPhoto) return
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (enlargedPhoto) setEnlargedPhoto(null)
+        else if (reelsModalOpen) setReelsModalOpen(false)
         else if (eventiModalOpen) setEventiModalOpen(false)
         else if (galleryOpen) setGalleryOpen(false)
       }
     }
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [galleryOpen, eventiModalOpen, enlargedPhoto])
+  }, [galleryOpen, eventiModalOpen, reelsModalOpen, enlargedPhoto])
 
   const navLinks = [
     { href: "#chi-siamo", label: "Chi Siamo" },
@@ -1259,27 +1266,22 @@ export default function LAteneoDanzaLanding() {
                 L&apos;Ateneo in scena — momenti di passione e talento
               </p>
             </div>
-            <div className={reelsExpanded ? "flex overflow-x-auto snap-x snap-mandatory gap-4 md:grid md:grid-cols-3 md:overflow-x-visible pb-4 md:pb-0" : "flex justify-center"}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-7xl mx-auto">
               {([
-                { ref: videoRef1, src: "/reel1.mp4", index: 0 },
-                { ref: videoRef2, src: "/reel2.mp4", index: 1 },
-                { ref: videoRef3, src: "/reel3.mp4", index: 2 },
-              ] as { ref: React.RefObject<HTMLVideoElement>; src: string; index: number }[])
-                .filter(({ index }) => reelsExpanded || index === 0)
-                .map(({ ref, src, index }) => (
-                  <div key={index} className={`aspect-[9/16] overflow-hidden rounded-sm bg-black relative ${reelsExpanded ? "snap-start flex-shrink-0 w-[80vw] md:w-auto" : "w-full max-w-sm"}`}>
+                { ref: videoRef9, src: "/saggio20267.mp4", index: 8 },
+                { ref: videoRef8, src: "/saggio20266.mp4", index: 7 },
+                { ref: videoRef4, src: "/saggio2026.mp4", index: 3 },
+              ] as { ref: React.RefObject<HTMLVideoElement>; src: string; index: number }[]).map(({ ref, src, index }, slotIndex) => (
+                <div key={src} className={slotIndex === 0 ? "" : "hidden md:block"}>
+                  <div className="w-full aspect-video md:aspect-[16/9] overflow-hidden rounded-sm bg-black relative">
                     <video
                       ref={ref}
-                      src={src}
-                      className="w-full h-full object-cover"
+                      src={`${src}#t=0.1`}
+                      className="w-full h-full object-contain"
+                      controls
                       loop
                       playsInline
-                      muted
-                      preload="none"
-                      onClick={() => {
-                        if (ref.current?.paused) ref.current.play()
-                        else ref.current?.pause()
-                      }}
+                      preload="metadata"
                       onPlay={() => {
                         setPlayingVideos(prev => new Set(prev).add(index))
                         videoRefs.forEach((r, i) => {
@@ -1291,43 +1293,19 @@ export default function LAteneoDanzaLanding() {
                       }}
                       onPause={() => setPlayingVideos(prev => { const s = new Set(prev); s.delete(index); return s })}
                     />
-                    {!playingVideos.has(index) && (
-                      <button
-                        className="absolute inset-0 flex items-center justify-center"
-                        style={{ background: "rgba(0,0,0,0.5)" }}
-                        onClick={() => ref.current?.play()}
-                        aria-label="Play video"
-                      >
-                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                          <polygon points="18,12 38,24 18,36" fill="#C9980A" />
-                        </svg>
-                      </button>
-                    )}
                   </div>
-                ))}
+                </div>
+              ))}
             </div>
-            {!reelsExpanded && (
-              <div className="flex justify-center mt-6">
-                <button
-                  onClick={() => setReelsExpanded(true)}
-                  className="px-8 py-3 rounded-sm text-sm font-semibold transition-colors"
-                  style={{ border: "1px solid #C9980A", color: "#C9980A", background: "transparent" }}
-                >
-                  Vedi altri video
-                </button>
-              </div>
-            )}
-            {reelsExpanded && (
-              <div className="flex justify-center mt-6">
-                <button
-                  onClick={() => setReelsExpanded(false)}
-                  className="px-8 py-3 rounded-sm text-sm font-semibold transition-colors"
-                  style={{ border: "1px solid #C9980A", color: "#C9980A", background: "transparent" }}
-                >
-                  Chiudi video ↑
-                </button>
-              </div>
-            )}
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={() => setReelsModalOpen(true)}
+                className="px-8 py-3 rounded-sm text-sm font-semibold transition-colors"
+                style={{ border: "1px solid #C9980A", color: "#C9980A", background: "transparent" }}
+              >
+                Vedi altri video
+              </button>
+            </div>
           </div>
 
           <div className="border-t border-[#2A2010] mt-4" />
@@ -1373,6 +1351,56 @@ export default function LAteneoDanzaLanding() {
           </div>
         </div>
       </section>
+
+      {/* Reels Modal */}
+      {reelsModalOpen && (
+        <div
+          className="fixed inset-0 z-[10500] flex items-start justify-center overflow-y-auto"
+          style={{ background: "rgba(0,0,0,0.95)" }}
+          onClick={(e) => { if (e.target === e.currentTarget) setReelsModalOpen(false) }}
+        >
+          <button
+            onClick={() => setReelsModalOpen(false)}
+            className="fixed top-6 right-6 z-[10510] text-[#F5EDD8] text-3xl font-light hover:opacity-70 transition-opacity"
+            aria-label="Close reels"
+          >
+            <X size={32} />
+          </button>
+          <div className="w-full max-w-7xl mx-auto px-4 py-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {([
+                { ref: videoRef7, src: "/saggio20265.mp4", index: 6 },
+                { ref: videoRef6, src: "/saggio20264.mp4", index: 5 },
+                { ref: videoRef5, src: "/saggio20263.mp4", index: 4 },
+                { ref: videoRef4, src: "/saggio20262.mp4", index: 3 },
+                { ref: videoRef3, src: "/saggio20268.mp4", index: 2 },
+              ] as { ref: React.RefObject<HTMLVideoElement>; src: string; index: number }[]).map(({ ref, src, index }) => (
+                <div key={src} className="w-full aspect-video md:aspect-[16/9] overflow-hidden rounded-sm bg-black relative">
+                  <video
+                    ref={ref}
+                    src={`${src}#t=0.1`}
+                    className="w-full h-full object-contain"
+                    controls
+                    loop
+                    playsInline
+                    preload="metadata"
+                    onPlay={() => {
+                      setPlayingVideos(prev => new Set(prev).add(index))
+                      videoRefs.forEach((r, i) => {
+                        if (r.current && i !== index) {
+                          r.current.pause()
+                          setPlayingVideos(prev => { const s = new Set(prev); s.delete(i); return s })
+                        }
+                      })
+                    }}
+                    onPause={() => setPlayingVideos(prev => { const s = new Set(prev); s.delete(index); return s })}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Eventi Modal */}
       {eventiModalOpen && (
